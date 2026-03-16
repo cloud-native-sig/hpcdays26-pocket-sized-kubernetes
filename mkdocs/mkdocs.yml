@@ -1,6 +1,7 @@
 site_name: Pocket-Sized Kubernetes 
 nav:
 - introduction.md
+- lesson1.md
 theme: 
   name: material
   palette:
