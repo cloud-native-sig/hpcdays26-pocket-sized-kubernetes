@@ -1,0 +1,29 @@
+site_name: Pocket-Sized Kubernetes 
+nav:
+- introduction.md
+theme: 
+  name: material
+  palette:
+    primary: teal
+    accent: indigo
+  logo: assets/CN-SIG-logo.png
+  features: 
+    - navigation.instant
+    - navigation.tracking
+    - navigation.footer
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - footnotes
+  - attr_list
+  - md_in_html
+copyright: © Cloud Native SIG 2026
+repo_url: https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes
+edit_uri: edit/main/tutorial
