@@ -27,3 +27,4 @@ markdown_extensions:
 copyright: © Cloud Native SIG 2026
 repo_url: https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes
 edit_uri: edit/main/tutorial
+site_url: https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/
