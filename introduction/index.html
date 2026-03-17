@@ -1,0 +1,881 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/">
+      
+      
+      
+        <link rel="next" href="../lesson1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Introduction - Pocket-Sized Kubernetes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Pocket-Sized Kubernetes" class="md-header__button md-logo" aria-label="Pocket-Sized Kubernetes" data-md-component="logo">
+      
+  <img src="../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Pocket-Sized Kubernetes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Pocket-Sized Kubernetes" class="md-nav__button md-logo" aria-label="Pocket-Sized Kubernetes" data-md-component="logo">
+      
+  <img src="../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    Pocket-Sized Kubernetes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aims
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-we-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who We Are
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#following-along-at-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following Along at Home
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to Kubernetes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-vs-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes vs Docker Compose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-kubernetes-in-research-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Kubernetes in Research Computing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-and-hpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes and HPC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson 1: Designing Your Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lesson 2: Building Your Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aims
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-we-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who We Are
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#following-along-at-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Following Along at Home
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to Kubernetes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-vs-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes vs Docker Compose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-kubernetes-in-research-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Kubernetes in Research Computing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-and-hpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes and HPC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="introduction">Introduction</h1>
+<p>Welcome to <strong>Pocket-Sized Kubernetes at Durham HPC Days 2026</strong>! 
+In this tutorial, you'll build a working Kubernetes cluster from
+scratch using Raspberry Pi hardware, deploy containerised applications,
+and gain experience working with distributed systems.</p>
+<h2 id="aims">Aims</h2>
+<p>By the end of the tutorial, you will have:</p>
+<ul>
+<li>A basic understanding of Kubernetes architecture and its use in research computing</li>
+<li>Built a multi-node k3s cluster on Raspberry Pi hardware</li>
+<li>Deployed and managed containerised applications on Kubernetes </li>
+<li>Observed key Kubernetes features including self-healing and scaling</li>
+<li>Gained practical skills transferable to HPC and cloud environments</li>
+</ul>
+<h2 id="who-we-are">Who We Are</h2>
+<p>This workshop is delivered by the <strong>Cloud Native Special Interest
+Group</strong> (SIG) with support from the <strong>Computational Abilities
+Knowledge Exchange</strong> (CAKE). We're a new community of research
+software engineers and technical professionals exploring cloud-native
+technologies in research software and digital infrastructure. You
+can find more about the SIG and how to get involved at
+<a href="https://cloudnative-sig.ac.uk/">https://cloudnative-sig.ac.uk/</a>.</p>
+<h2 id="following-along-at-home">Following Along at Home</h2>
+<p>All code and resources used in this tutorial are available 
+on the <a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes">tutorial's GitHub repository</a>.
+If you want to follow along at home or perhaps run your own workshop,
+you can replicate our setup with:</p>
+<ul>
+<li>2-4 Raspberry Pi boards (Pi 3B+ or newer recommended&mdash;see
+  <a href="../lesson1/#k3s-and-hardware-requirements">Hardware Requirements</a>)</li>
+<li>MicroSD cards (16GB+) &amp; Power Supplies for each RPi</li>
+<li>at least one microHDMI-HDMI cable plus external display</li>
+<li>Network connectivity (WiFi or Ethernet/switches)</li>
+<li>A laptop or PC with SSH client</li>
+</ul>
+<p>To prepare each RPi, we recommend using the <a href="https://www.raspberrypi.com/software/">Raspberry Pi
+Imager</a> to install RPi OS Lite
+64-Bit for the device. The installer allows you to set the RPi
+hostname, configure wireless connectivity, enable SSH and create an
+initial login account.</p>
+<p>On first boot, connect the device to an external monitor and log in to
+check network connectivity and obtain the device IP address.  In order
+to install k3s, you will need to enable memory cgroups by editing
+<code>/boot/firmware/cmdline.txt</code> and appending to the end of the existing
+line:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cgroup_memory=1 cgroup_enable=memory
+</span></code></pre></div>
+After saving the file, reboot the RPi. You can now disconnect the
+external monitor and connect via SSH from your own laptop or PC.</p>
+<div class="admonition note">
+<p class="admonition-title">Kubernetes Anywhere</p>
+<p>While we use Raspberry Pis for this tutorial, k3s can be installed
+on a wide range of hardware from homelab servers to cloud server
+instances.</p>
+</div>
+<h2 id="introduction-to-kubernetes">Introduction to Kubernetes</h2>
+<h3 id="what-is-kubernetes">What is Kubernetes</h3>
+<p>Kubernetes (k8s) is an open-source container orchestration platform
+that automates deployment, scaling, and management of containerised
+applications across groups of machines.</p>
+<h3 id="kubernetes-vs-docker-compose">Kubernetes vs Docker Compose</h3>
+<p>Docker runs applications from built images in sandboxed environments
+called containers.  Docker Compose is a declarative tool that allows
+you to run groups of containers with networking and storage volumes on
+a single host. Kubernetes goes beyond Docker Compose by providing an
+orchestration pipeline for multi-host, multi-container
+applications. In other words, it allows complex containerised
+applications to run across multiple hosts in a cluster. Kubernetes has
+powerful automation and management features for scheduling, scaling
+and resilience.  </p>
+<div class="admonition note">
+<p class="admonition-title">On Docker Swarm</p>
+<p>Docker Engine's <a href="https://docs.docker.com/engine/swarm/">Swarm mode</a>     has many goals in common with Kubernetes, but is
+not as actively developed, feature-rich or has the same level
+of resilience for production use.</p>
+</div>
+<h3 id="using-kubernetes-in-research-computing">Using Kubernetes in Research Computing</h3>
+<p>Developing a Kubernetes cluster is a good approach when you need
+to manage multiple containerised services across different machines,
+and may benefit from:</p>
+<ul>
+<li>Automatic scaling of workloads based on demand</li>
+<li>Rolling updates with minimal downtime</li>
+<li>Self-healing, resilient systems</li>
+<li>Portability between on-prem and cloud infrastructure   </li>
+</ul>
+<p>On the other hand, Kubernetes introduces complexity and has a
+significant learning curve, and so may not be appropriate for:</p>
+<ul>
+<li>Simple container applications that can run on a single host (use
+  Docker Compose)</li>
+<li>HPC batch job management (use SLURM)</li>
+<li>Services offered by a cloud provider or technology you are already
+  invested in</li>
+<li>Large-scale parallel filesystems (use dedicated solutions, e.g.,
+  Lustre)</li>
+</ul>
+<h3 id="kubernetes-and-hpc">Kubernetes and HPC</h3>
+<p>While we will focus on learning Kubernetes through standard
+application deployments, those interested in HPC integration
+should explore the <a href="https://slinky.schedmd.com/en/latest/"><strong>slinky</strong></a>
+project by SchemMD that enables interoperability between SLURM 
+and Kubernetes. This includes <code>slurm-operator</code> for 
+running SLURM on Kubernetes (as pods) and <code>slurm-bridge</code> for
+using SLURM to schedule Kubernetes workloads. </p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>Kubernetes follows a <strong>control plane + worker nodes</strong> architecture:</p>
+<p><img alt="The components of a Kubernetes Cluster" src="../assets/kubernetes-overview.svg" /></p>
+<p><em>The components of a Kubernetes cluster. <a href="https://kubernetes.io/docs/concepts/overview/components/">Overview Components</a></em></p>
+<h3 id="key-components">Key Components</h3>
+<ul>
+<li><strong>Node</strong>: A physical or virtual machine in the cluster</li>
+<li><strong>Pod</strong>: The smallest deployable unit consisting of one more containers that share storage/network</li>
+<li><strong>Deployment</strong>: Manages a set of identical pods (defines desired state)</li>
+<li><strong>Service</strong>: Stable network endpoint to access pods </li>
+<li><strong>Control Plane</strong>: The brain of the cluster, makes decisions based on the current cluster state, accessible via the <strong>API Server</strong></li>
+<li><strong>Worker Nodes</strong>: Run the containerised applications using a
+    container runtime, managed by a <code>kubelet</code> agent.</li>
+</ul>
+<p>Other critical components include the Controller Manager and Scheduler
+on the control node and <code>etcd</code>, a key-value store for cluster data.</p>
+<div class="admonition tip">
+<p class="admonition-title">Further Reading</p>
+<p>Further information on Kubernetes architecture can be found on our 
+<a href="https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/">Introduction to Kubernetes workshop materials</a>.</p>
+</div>
+<h3 id="how-it-works">How it works</h3>
+<p>Kubernetes follows a <em>declarative</em> approach where you define the
+target state of the applications running in the cluster, and 
+Kubernetes works continuously to achieve that state. For example, if
+a node goes down, Kubernetes may distribute its workload to other 
+nodes to ensure services for running applications are not interrupted.
+Kubernetes management follows the Infrastructure as Code paradigm 
+and is readily integrated with GitOps using high-level tools such as
+<a href="https://argoproj.github.io/cd/">ArgoCD</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+        
+          
+          <a href="../lesson1/" class="md-footer__link md-footer__link--next" aria-label="Next: Lesson 1: Designing Your Cluster">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lesson 1: Designing Your Cluster
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Cloud Native SIG 2026
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
