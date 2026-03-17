@@ -131,10 +131,16 @@ Kubernetes follows a **control plane + worker nodes** architecture:
 - **Pod**: The smallest deployable unit consisting of one more containers that share storage/network
 - **Deployment**: Manages a set of identical pods (defines desired state)
 - **Service**: Stable network endpoint to access pods 
-- **Control Plane**: The brains of the clusters, makes decisions based on the current cluster state
-- **API Server:** The gateway for you to communicate with the control
-  plane
-- **Worker Nodes**: Run your actual containerised applications
+- **Control Plane**: The brain of the cluster, makes decisions based on the current cluster state, accessible via the **API Server**
+- **Worker Nodes**: Run the containerised applications using a
+    container runtime, managed by a `kubelet` agent.
+
+Other critical components include the Controller Manager and Scheduler
+on the control node and `etcd`, a key-value store for cluster data.
+
+!!! tip "Further Reading"
+    Further information on Kubernetes architecture can be found on our 
+    [Introduction to Kubernetes workshop materials](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
 
 ### How it works
 Kubernetes follows a *declarative* approach where you define the
@@ -146,6 +152,3 @@ Kubernetes management follows the Infrastructure as Code paradigm
 and is readily integrated with GitOps using high-level tools such as
 [ArgoCD](https://argoproj.github.io/cd/).
 
-!!! tip "Further Reading"
-    Further information on Kubernetes architecture can be found on our 
-    [Introduction to Kubernetes workshop materials](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
