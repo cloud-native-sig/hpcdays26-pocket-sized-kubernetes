@@ -1,9 +1,9 @@
-## Following Along at Home
+## Using Your Own Hardware
 
 All code and resources used in this tutorial are available 
 on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes).
 If you want to follow along at home or perhaps run your own workshop,
-you can replicate our setup with:
+you can replicate our cluster setup with:
 
 - 2-4 Raspberry Pi boards (Pi 3B+ or newer recommended&mdash;see
   [Hardware Requirements](lesson1.md#k3s-and-hardware-requirements))
@@ -30,7 +30,7 @@ After saving the file, reboot the RPi. You can now disconnect the
 external monitor and connect via SSH from your own laptop or PC.
 
 !!! note "Kubernetes Anywhere"
-    While we use Raspberry Pis for this tutorial, k3s can be installed
+    While we used Raspberry Pis for the tutorial, k3s can be installed
     on a wide range of hardware from homelab servers to cloud server
     instances.
 
