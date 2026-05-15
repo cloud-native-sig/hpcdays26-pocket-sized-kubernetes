@@ -226,9 +226,9 @@ $ kubectl describe node kworker1
 We'll be seeing the power of `kubectl` when it comes to deployments 
 in the next lesson.
 
-### Kubernetes Namespaces
+#### Kubernetes Namespaces
 Namespaces are logical divisions or groupings of resources within a 
-cluster.  This allows you to separate, for example, different 
+cluster. This allows you to separate, for example, different 
 applications or different deployments of an application such as 
 `dev` and `prod`. 
 
@@ -242,3 +242,113 @@ $ kubectl get pods --all-namespaces
 ```
 Which of these can you match to Kubernetes services from 
 the [Introduction](./introduction.md#architecture-overview)?
+
+#### Resources and resource management
+
+You can see more resources by moving your context to the 
+`kube-system` namespace with:
+```
+kubectl config set-context --namespace=kube-system --current
+kubectl get all
+```
+
+Now we can see more details on exactly what is being run on the 
+cluster, such as; replicasets, jobs, deployments, etc. 
+
+To view the resources that are being used by these pods we can 
+inspect the pod itself.
+
+```
+kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].allocatedResources'
+kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].resources.limits'
+```
+
+You can also inspect pods by getting a detailed report using:
+
+```
+kubectl describe pod -l k8s-app=kube-dns
+```
+
+This will give information about the status of the pod, recent events
+and some of the pod specifications. 
+
+#### Pod Storage, ConfigMaps and PVCs
+
+Within Kubernetes pods are ephemeral, so most storage that needs to
+persist is held in Persistent Volumes and loaded as volumes into the
+pod. 
+
+With our systems only pods, we can inspect this information too. 
+```
+kubectl get pod -o yaml -l k8s-app=kube-dns | grep -i volumes -A 32
+```
+The above grabs a specific part of the yaml definition for the DNS 
+pods, but feel free to inspect further by removing the `grep` 
+command.
+
+You should see something like the following. 
+```
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        - key: NodeHosts
+          path: NodeHosts
+        name: coredns
+      name: config-volume
+```
+We can see that the DNS pod uses existing configmaps to read in 
+specifications for running the pod itself. We can inspect the 
+contents of the config map directly, again using `kubectl`.
+
+```
+kubectl get cm -o yaml coredns
+```
+
+This configmap is then mapped directly to the RPi's memory within the
+pod and will be used while the container is created. For some pods, 
+this can be interacted with using `kubectl exec -it `. The core DNS
+pod does not have this available, but your local-path-provisioner can.
+
+```
+kubectl exec -it local-path-provisioner-<your-extension> -- sh
+```
+
+## Summary
+
+This lesson has focussed on getting the K3s cluster setup and working
+for each group. Using the air-gapped install we have prepared the 
+master node and added in each worker. Following this multiple 
+resources are created on the cluster so we have had a look at these,
+and what the command line interface, `kubectl` can be useful for. We
+used storage and compute resources as examples for exploring the pods
+, but we will have a more technical look in the next lesson.
+
+By the end of the session you should have a comfortable understanding
+of how you could create a kubernetes cluster with a similar setup, and
+be able to access the entire cluster from your local computer. 
+
+In the next session we will take a deeper dive into what can 
+kubernetes do and investigate important topics like; Networking, 
+Ingresses, CronJobs, more Storage details, Telemetry and High 
+Availability. 
+
+Any questions please find Lewis and Piper, or reach out to the 
+Cloud Native Significent Interest Group. 
+[e-mail](cloudnative-sig@jiscmail.ac.uk)
+[Website](https://cloudnative-sig.ac.uk/)
+
+## Acknowledgements 
+
+This workshop is delivered by the Cloud-Native SIG team with support 
+from the Computational Abilities Knowledge Exchange Network+. CAKE 
+has received funding through the UKRI Digital Research Infrastructure
+Programme under project reference UKRI1799.
+
+Piper is a Research Software Engineer in Advanced Research Computing,
+from the Rosalind Franklin Institute, piper.fowler-wright@rfi.ac.uk. 
+
+Lewis also works as a Research Software Engineer , but for 
+[DAFNI](https://dafni.ac.uk/) within STFC's Scientific computing
+department.  lewis.sampson@stfc.ac.uk
