@@ -1,86 +1,38 @@
 # Lesson 1 — Building Your Cluster
 
-In this lesson you will:
+In this lesson we’ll assemble a small Kubernetes cluster using Raspberry Pis and K3s. By the end of the session, each group should have a functioning multi-node cluster that you can interact with using kubectl.
 
-* Connect to your Raspberry Pi nodes
-* Install K3s on the control node
-* Join worker nodes to the cluster
-* Verify the cluster is operational
-* Explore Kubernetes resources with `kubectl`
+Along the way we’ll:
 
-By the end of the session, your group will have a working Kubernetes cluster running on Raspberry Pis.
+* connect to the Raspberry Pis over SSH,
+* install a Kubernetes control plane,
+* join worker nodes to the cluster,
+* and take a first look at the resources Kubernetes creates behind the scenes.
 
+This session is intentionally hands-on, so expect to spend most of the time in the terminal exploring the cluster directly.
 ---
 
 # Connecting to Your Nodes
 
-Each table has:
+Each table has a note with:
 
 * Raspberry Pi IP addresses
 * SSH login credentials
 * WiFi credentials for the workshop router
 
-Connect your laptop to:
+You will also need to connect to our Router - `TP-Link_AP_2A5A_01`
 
-```text
-TP-Link_AP_2A5A_01
-```
-
-The access details should be available on your table.
-
-> While connected to the workshop router, your laptop will lose internet access. You might need to have kubectl installed locally before connecting to the router s[Kubernetes commandline](https://kubernetes.io/docs/tasks/tools/)
+> While connected to the workshop router, your laptop will lose internet access. You might need to have kubectl installed locally before connecting [Kubernetes commandline](https://kubernetes.io/docs/tasks/tools/)
 
 ## Verify SSH Access
 
-Confirm you can connect to each node:
+Once you have connected to the route, as a group you need to confirm you can connect to each node:
 
 ```bash
 ssh chef@192.168.x.xxx
 hostname
 exit
 ```
-
-Expected hostnames:
-
-```text
-kmaster
-kworker1
-kworker2
-...
-```
-
----
-
-## Optional: Configure Host Aliases
-
-To avoid remembering IP addresses, add entries to `/etc/hosts`:
-
-```text
-192.168.x.xxx    kmaster
-192.168.x.yyy    kworker1
-```
-
-You can then connect with:
-
-```bash
-ssh chef@kmaster
-```
-
-Alternatively, configure SSH aliases in `~/.ssh/config`:
-
-```text
-Host kworker1
-    HostName 192.168.x.yyy
-    User chef
-    IdentityFile ~/.ssh/id_ed25519
-```
-
-Then connect with:
-
-```bash
-ssh kworker1
-```
-
 ---
 
 ## Test Node Connectivity
@@ -93,33 +45,33 @@ ping -c3 192.168.x.yyy
 ```
 
 ---
+## Optional: Configure Host Aliases
 
-## Troubleshooting
+For convenience, you may want to add IP-hostname pairs to 
+`/etc/hosts/` on your own device:
 
-If a node is unreachable:
-
-* Verify the IP address
-* Check the node is powered on
-* Confirm `sshd` is running
-* Verify login credentials
-
-If needed, connect the Raspberry Pi to a display and keyboard for debugging.
-
-### Checking the Node IP Address
-
-On the Raspberry Pi:
-
-```bash
-hostname -I
+```text
+192.168.x.xxx    kmaster
+192.168.x.yyy    kworker1
 ```
 
-or
+Then you can simply `ssh <username>@kmaster` etc. instead of having 
+to remember all the IP addresses.
 
-```bash
-ip addr show
+Alternatively, configure SSH aliases in `~/.ssh/config`, e.g.
+
+```text
+Host kworker1
+    HostName 192.168.x.yyy
+    User chef
+    IdentityFile ~/.ssh/id_ed25519
 ```
+
+Then connect with `ssh kworker1`
 
 ---
+
+
 
 ## Optional: Configure SSH Keys
 
@@ -133,8 +85,19 @@ ssh-copy-id chef@kmaster
 Repeat for each node if desired.
 
 ---
+## Optional: Troubleshooting
 
-# Installing K3s
+We should have configured static IPs through our router's DHCP settings.
+But, if a node is unreachable we will need to:
+
+* Verify the IP address
+* Check the node is powered on
+* Confirm `sshd` is running
+* Configured a static IPs using `nmcli` or `nmtui`.
+
+If needed, ask one of the course facilitators to help by connecting the Raspberry Pi to a display and keyboard for debugging.
+---
+# Installing K3s and creating the cluster
 
 K3s is a lightweight Kubernetes distribution designed for edge and resource-constrained systems such as Raspberry Pis.
 
@@ -144,7 +107,7 @@ We will:
 2. Retrieve the cluster join token
 3. Join worker nodes to the cluster
 
-> We recommend splitting nodes between group members.
+> We recommend splitting responsibility of the nodes between members of your group; try to pair people with different levels or experience with the Unix Shell (e.g. 1-3 people max per node).
 
 ---
 
@@ -166,32 +129,15 @@ cgroup_memory=1 cgroup_enable=memory
 
 ---
 
-# Installing the Control Node
+## Installing the Control Node
 
-The workshop cluster is air-gapped, so installation files are already present on each node.
+Since the workshop cluster is air-gapped, installation files are preloaded on each node. If there are any missing files, the blue USB will contain everything needed.
 
-Internet-enabled installation commands are also shown for reference.
-
----
-
-## Option 1 — With Internet Access
-
-On `kmaster`:
-
-```bash
-curl -sfL https://get.k3s.io | sh -
-```
-
-This installer:
-
-* downloads K3s,
-* installs a systemd service,
-* starts the Kubernetes control plane,
-* configures `kubectl`.
+But for replication in your own setup, we will include the Internet-enabled options. 
 
 ---
 
-## Option 2 — Air-Gapped Installation
+### Option 1 — Air-Gapped Installation
 
 On `kmaster`:
 
@@ -212,11 +158,24 @@ INSTALL_K3S_SKIP_DOWNLOAD=true \
 ```
 
 ---
+### Option 2 — With Internet Access
 
-# Verify the Control Node
+On `kmaster`:
 
-Check the K3s service:
+```bash
+curl -sfL https://get.k3s.io | sh -
+```
 
+This installer:
+* Downloads K3s,
+* Installs a systemd service,
+* Starts the Kubernetes control plane,
+* Configures `kubectl`.
+
+---
+## Verify the Control Node
+
+You'll see output indicating the service has started. To verify K3s is running use,
 ```bash
 sudo systemctl status k3s
 ```
@@ -227,7 +186,7 @@ Check the node status:
 sudo kubectl get nodes
 ```
 
-Expected output:
+You should see output similar to
 
 ```text
 NAME      STATUS   ROLES           AGE   VERSION
@@ -236,7 +195,7 @@ kmaster   Ready    control-plane   30s   v1.xx.x+k3s1
 
 ---
 
-## Optional: Use `kubectl` Without `sudo`
+### Optional: Use `kubectl` Without `sudo`
 
 By default, K3s configures `kubectl` for root access only.
 
@@ -248,48 +207,35 @@ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 
 ---
 
-# Retrieve the Join Token
-
-Worker nodes require a token to join the cluster.
-
-On the control node:
-
-```bash
-sudo cat /var/lib/rancher/k3s/server/node-token
-```
-
-Share this token with the group.
-
----
-
-# Installing Worker Nodes
+## Installing Worker Nodes
 
 Each worker node requires:
 
 * the control node IP address,
 * the join token.
 
-On a worker node:
+---
+### Retrieve the Join Token
+
+The worker nodes will need a token from the control node to join the 
+cluster. Retrieve this with:
+
+```bash
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+
+Share the output with everyone that is configuring the worker nodes!
+!!! tip "Transfering the token"
+    Potentially by copying it to `/home/chef/` and `chown chef:chef /home/chef/node-token`. Then `scp /home/chef/node-token chef@192.168.x.yyy:/home/chef/`
+
+SSH into a worker node and assign these to variables:
 
 ```bash
 export CONTROL_NODE=192.168.x.xxx
 export CONTROL_TOKEN=<token>
 ```
-
 ---
-
-## Option 1 — With Internet Access
-
-```bash
-curl -sfL https://get.k3s.io | \
-K3S_URL=https://$CONTROL_NODE:6443 \
-K3S_TOKEN=$CONTROL_TOKEN \
-sh -
-```
-
----
-
-## Option 2 — Air-Gapped Installation
+### Option 1 — Air-Gapped Installation
 
 ```bash
 sudo -i
@@ -309,24 +255,28 @@ K3S_URL=https://$CONTROL_NODE:6443 \
 K3S_TOKEN=$CONTROL_TOKEN \
 /root/k3s/install.sh
 ```
+---
+### Option 2 — With Internet Access
+
+```bash
+curl -sfL https://get.k3s.io | \
+K3S_URL=https://$CONTROL_NODE:6443 \
+K3S_TOKEN=$CONTROL_TOKEN \
+sh -
+```
 
 ---
-
-# Verify the Cluster
+## Verify the Cluster
 
 Back on the control node:
 
 ```bash
-kubectl get nodes
-```
-
-Expected output:
-
-```text
-NAME       STATUS   ROLES           AGE
-kmaster    Ready    control-plane   5m
-kworker1   Ready    <none>          2m
-kworker2   Ready    <none>          2m
+$ sudo kubectl get nodes
+NAME        STATUS   ROLES              AGE     VERSION
+kmaster    Ready    control-plane      5m      v1.28.5+k3s1
+kworker1    Ready    <none>             2m      v1.28.5+k3s1
+kworker2    Ready    <none>             1m30s   v1.28.5+k3s1
+kworker3    Ready    <none>             5m13s   v1.28.5+k3s1
 ```
 
 All nodes should report:
@@ -334,6 +284,7 @@ All nodes should report:
 ```text
 STATUS = Ready
 ```
+But we expect the roles to be empty.
 
 ---
 
@@ -376,13 +327,17 @@ chmod 600 ~/.kube/config-k3s
 
 # Kubectl Basics
 
-`kubectl` is the command-line interface for Kubernetes.
+We have already seen that `kubectl` is the command-line interface for Kubernetes. Now we will explore the basics of how the tool can be used; 
 
-General syntax:
+The general syntax is:
 
 ```bash
-kubectl <command> <resource> [name]
+$ kubectl <command> <type> [name] [flags]
 ```
+where `<command>` specifies the action to perform, `<type>` is the
+type of Kubernetes *resource* (e.g., nodes, pods, deployments), 
+`[name]` is the optional name of the resource, and `[flags]` are 
+optional parameters.
 
 Examples:
 
@@ -393,9 +348,9 @@ kubectl describe node kworker1
 
 ---
 
-# Kubernetes Namespaces
+## Kubernetes Namespaces
 
-Namespaces logically separate resources within a cluster.
+Namespaces logically separate resources within a cluster. This allows you to separate applications or different deployments of an application such as `dev` and `prod`. 
 
 List all namespaces:
 
@@ -403,21 +358,17 @@ List all namespaces:
 kubectl get namespaces
 ```
 
-List all pods across namespaces:
-
+There are  a number of pods running essential *system* processes in the `kube-system` namespace:
 ```bash
-kubectl get pods --all-namespaces
+$ kubectl get pods --all-namespaces
 ```
-
-You should see system components such as:
-
-* CoreDNS
-* Metrics Server
-* Local Path Provisioner
+You can match these to services from the Kubernetes [Introduction](./introduction.md#architecture-overview)?
 
 ---
 
-# Exploring Cluster Resources
+## Exploring Cluster Resources
+
+By default, `kubectl` refers to the `default` namespace. Since we have not deployed any applications in this namespace, `kubectl get deployments` and `kubectl get pods` will not return anything. 
 
 Switch to the `kube-system` namespace:
 
@@ -425,7 +376,7 @@ Switch to the `kube-system` namespace:
 kubectl config set-context --current --namespace=kube-system
 ```
 
-View resources:
+View *all* resources:
 
 ```bash
 kubectl get all
@@ -439,30 +390,36 @@ This includes:
 * Services
 * Jobs
 
+> `kubectl get all` does not quite show all the resources, but it does highlight the main ones.
+
 ---
 
-# Inspecting Pods
+### Resource Requests and Limits
 
-Describe a pod:
+Still using `kubectl` we can investigate exactly how and what is running on the cluster at this point.
+
+### Inspecting Pods
+
+We can start by inspecting the pods we have found in the `kube-system` namespace. 
+
+Describe any pod:
 
 ```bash
 kubectl describe pod <pod-name>
 ```
 
-Inspect pod YAML:
+Inspect a pod manifest output to YAML:
 
 ```bash
 kubectl get pod <pod-name> -o yaml
 ```
 
----
-
-# Resource Requests and Limits
-
-Inspect resource allocations:
+To view the resources that are being used by these pods we can 
+inspect the pod itself.
 
 ```bash
-kubectl describe pod -l k8s-app=kube-dns
+kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].allocatedResources'
+kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].resources.limits'
 ```
 
 Edit deployment resources interactively:
@@ -480,7 +437,7 @@ kubectl patch deployment coredns \
 
 ---
 
-# Storage and ConfigMaps
+### Storage and ConfigMaps
 
 Pods are ephemeral, so persistent data is typically stored using:
 
@@ -488,23 +445,42 @@ Pods are ephemeral, so persistent data is typically stored using:
 * Persistent Volume Claims (PVC)
 * ConfigMaps
 
-Inspect the CoreDNS configuration:
+Lets take a look at those now. Inspect the CoreDNS configuration:
 
 ```bash
 kubectl get cm coredns -o yaml
 ```
 
-Inspect pod volumes:
+Check the pod manifest for volumes and volumemounts:
 
 ```bash
-kubectl get pod -l k8s-app=kube-dns -o yaml
+kubectl get pod -l k8s-app=kube-dns -o yaml| grep -i volumes -A 32
 ```
+
+The above grabs a specific part of the yaml definition for the DNS 
+pods, but feel free to inspect further by removing the `grep` 
+command.
+
+You should see something like the following. 
+```yaml
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        - key: NodeHosts
+          path: NodeHosts
+        name: coredns
+      name: config-volume
+```
+We can see that the DNS pod use the existing configmap to read in 
+specifications for running the pod itself.
 
 ---
 
-# Accessing Containers
+### Accessing Containers
 
-Some containers allow interactive access:
+For some pods, their containers allow interactive access:
 
 ```bash
 kubectl exec -it <pod-name> -- sh
@@ -515,27 +491,26 @@ Example:
 ```bash
 kubectl exec -it local-path-provisioner-<hash> -- sh
 ```
+From here you can view the mounted volumes. See if you can find this where the configmap has been mounted, and where the data came from.
 
 ---
 
 # Summary
 
-In this lesson you:
-
+This lesson has focussed on getting the K3s cluster setup and working
+for each group, you have:
 * Built a Raspberry Pi Kubernetes cluster using K3s
 * Added worker nodes to the cluster
 * Verified cluster health with `kubectl`
 * Explored namespaces, pods, resources, and storage
 
-You should now be comfortable:
-
+By the end of the session you should be a comfortable:
 * accessing cluster nodes,
 * using `kubectl`,
 * inspecting Kubernetes resources,
 * managing a small Kubernetes cluster.
 
 In the next lesson we will explore:
-
 * networking
 * ingresses
 * storage
@@ -556,8 +531,12 @@ Contributors:
 * Piper Fowler-Wright — Rosalind Franklin Institute
 * Lewis Sampson — STFC / DAFNI
 
-Useful links:
-
+Documentation: 
 * [Cloud Native SIG](https://cloudnative-sig.ac.uk/?utm_source=chatgpt.com)
 * [K3s Documentation](https://docs.k3s.io/?utm_source=chatgpt.com)
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/?utm_source=chatgpt.com)
+
+Links:
+* [DAFNI](https://dafni.ac.uk/) 
+* [CAKE](https://www.cake.ac.uk/)
+* [RFI ARC](https://www.rfi.ac.uk/focus/platforms/advanced-research-computing/)
