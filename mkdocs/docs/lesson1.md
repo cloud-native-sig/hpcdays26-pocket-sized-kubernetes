@@ -1,36 +1,3 @@
-Your content is already strong technically — the main improvements are around:
-
-* reducing repetition,
-* tightening wording,
-* improving instructional flow,
-* separating “required” vs “optional” actions,
-* making sections easier to convert into slides,
-* reducing cognitive load for workshop attendees,
-* standardising terminology (`control node`, `worker node`, `cluster`),
-* shortening long prose blocks into actionable steps.
-
-For a live HPC workshop, participants benefit most from:
-
-1. short chunks,
-2. explicit goals,
-3. copy-paste commands,
-4. clear checkpoints,
-5. troubleshooting isolated into callouts.
-
-I’d restructure Lesson 1 into:
-
-* **Overview**
-* **Connect to Nodes**
-* **Install Control Plane**
-* **Join Worker Nodes**
-* **Verify Cluster**
-* **Explore Kubernetes**
-* **Summary**
-
-Below is a refined version with streamlined wording and improved workshop pacing.
-
----
-
 # Lesson 1 — Building Your Cluster
 
 In this lesson you will:
@@ -61,7 +28,7 @@ TP-Link_AP_2A5A_01
 
 The access details should be available on your table.
 
-> While connected to the workshop router, your laptop may lose internet access.
+> While connected to the workshop router, your laptop will lose internet access. You might need to have kubectl installed locally before connecting to the router s[Kubernetes commandline](https://kubernetes.io/docs/tasks/tools/)
 
 ## Verify SSH Access
 
@@ -569,11 +536,11 @@ You should now be comfortable:
 
 In the next lesson we will explore:
 
-* networking,
-* ingresses,
-* storage,
-* telemetry,
-* CronJobs,
+* networking
+* ingresses
+* storage
+* telemetry
+* CronJobs
 * high availability.
 
 ---
