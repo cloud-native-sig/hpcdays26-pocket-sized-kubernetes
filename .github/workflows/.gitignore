@@ -1,2 +1,4 @@
 *.tar
 *.gz
+*k3s-arm64*
+*k3s-airgap-images-arm64.tar*
