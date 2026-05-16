@@ -10,6 +10,7 @@ Along the way we’ll:
 * and take a first look at the resources Kubernetes creates behind the scenes.
 
 This session is intentionally hands-on, so expect to spend most of the time in the terminal exploring the cluster directly.
+
 ---
 
 # Connecting to Your Nodes
