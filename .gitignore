@@ -1,4 +1,5 @@
-*.tar
-*.gz
+
 *k3s-arm64*
 *k3s-airgap-images-arm64.tar*
+mkdocs/docs/lesson1-orig
+workshop-setup/workshop-images.tar

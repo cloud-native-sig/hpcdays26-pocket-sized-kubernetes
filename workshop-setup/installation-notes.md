@@ -61,8 +61,10 @@ http://ftp.uk.debian.org/debian/pool/main/libs/libsodium/libsodium23_1.0.18-1+de
 ## Get arm64 images for deployments
 ``` 
 docker pull --platform linux/arm64 nginx:alpine
-busybox
-perl
+docker pull --platform linux/arm64 busybox
+docker pull --platform linux/arm64 perl
+docker pull --platform linux/arm64 prom/prometheus
+docker pull --platform linux/arm64 grafana/grafana
 
 echo 'FROM alpine:3.20
 
@@ -131,7 +133,7 @@ export MASTER_IP=192.168.0.101
 INSTALL_K3S_SKIP_DOWNLOAD=true K3S_URL=https://$MASTER_IP:6443 K3S_TOKEN=$TOKEN /root/k3s/install.sh
 ```
 
-Label work nodes
+Label worker nodes
 `sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker`
 
 
