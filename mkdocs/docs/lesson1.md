@@ -10,6 +10,7 @@ Along the way we’ll:
 * and take a first look at the resources Kubernetes creates behind the scenes.
 
 This session is intentionally hands-on, so expect to spend most of the time in the terminal exploring the cluster directly.
+
 ---
 
 # Connecting to Your Nodes
@@ -284,7 +285,10 @@ All nodes should report:
 ```text
 STATUS = Ready
 ```
-But we expect the roles to be empty.
+But we expect the roles to be empty. To fix that we can rune the following one-liner.
+
+`sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker`
+
 
 ---
 
