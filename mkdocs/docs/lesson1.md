@@ -284,7 +284,10 @@ All nodes should report:
 ```text
 STATUS = Ready
 ```
-But we expect the roles to be empty.
+But we expect the roles to be empty. To fix that we can rune the following one-liner.
+
+`sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker`
+
 
 ---
 
