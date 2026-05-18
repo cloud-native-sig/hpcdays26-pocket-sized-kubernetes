@@ -1,4 +1,4 @@
-# Lesson 2: Using the cluster
+# Lesson 2 - Using your cluster
 
 In this lesson, you'll 
 
@@ -6,26 +6,25 @@ In this lesson, you'll
 Before you connect to the router, in this next session the cluster will need access to our demonstration deployment manifests. If you are using your local computer and have kubectl access to the cluster, you only need to checkout the git branch locally. 
 
 ```bash
-git clone https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes.git
+$ git clone https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes.git
 ```
 If you are accessing the nodes via ssh and using kubectl from here, copy at least the resources repository to the node youre using.
 
 ```bash
-scp -r resources/ chef@kmaster:~/
-ssh chef@kmaster
-ls -l 
+$ scp -r resources/ chef@kmaster:~/
+$ ssh chef@kmaster
+$ ls -l 
+total 12 \n
+drwxr-xr-x 2 chef chef 4096 May 13 04:57 resources
+-rwxrwxr-x 1 chef chef 4880 May 10 02:04 setup-rpi-worker.sh
 ```
-> total 12 
-> drwxr-xr-x 2 chef chef 4096 May 13 04:57 resources
-> -rwxrwxr-x 1 chef chef 4880 May 10 02:04 setup-rpi-worker.sh
-
 Only one person per group will *need* to deploy manifetes, but it may be useful for everyone to have visibility of the code, and to share hands-on practice. We will use `RES_HOME` throughout the for where your resource folder is stored. 
 
 Also since the cluster is air-gapped we need install images differently. For these clusters, you'll use a set of pre-loaded images since the pods wont be able to access them directly from Docker Hub itself. 
 
 Each node should have a file present at  /root/workshop-images.tar and you can load it onto that nodes memory using 
 ```bash
- sudo k3s ctr images import /root/workshop-images.tar
+$ sudo k3s ctr images import /root/workshop-images.tar
 ```
 If the file is missing from the node, alert Lewis and he'll help get the files.  
 
@@ -38,19 +37,19 @@ This section will focus on creating an nginx deployment, looking at scaling pods
 We’ll begin by creating a Deployment running a single nginx pod.
 
 ```bash
-kubectl create namespace nginx
-kubectl apply -f resources/nginx-deployment.yaml
-kubectl config set-context --current --namespace=nginx
+$ kubectl create namespace nginx
+$ kubectl apply -f resources/nginx-deployment.yaml
+$ kubectl config set-context --current --namespace=nginx
 ```
 and inspect the running pod:
 
 ```bash
-kubectl get pods -o wide
+$ kubectl get pods -o wide
 ```
 You should see a pod running with its own internal cluster IP. Even simple containers produce logs that can be inspected with kubectl.
 
 ```bash 
-kubectl logs deployment/nginx-demo
+$ kubectl logs deployment/nginx-demo
 ```
 ### Scaling the Deployment
 
@@ -58,12 +57,12 @@ One of Kubernetes’ core strengths is scaling workloads horizontally.
 
 Scale the deployment from 1 replica to 3:
 ```bash
-kubectl scale deployment nginx-demo --replicas=3
+$ kubectl scale deployment nginx-demo --replicas=3
 ```
 
 Watch the new pods appear:
 ```bash
-kubectl get pods -o wide -w
+$ kubectl get pods -o wide -w
 ```
 
 Notice:
@@ -77,8 +76,8 @@ If a pod fails, Kubernetes will attempt to replace it automatically.
 
 Right now the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
 ```bash
-kubectl apply -f resources/nginx-service.yaml 
-kubectl get svc
+$ kubectl apply -f resources/nginx-service.yaml 
+$ kubectl get svc
 ```
 You should see something similar to:
 ```bash
@@ -97,11 +96,11 @@ Importantly, the Service remains stable even if pods are recreated.
 
 We can see which pods the Service is forwarding traffic to:
 ```bash
-kubectl get endpoints nginx-service
+$ kubectl get endpoints nginx-service
 ```
 or:
 ```bash
-kubectl describe service nginx-service
+$ kubectl describe service nginx-service
 ```
 You should see the IP addresses of all nginx pods currently backing the Service.
 
@@ -111,7 +110,7 @@ To debug networking inside Kubernetes, it is often useful to launch a temporary 
 
 We’ll use BusyBox:
 ```bash
-kubectl apply -f resources/busybox.yaml
+$ kubectl apply -f resources/busybox.yaml
 ```
 This launches an interactive shell inside the cluster.
 
@@ -128,7 +127,7 @@ Using CoreDNS nslookup will resolve to the ClusterIP assigned to the Service, bu
 
 Still inside BusyBox:
 ```bash
-wget -qO- http://nginx-service
+/ # wget -qO- http://nginx-service
 ```
 You should receive the default NGINX welcome page HTML.
 
@@ -145,14 +144,14 @@ All of this happened transparently.
 
 Run the request several times:
 ```bash
-wget -qO- http://nginx-service
+/ # wget -qO- http://nginx-service
 ```
 
 Although the webpage looks identical, Kubernetes may route each request to a different nginx pod behind the Service. The last line on the webpage output gives you the hostname.
 
 To make the connections, inspect the pod information:
 ```bash
-kubectl get pods -o wide
+$ kubectl get pods -o wide
 ```
 
 ## Summary
