@@ -29,8 +29,13 @@ Each node should have a file present at  /root/workshop-images.tar and you can l
 ```
 If the file is missing from the node, alert Lewis and he'll help get the files.  
 
-# Services and networking 
+# Exercise 1 - Services and networking 
+
+This section will focus on creating an nginx deployment, looking at scaling pods, connecting services and testing cluster networks.
+
 ## NGINX deployment
+
+We’ll begin by creating a Deployment running a single nginx pod.
 
 ```bash
 kubectl create namespace nginx
@@ -42,9 +47,11 @@ and inspect the running pod:
 ```bash
 kubectl get pods -o wide
 ```
-You should see a pod running with its own internal cluster IP.
-kubectl logs deployment/nginx-demo
+You should see a pod running with its own internal cluster IP. Even simple containers produce logs that can be inspected with kubectl.
 
+```bash 
+kubectl logs deployment/nginx-demo
+```
 ### Scaling the Deployment
 
 One of Kubernetes’ core strengths is scaling workloads horizontally.
@@ -110,14 +117,12 @@ This launches an interactive shell inside the cluster.
 
 ### DNS Resolution
 
-Inside BusyBox, test Kubernetes DNS:
+Kubernetes automatically creates DNS records for Services using CoreDNS.Inside BusyBox, we can test Kubernetes DNS:
 ```bash
 $ kubectl exec -it toolbox -- sh
 / # nslookup nginx-service
 ```
-You should receive the ClusterIP assigned to the Service.
-
-Kubernetes automatically creates DNS records for Services using CoreDNS.
+Using CoreDNS nslookup will resolve to the ClusterIP assigned to the Service, but should see some warnings too. This is because we have not given the nslookup tool namespace information. Using `nslookup nginx-service.nginx.svc.cluster.local` will remove the warnings. 
 
 ### Accessing the Service
 
@@ -143,9 +148,9 @@ Run the request several times:
 wget -qO- http://nginx-service
 ```
 
-Although the webpage looks identical, Kubernetes may route each request to a different nginx pod behind the Service.
+Although the webpage looks identical, Kubernetes may route each request to a different nginx pod behind the Service. The last line on the webpage output gives you the hostname.
 
-To make this easier to observe, inspect the pod IPs:
+To make the connections, inspect the pod information:
 ```bash
 kubectl get pods -o wide
 ```
@@ -164,25 +169,21 @@ These ideas form the foundation for more advanced topics such as:
 * observability,
 * and multi-service applications.
 
-
-
-# Jobs and batch execution 
-## Kubernetes Jobs and CronJobs
-
-# Resource management 
+# Exercise 2 - Resource management 
 ## OOM 
 ## CPU contention 
+## Failure recovery 
 
 
-# Persistent storage 
+# Exercise 3 - Persistent storage 
 ## PV/PVC
 ## Persistent workloads
 
-# Monitoring and telemetry 
+# Exercise 4 - Monitoring and telemetry 
 ## Grafana and Prometheus
 
-# Failure recovery 
-
+# Exercise 5 - Jobs and batch execution 
+## Kubernetes Jobs and CronJobs
 ## A Very Effective “Capstone Demo”
 
 Distributed Monte Carlo π Estimator
