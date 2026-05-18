@@ -3,6 +3,7 @@ nav:
 - introduction.md
 - designing-a-cluster.md
 - lesson1.md
+- lesson2.md
 - extra-reading.md
 theme: 
   name: material
