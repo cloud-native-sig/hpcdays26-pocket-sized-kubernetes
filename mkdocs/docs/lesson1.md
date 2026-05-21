@@ -18,7 +18,6 @@ This session is intentionally hands-on, so expect to spend most of the time in t
 * (optionally) Following along with the [GitHub Pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/)
 * There should be plenty of opportunities for asking questions during the workshop. If Piper or Lewis are presenting, please use [mentimeter?](https://www.mentimeter.com/) to track questions.
 
-
 ## Acknowledgements
 
 This workshop is delivered by the Cloud-Native SIG team with support from the Computational Abilities Knowledge Exchange Network+ (CAKE).
