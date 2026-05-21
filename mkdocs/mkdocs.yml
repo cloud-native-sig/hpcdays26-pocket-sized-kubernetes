@@ -2,8 +2,11 @@ site_name: Pocket-Sized Kubernetes
 nav:
 - introduction.md
 - designing-a-cluster.md
-- lesson1.md
-- lesson2.md
+- Lesson 1 — Building your cluster: lesson1.md
+- Lesson 2 - Using your cluster:
+  - Introduction: lesson2.md
+  - Exercise 1: lesson2-exercise1.md
+  - Exercise 2: lesson2-exercise2.md
 - extra-reading.md
 theme: 
   name: material
