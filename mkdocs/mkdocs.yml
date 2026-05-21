@@ -2,11 +2,16 @@ site_name: Pocket-Sized Kubernetes
 nav:
 - introduction.md
 - designing-a-cluster.md
-- Lesson 1 — Building your cluster: lesson1.md
-- Lesson 2 - Using your cluster:
+- Lesson 1 — Building your cluster:
+  - Introduction: lesson1.md
+  - Exercise 1 — Connecting to Your Nodes: lesson1/exercise1.md
+  - Exercise 2 — Installing K3s and creating the cluster: lesson1/exercise2.md
+  - Exercise 3 — Kubectl Basics: lesson1/exercise3.md
+  - Summary: lesson1/summary.md
+- Lesson 2 — Using your cluster:
   - Introduction: lesson2.md
-  - Exercise 1: lesson2-exercise1.md
-  - Exercise 2: lesson2-exercise2.md
+  - Exercise 1 — Services and networking: lesson2/exercise1.md
+  - Exercise 2 — Resource Management and Failure Recovery: lesson2/exercise2.md
 - extra-reading.md
 theme: 
   name: material

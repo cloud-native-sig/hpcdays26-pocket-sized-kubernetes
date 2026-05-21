@@ -34,7 +34,7 @@ kubectl config set-context --current --namespace=resource-demo
 Using the memory-demo.yaml manifest, apply a new deployment:
 
 ```bash
-kubectl apply -f memory-demo.yaml
+kubectl apply -f $RES_HOME/memory-demo.yaml
 ```
 
 ### Observing the Failure
@@ -118,7 +118,7 @@ We will create multiple CPU-intensive workloads and observe the effects.
 Deploying a CPU Stress Test:
 
 ```bash
-kubectl apply -f cpu-demo.yaml
+kubectl apply -f $RES_HOME/cpu-demo.yaml
 ```
 
 ### Watching CPU Usage
@@ -243,6 +243,4 @@ In this exercise you explored:
 
 You also saw an important Kubernetes design principle in practice:
 
-Kubernetes is continuously attempting to reconcile the cluster toward a desired state.
-
-This reconciliation behaviour is what allows Kubernetes to recover automatically from many common failures.
+Kubernetes is continuously attempting to reconcile the cluster toward a desired state. This reconciliation behaviour is what allows Kubernetes to recover automatically from many common failures.

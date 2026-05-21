@@ -1,4 +1,4 @@
-# Exercise 1  Services and networking
+# Exercise 1 — Services and networking
 
 This section will focus on creating an nginx deployment, looking at scaling pods, connecting services and testing cluster networks.
 
@@ -8,7 +8,7 @@ We’ll begin by creating a Deployment running a single nginx pod.
 
 ```bash
 kubectl create namespace nginx
-kubectl apply -f resources/nginx-deployment.yaml
+kubectl apply -f $RES_HOME/nginx-deployment.yaml
 kubectl config set-context --current --namespace=nginx
 ```
 
@@ -53,7 +53,7 @@ If a pod fails, Kubernetes will attempt to replace it automatically.
 Right now the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
 
 ```bash
-kubectl apply -f resources/nginx-service.yaml 
+kubectl apply -f $RES_HOME/nginx-service.yaml 
 kubectl get svc
 ```
 
@@ -95,7 +95,7 @@ To debug networking inside Kubernetes, it is often useful to launch a temporary 
 We’ll use BusyBox:
 
 ```bash
-kubectl apply -f resources/busybox.yaml
+kubectl apply -f $RES_HOME/busybox.yaml
 ```
 
 This launches an interactive shell inside the cluster.
