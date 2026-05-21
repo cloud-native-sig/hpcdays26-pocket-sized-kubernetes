@@ -20,8 +20,8 @@ spec:
     spec:
       containers:
         - name: stress-ng
-
-          image: stress-ng
+          image: workshop-tools:arm64  
+          imagePullPolicy: IfNotPresent
 
           command:
             - stress-ng
