@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: cpu-demo
+  namespace: resource-demo
+
+spec:
+  replicas: 4
+
+  selector:
+    matchLabels:
+      app: cpu-demo
+
+  template:
+    metadata:
+      labels:
+        app: cpu-demo
+
+    spec:
+      containers:
+        - name: stress-ng
+
+          image: stress-ng
+
+          command:
+            - stress-ng
+
+          args:
+            - --cpu
+            - "2"
+            - --timeout
+            - "300s"
+
+          resources:
+            requests:
+              cpu: "100m"
+
+            limits:
+              cpu: "250m"
