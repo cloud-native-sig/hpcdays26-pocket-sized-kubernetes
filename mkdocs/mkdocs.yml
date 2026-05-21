@@ -7,7 +7,7 @@ nav:
   - Exercise 1 — Connecting to Your Nodes: lesson1/exercise1.md
   - Exercise 2 — Installing K3s and creating the cluster: lesson1/exercise2.md
   - Exercise 3 — Kubectl Basics: lesson1/exercise3.md
-  - Summary: lesson1/summary.md
+  - Lesson 1 summary: lesson1/summary.md
 - Lesson 2 — Using your cluster:
   - Introduction: lesson2.md
   - Exercise 1 — Services and networking: lesson2/exercise1.md

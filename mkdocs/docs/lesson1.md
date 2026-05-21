@@ -11,7 +11,7 @@ Along the way we’ll:
 
 This session is intentionally hands-on, so expect to spend most of the time in the terminal exploring the cluster directly.
 
-*Getting Ready* :
+Getting Ready:
 
 * Split into even groups per cluster, introduce yourself to the group you'll be working with for today.
 * Checkout the [workshop github](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes#)

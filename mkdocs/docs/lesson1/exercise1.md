@@ -8,19 +8,17 @@ Each table has a note with:
 
 You will also need to connect to our Router - `TP-Link_AP_2A5A_01`
 
-> While connected to the workshop router, your laptop will lose internet access. You might need to have kubectl installed locally before connecting [Kubernetes commandline](https://kubernetes.io/docs/tasks/tools/)
+> While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
 
 ## Verify SSH Access
 
-Once you have connected to the route, as a group you need to confirm you can connect to each node:
+Once you have connected to the router, as a group, you will need to confirm you can connect to each node:
 
 ```bash
 ssh chef@192.168.x.xxx
 hostname
 exit
 ```
-
----
 
 ## Test Node Connectivity
 
@@ -30,8 +28,6 @@ From the control node, verify worker nodes are reachable:
 ssh chef@kmaster
 ping -c3 192.168.x.yyy
 ```
-
----
 
 ## Optional: Configure Host Aliases
 
@@ -55,13 +51,11 @@ Host kworker1
     IdentityFile ~/.ssh/id_ed25519
 ```
 
-Then connect with `ssh kworker1`
-
----
+Then connect to the desired now with `ssh kworker1`
 
 ## Optional: Configure SSH Keys
 
-To avoid repeatedly entering passwords:
+To avoid repeatedly entering passwords you can setup SSH keys to make login more streamlined:
 
 ```bash
 ssh-keygen -t ed25519
@@ -69,8 +63,6 @@ ssh-copy-id chef@kmaster
 ```
 
 Repeat for each node if desired.
-
----
 
 ## Optional: Troubleshooting
 
@@ -83,6 +75,3 @@ But, if a node is unreachable we will need to:
 * Configured a static IPs using `nmcli` or `nmtui`.
 
 If needed, ask one of the course facilitators to help by connecting the Raspberry Pi to a display and keyboard for debugging
-
----
-

@@ -6,7 +6,7 @@ If you want to follow along at home or perhaps run your own workshop,
 you can replicate our cluster setup with:
 
 - 2-4 Raspberry Pi boards (Pi 3B+ or newer recommended&mdash;see
-  [Hardware Requirements](lesson1.md#k3s-and-hardware-requirements))
+  [Hardware Requirements](designing-a-cluster.md#k3s-and-hardware-requirements))
 - MicroSD cards (16GB+) & Power Supplies for each RPi
 - at least one microHDMI-HDMI cable plus external display
 - Network connectivity (WiFi or Ethernet/switches)

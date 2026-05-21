@@ -10,31 +10,14 @@ We will:
 
 > We recommend splitting responsibility of the nodes between members of your group; try to pair people with different levels or experience with the Unix Shell (e.g. 1-3 people max per node).
 
----
-
-## Raspberry Pi Requirements
-
-If using your own Raspberry Pis, ensure memory cgroups are enabled.
-
-Edit:
-
-```bash
-/boot/firmware/cmdline.txt
-```
-
-Append:
-
-```text
-cgroup_memory=1 cgroup_enable=memory
-```
-
----
+!!! Tip
+    If you are following along after the workshop with your own Raspberry Pis, ensure memory cgroups are enabled. Edit: `/boot/firmware/cmdline.txt` and append: `cgroup_memory=1 cgroup_enable=memory`
 
 ## Installing the Control Node
 
 Since the workshop cluster is air-gapped, installation files are preloaded on each node. If there are any missing files, the blue USB will contain everything needed.
 
-But for replication in your own setup, we will include the Internet-enabled options.
+But for replication in your own setup, we will include Internet-enabled installation options.
 
 **Option 1 — Air-Gapped Installation**
 
@@ -69,8 +52,6 @@ This installer:
 * Starts the Kubernetes control plane,
 * Configures `kubectl`.
 
----
-
 ## Verify the Control Node
 
 You'll see output indicating the service has started. To verify K3s is running use,
@@ -92,8 +73,6 @@ NAME      STATUS   ROLES           AGE   VERSION
 kmaster   Ready    control-plane   30s   v1.xx.x+k3s1
 ```
 
----
-
 ### Optional: Use `kubectl` Without `sudo`
 
 By default, K3s configures `kubectl` for root access only.
@@ -104,16 +83,12 @@ To allow non-root usage:
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 ```
 
----
-
 ## Installing Worker Nodes
 
 Each worker node requires:
 
 * the control node IP address,
 * the join token.
-
----
 
 ### Retrieve the Join Token
 
@@ -126,16 +101,18 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 
 Share the output with everyone that is configuring the worker nodes!
 !!! tip "Transfering the token"
-    Potentially by copying it to `/home/chef/` and `chown chef:chef /home/chef/node-token`. Then `scp /home/chef/node-token chef@192.168.x.yyy:/home/chef/`
+    One option is to copy it to `/home/chef/` and `chown chef:chef /home/chef/node-token`. Then `scp /home/chef/node-token chef@192.168.x.yyy:/home/chef/` with the IP of your desired worker node.
 
-SSH into a worker node and assign these to variables:
+Then SSH into a worker node and assign these to variables:
 
 ```bash
 export CONTROL_NODE=192.168.x.xxx
-export CONTROL_TOKEN=<token>
+export CONTROL_TOKEN=$(sudo cat /home/chef/node-token)
 ```
 
 **Option 1 — Air-Gapped Installation**
+
+On your desired worker  
 
 ```bash
 $ sudo -i
@@ -155,17 +132,15 @@ $ INSTALL_K3S_SKIP_DOWNLOAD=true \
   /root/k3s/install.sh
 ```
 
----
-
 **Option 2 — With Internet Access**
+
+On your desired worker  
 
 ```bash
 $ curl -sfL https://get.k3s.io | \
  K3S_URL=https://$CONTROL_NODE:6443 \
  K3S_TOKEN=$CONTROL_TOKEN sh -
 ```
-
----
 
 ## Verify the Cluster
 
@@ -186,7 +161,7 @@ All nodes should report:
 STATUS = Ready
 ```
 
-But we expect the roles to be empty. To fix that we can rune the following one-liner.
+But we expect the roles to be empty. To fix that we can run the following one-liner.
 
 ```bash
 sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker

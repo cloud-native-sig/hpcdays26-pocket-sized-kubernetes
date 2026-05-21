@@ -29,27 +29,25 @@ $ scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
     ~/.kube/config-k3s
 ```
 
-Edit:
+Edit the server to point to your control plane and api-server:
 
 ```yaml
 server: https://<control-node-ip>:6443
 ```
 
-Then export the config:
+After exporting the config to your local environment:
 
 ```bash
 export KUBECONFIG=~/.kube/config-k3s
 ```
 
-You can now run:
+You can now run all kubectl commands from your computer:
 
 ```bash
 kubectl get nodes
 ```
 
-directly from your laptop.
-
-For security:
+For additional security you should typically limit access to this new file:
 
 ```bash
 chmod 600 ~/.kube/config-k3s
@@ -57,7 +55,7 @@ chmod 600 ~/.kube/config-k3s
 
 ## Kubernetes Namespaces
 
-Namespaces logically separate resources within a cluster. This allows you to separate applications or different deployments of an application such as `dev` and `prod`.
+Namespaces are used a lot to logically separate resources within a cluster. This allows you to separate applications or different deployments of an application such as `dev` and `prod`.
 
 List all namespaces:
 
@@ -65,15 +63,13 @@ List all namespaces:
 kubectl get namespaces
 ```
 
-There are  a number of pods running essential *system* processes in the `kube-system` namespace:
+There are a number of pods running essential *system* processes in the `kube-system` namespace:
 
 ```bash
 kubectl get pods --all-namespaces
 ```
 
-You can match these to services from the Kubernetes [Introduction](./introduction.md#architecture-overview)?
-
----
+You can match these to services from the Kubernetes [Introduction](../introduction.md#architecture-overview)?
 
 ## Exploring Cluster Resources
 
@@ -117,7 +113,7 @@ Describe any pod:
 kubectl describe pod <pod-name>
 ```
 
-Inspect a pod manifest output to YAML:
+Inspect a pod manifest output in YAML:
 
 ```bash
 kubectl get pod <pod-name> -o yaml
@@ -131,20 +127,18 @@ kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerS
 kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].resources.limits'
 ```
 
-Edit deployment resources interactively:
+Edit deployment resources via:
 
 ```bash
 kubectl edit deployment coredns
 ```
 
-Or patch directly:
+Or patch directly via a single command:
 
 ```bash
 $ kubectl patch deployment coredns \
  -p '{"spec":{"template":{"spec":{"containers":[{"name":"coredns","resources":{"requests":{"cpu":"120m"}}}]}}}}'
 ```
-
----
 
 ### Storage and ConfigMaps
 
@@ -154,7 +148,7 @@ Pods are ephemeral, so persistent data is typically stored using:
 * Persistent Volume Claims (PVC)
 * ConfigMaps
 
-Lets take a look at those now. Inspect the CoreDNS configuration:
+We will have an in-depth session on this later, but lets take a quick look at those now. Inspect the CoreDNS configuration:
 
 ```bash
 kubectl get cm coredns -o yaml
@@ -163,12 +157,10 @@ kubectl get cm coredns -o yaml
 Check the pod manifest for volumes and volumemounts:
 
 ```bash
-kubectl get pod -l k8s-app=kube-dns -o yaml| grep -i volumes -A 32
+kubectl get pod -l k8s-app=kube-dns -o yaml | grep -i volumes -A 32
 ```
 
-The above grabs a specific part of the yaml definition for the DNS
-pods, but feel free to inspect further by removing the `grep`
-command.
+The above grabs a specific part of the yaml definition for the DNS pods, but feel free to inspect further by removing the pipe to `grep` command.
 
 You should see something like the following.
 
@@ -184,8 +176,7 @@ You should see something like the following.
       name: config-volume
 ```
 
-We can see that the DNS pod use the existing configmap to read in
-specifications for running the pod itself.
+We can see that the DNS pod use the existing configmap to read in specifications for running the pod itself.
 
 ---
 
