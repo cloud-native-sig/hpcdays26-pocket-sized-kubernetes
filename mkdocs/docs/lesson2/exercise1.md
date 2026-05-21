@@ -1,4 +1,4 @@
-# Exercise 1  Services and networking
+# Exercise 1 — Services and networking
 
 This section will focus on creating an nginx deployment, looking at scaling pods, connecting services and testing cluster networks.
 
