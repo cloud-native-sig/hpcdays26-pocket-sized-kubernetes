@@ -261,9 +261,22 @@ The webpage should still exist.
 
 Even though the original container disappeared, the pod changed, and the workload restarted. The persistent volume preserved the application data.
 
-## Part 4 - Discussion — Why This Matters
+## Summary
 
-Persistent storage is essential for many workloads, including:
+In this exercise you:
+
+- created Persistent Volume Claims,
+- mounted persistent storage into pods,
+- observed data surviving pod deletion,
+- and explored how persistent workloads behave in Kubernetes.
+
+You also saw another important Kubernetes principle:
+
+> Containers are usually disposable, but storage often is not.
+
+Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
+
+As mentioned earlier, persistent storage is essential for many workloads, including:
 
 - shared datasets and databases,
 - user uploads and scientific outputs,
@@ -276,10 +289,6 @@ However, storage in Kubernetes introduces additional complexity:
 - node locality,
 - performance considerations,
 - and failure recovery behaviour.
-
-This becomes especially important in HPC and research computing environments.
-
----
 
 ### Optional Exploration
 
@@ -302,18 +311,3 @@ On a production environment, this could instead map to:
 - Lustre,
 - BeeGFS,
 - or cloud block storage.
-
-## Summary
-
-In this exercise you:
-
-- created Persistent Volume Claims,
-- mounted persistent storage into pods,
-- observed data surviving pod deletion,
-- and explored how persistent workloads behave in Kubernetes.
-
-You also saw another important Kubernetes principle:
-
-> Containers are usually disposable, but storage often is not.
-
-Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
