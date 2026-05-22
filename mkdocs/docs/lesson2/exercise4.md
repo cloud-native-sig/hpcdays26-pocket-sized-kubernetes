@@ -1,282 +1,357 @@
-# Exercise 4 — Monitoring and Telemetry
+# Exercise 4 — Jobs and Batch Execution
 
-In this exercise we will explore lightweight Kubernetes monitoring and telemetry using:
+In this exercise we will explore one of Kubernetes’ most important workload types for research computing and HPC-style environments:
 
-- `kubectl top`
-- metrics-server
-- and live traffic generated with `iperf3`
+- Jobs
+- CronJobs
+- and distributed batch execution
 
-The goal is to observe how workload behaviour appears through cluster metrics in real time.
+Unlike long-running services such as web applications, batch workloads:
 
-Rather than treating monitoring as something separate from workloads, we will generate traffic ourselves and watch the cluster respond.
+- run to completion,
+- produce outputs,
+- and then terminate.
 
-## Why Monitoring Matters
+This makes them ideal for:
 
-Once workloads become distributed across multiple nodes and containers, it becomes difficult to understand cluster behaviour from logs alone.
+- simulations,
+- data processing,
+- scientific pipelines,
+- machine learning tasks,
+- and parameter sweeps.
 
-Monitoring systems help answer questions such as:
+## Why Batch Workloads Matter
 
-- Which workloads are consuming CPU?
-- Which nodes are under pressure?
-- Are applications healthy?
-- Where are bottlenecks occurring?
+Many HPC and research workloads are naturally batch-oriented.
 
-In larger Kubernetes environments this telemetry is often collected using systems such as:
+Examples include:
 
-- Prometheus
-- Grafana
-- Loki
-- OpenTelemetry
+- Monte Carlo simulations,
+- genome analysis,
+- image processing,
+- parameter sweeps,
+- finite element simulations,
+- and workflow pipelines.
 
-For this workshop we will use the lighter-weight Kubernetes metrics pipeline already available in the cluster.
+Kubernetes supports these using:
 
-## Part 1 - Kubernetes Metrics
+- Jobs
+- CronJobs
+- parallel execution
+- and automatic retry behaviour.
 
-If `metrics-server` is installed, see [Extra reading](../extra-reading.md#kubernetes-metrics-server), Kubernetes can expose live resource usage information through the Kubernetes API.
+## Kubernetes Job Concepts
 
-This includes:
+### Jobs
 
-- CPU usage,
-- memory consumption,
-- and node utilisation.
+A Kubernetes Job creates one or more pods and ensures they complete successfully.
 
-Inspect node metrics:
+Unlike Deployments:
+
+- Jobs are not intended to run forever,
+- pods terminate once work is complete.
+
+Kubernetes tracks:
+
+- successful completions,
+- failures,
+- retries,
+- and execution state.
+
+### CronJobs
+
+CronJobs schedule Jobs periodically using cron syntax.
+
+Examples:
+
+- nightly backups,
+- scheduled analysis,
+- telemetry collection,
+- or automated reporting.
+
+## Part 1 — A Simple Job
 
 ```bash
-kubectl top nodes
-```
-
-Inspect pod metrics:
-
-```bash
-kubectl top pods
-```
-
-At the moment the cluster may appear relatively idle.
-
-We will now generate network traffic and workload activity to make the telemetry more interesting.
-
----
-
-## Part 2 — Deploy an iperf3 Server
-
-Create:
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-
-metadata:
-  name: iperf-server
-
-spec:
-  replicas: 1
-
-  selector:
-    matchLabels:
-      app: iperf-server
-
-  template:
-    metadata:
-      labels:
-        app: iperf-server
-
-    spec:
-      containers:
-        - name: iperf3
-
-          image: iperf3
-
-          command:
-            - iperf3
-
-          args:
-            - -s
-
-          ports:
-            - containerPort: 5201
+kubectl create namespace jobs-demo
+kubectl config set-context --current --namespace=jobs-demo
 ```
 
 Apply it:
 
 ```bash
-kubectl apply -f iperf-server.yaml
+kubectl apply -f $RES_HOME/hello-job.yaml
 ```
 
-### Expose the Server
+### Inspecting the Job
 
-Create a Service:
+View the Job:
 
 ```bash
-kubectl expose deployment iperf-server \
-    --port=5201 \
-    --target-port=5201 \
-    --name=iperf-service
+kubectl get jobs
 ```
 
-Inspect it:
+Inspect the pods created by the Job:
 
 ```bash
-kubectl get svc
+kubectl get pods
 ```
 
-## Part 3 — Launch a Client Pod
+You should notice the pod runs briefly, completes, and enters the `Completed` state.
 
-Create an interactive client pod:
+Unlike Deployments, this is expected behaviour.
+
+### Viewing Job Logs
+
+Inspect the output:
 
 ```bash
-kubectl run iperf-client \
-    --image=iperf3 \
-    -it --rm \
-    --restart=Never -- sh
+kubectl logs job/hello-job
 ```
 
-Verify DNS resolution:
-
-```bash
-nslookup iperf-service
-```
-
----
-
-## Part 4 — Generate Network Traffic
-
-Run a bandwidth test:
-
-```bash
-iperf3 -c iperf-service
-```
-
-You should see output similar to:
+You should see:
 
 ```text
-[ ID] Interval           Transfer     Bitrate
-[  5]   0.00-10.00 sec   1.10 GBytes   945 Mbits/sec
+Hello from Kubernetes Jobs!
+Job complete.
 ```
 
-This traffic is:
-- pod-to-service,
-- routed through Kubernetes networking,
-- and potentially crossing worker nodes.
+## Part 2 — Parallel Batch Execution
 
-### Observing Cluster Metrics
+Kubernetes Jobs can also run multiple tasks in parallel.
 
-While `iperf3` is running, open another terminal.
+This is extremely useful for:
 
-Watch node metrics update live:
+- parameter sweeps,
+- ensemble simulations,
+- and embarrassingly parallel workloads.
+
+Apply it:
 
 ```bash
-watch kubectl top nodes
+kubectl apply -f $RES_HOME/parallel-job.yaml
 ```
 
-Or observe pod resource usage:
+### Observing Parallel Execution
+
+Watch the pods:
 
 ```bash
-watch kubectl top pods
+kubectl get pods -w
 ```
 
-You should notice:
-- increased CPU activity,
-- changing memory usage,
-- and workload activity across nodes.
+Notice:
 
-Even though this is only a small cluster, the same principles apply to much larger Kubernetes environments.
+- multiple pods running simultaneously,
+- pods completing independently,
+- and Kubernetes tracking progress automatically.
+
+Inspect the Job:
+
+```bash
+kubectl describe job parallel-job
+```
+
+Look for:
+
+- completions,
+- parallelism,
+- success counters,
+- and pod status.
+
+## Part 3 — CronJobs
+
+Now we will schedule a recurring task.
+
+Create:
+
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+
+metadata:
+  name: time-printer
+
+spec:
+  schedule: "*/1 * * * *"
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+
+          containers:
+            - name: clock
+
+              image: bash
+
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  echo "Current time:"
+                  date
+```
+
+Apply it:
+
+```bash
+kubectl apply -f $RES_HOME/cronjob.yaml
+```
+
+### Observing Scheduled Jobs
+
+Watch Jobs appear automatically:
+
+```bash
+kubectl get jobs -w
+```
+
+Every minute:
+
+- a new Job will be created,
+- execute,
+- and terminate.
+
+Inspect the CronJob:
+
+```bash
+kubectl get cronjobs
+```
+
+View logs from one execution:
+
+```bash
+kubectl logs job/<job-name>
+```
+
+## Part 4 — Capstone Demo: Distributed Monte Carlo π Estimation
+
+We will now build a simple distributed scientific workload.
+
+Monte Carlo methods estimate values using repeated random sampling.
+
+We can estimate π by:
+
+- randomly generating points,
+- checking whether they fall inside a unit circle,
+- and computing the resulting ratio.
+
+This is an excellent Kubernetes example because:
+
+- each worker is independent,
+- tasks are embarrassingly parallel,
+- and results can be aggregated afterwards.
+
+### Monte Carlo π Refresher
+
+The area of:
+
+- a unit square is `1`
+- a unit circle is `π`
+
+If random points fall inside the circle with probability:
+
+:contentReference[oaicite:0]{index=0}
+
+then:
+
+:contentReference[oaicite:1]{index=1}
+
+The more samples we generate, the better the estimate becomes.
+
+### Distributed Monte Carlo Workers
+
+Apply it:
+
+```bash
+kubectl apply -f $RES_HOME/monte-carlo.yaml
+```
+
+### Observing the Workers
+
+Watch the Job:
+
+```bash
+kubectl get pods -w
+```
+
+Inspect logs from all workers:
+
+```bash
+kubectl logs -l job-name=monte-carlo-pi
+```
+
+You should see slightly different estimates from each pod.
+
+Example:
+
+```text
+Hostname: monte-carlo-pi-xxxxx
+Estimated π = 3.14184
+```
+
+```text
+Hostname: monte-carlo-pi-yyyyy
+Estimated π = 3.13892
+```
 
 ---
 
-### Inspecting Pod Placement
+### Why This Is a Good HPC Example
 
-View where workloads are running:
+This demonstrates several important distributed computing ideas:
 
-```bash
-kubectl get pods -o wide
-```
+- embarrassingly parallel workloads,
+- independent task execution,
+- distributed compute,
+- workload scheduling,
+- and aggregation of independent results.
 
-Check:
-- which node the server pod is running on,
-- where the client pod landed,
-- and whether traffic may be crossing worker nodes.
+Although the example is simple, the same execution model scales to:
 
-This introduces useful discussions around:
-- overlay networking,
-- container network interfaces (CNIs),
-- and virtual networking overhead.
+- scientific simulations,
+- rendering,
+- machine learning inference,
+- and parameter sweeps.
 
----
+### Failure Recovery Demonstration
 
-### Optional — Scaling the Server
-
-Scale the server deployment:
+Delete one of the running worker pods:
 
 ```bash
-kubectl scale deployment iperf-server \
-    --replicas=3
+kubectl get pods
 ```
-
-Inspect the endpoints:
 
 ```bash
-kubectl describe service iperf-service
+kubectl delete pod <pod-name>
 ```
 
-The Service should now load balance traffic across multiple backend pods.
+Observe Kubernetes recreate it automatically.
 
----
+The Job controller ensures the requested number of successful completions still occurs.
 
-### Optional — Direct Pod Communication
-
-Instead of using the Service abstraction, connect directly to a pod IP.
-
-Find pod addresses:
+## Summary and clean-up
 
 ```bash
-kubectl get pods -o wide
+kubectl delete job hello-job
+kubectl delete job parallel-job
+kubectl delete cronjob time-printer
+kubectl delete job monte-carlo-pi
 ```
 
-Then from the client:
+In this exercise you explored:
 
-```bash
-iperf3 -c <pod-ip>
-```
+- Kubernetes Jobs,
+- CronJobs,
+- parallel execution,
+- distributed batch workloads,
+- and failure recovery.
 
-This demonstrates:
-- direct pod networking,
-- pod IP routability,
-- and the role Kubernetes Services play in abstraction and stability.
+You also built a simple distributed Monte Carlo simulation using Kubernetes Jobs.
 
-## Summary and Discussion 
+This execution model is one of the reasons Kubernetes has become increasingly popular for:
 
-### Prometheus and Grafana
-
-In production Kubernetes environments, telemetry is often collected and visualised using:
-
-- Prometheus for metrics collection,
-- and Grafana for dashboards and visualisation.
-
-These systems allow:
-- historical monitoring,
-- alerting,
-- performance analysis,
-- and cluster-wide observability.
-
-However, they also introduce additional operational overhead and resource consumption, which is why we are using the lighter-weight metrics pipeline for this workshop.
-
-### Cleanup
-
-```bash
-kubectl delete deployment iperf-server
-kubectl delete service iperf-service
-```
-
----
-
-### Summary
-
-In this exercise you:
-
-- explored Kubernetes telemetry,
-- monitored resource usage with `kubectl top`,
-- generated live traffic using `iperf3`,
-- and observed workload behaviour across the cluster.
-
-You also saw how Kubernetes exposes operational metrics that can later be integrated into larger observability platforms such as Prometheus and Grafana.
+- scientific computing,
+- research infrastructure,
+- and cloud-native HPC workflows.

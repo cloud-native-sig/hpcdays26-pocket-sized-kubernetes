@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: monte-carlo-pi
+  namespace: jobs-demo
+
+spec:
+  completions: 10
+  parallelism: 5
+
+  template:
+    spec:
+      restartPolicy: Never
+
+      containers:
+        - name: monte-carlo
+
+          image: workshop-tools:arm64
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              python3 - <<'EOF'
+              import random
+              import math
+
+              samples = 100000
+              inside = 0
+
+              for _ in range(samples):
+                  x = random.random()
+                  y = random.random()
+
+                  if x*x + y*y <= 1:
+                      inside += 1
+
+              pi_estimate = 4 * inside / samples
+
+              print(f"Hostname: {__import__('socket').gethostname()}")
+              print(f"Estimated π = {pi_estimate}")
+              EOF

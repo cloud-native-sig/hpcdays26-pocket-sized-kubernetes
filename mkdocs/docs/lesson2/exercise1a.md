@@ -48,7 +48,7 @@ Notice:
 
 If a pod fails, Kubernetes will attempt to replace it automatically.
 
-## Exposing the Deployment
+## Part 2 — Exposing the Deployment
 
 Right now, the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
 
@@ -88,7 +88,7 @@ kubectl describe service nginx-service
 
 You should see the IP addresses of all nginx pods currently backing the Service.
 
-## Testing Connectivity Inside the Cluster
+## Part 3 — Testing Connectivity Inside the Cluster
 
 To debug networking inside Kubernetes, it is often useful to launch a temporary utility container.
 
@@ -130,7 +130,7 @@ The step by step process at this point is:
 
 All of this happened transparently.
 
-## Observing Load Balancing
+### Observing Load Balancing
 
 It is interesting to see the results if you run the request several times:
 
@@ -146,7 +146,7 @@ To figure out which pod is related to which hostname, inspect the pod informatio
 kubectl get pods -o wide
 ```
 
-## Exercise 1 summary
+## Summary
 
 In this exercise you:
 

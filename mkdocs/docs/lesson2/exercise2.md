@@ -220,15 +220,13 @@ Eventually Kubernetes will:
 
 This process may take several minutes.
 
-### Optional: Clean up
+## Summary and clean up
 
 Due to the nature of the stress-tests, lets clean up these resources before they cause trouble later on.  
 
 ```bash
 kubectl delete -f $RES_HOME/cpu-demo.yaml -f $RES_HOME/memory-demo.yaml
 ```
-
-## Summary
 
 In this exercise you explored:
 
