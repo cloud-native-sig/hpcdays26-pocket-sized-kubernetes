@@ -149,18 +149,7 @@ You can inspect CPU visibility directly inside a pod:
 kubectl exec -it deploy/cpu-demo -- sh
 ```
 
-Then:
-
-```bash
-nproc
-top
-```
-
-or if available:
-
-```bash
-htop
-```
+Then run `nproc`, `top`, or `htop`
 
 ## Part 3 — Failure Recovery
 
@@ -229,9 +218,15 @@ Eventually Kubernetes will:
 * evict workloads,
 * and recreate pods on healthy nodes.
 
-This process may take several minutes depending on cluster settings.
+This process may take several minutes.
 
-## Summary
+## Summary and clean up
+
+Due to the nature of the stress-tests, lets clean up these resources before they cause trouble later on.  
+
+```bash
+kubectl delete -f $RES_HOME/cpu-demo.yaml -f $RES_HOME/memory-demo.yaml
+```
 
 In this exercise you explored:
 

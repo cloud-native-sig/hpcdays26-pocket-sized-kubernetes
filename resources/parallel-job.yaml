@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: parallel-job
+  namespace: jobs-demo
+spec:
+  completions: 5
+  parallelism: 3
+
+  template:
+    spec:
+      restartPolicy: Never
+
+      containers:
+        - name: worker
+          image: workshop-tools:arm64
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Starting work on $(hostname)"
+              sleep $((RANDOM % 20))
+              echo "Finished work on $(hostname)"

@@ -28,7 +28,7 @@ kubectl logs deployment/nginx-demo
 
 One of Kubernetes’ core strengths is scaling workloads horizontally.
 
-Scale the deployment from 1 replica to 3:
+We can easily scale the deployment from 1 replica to 3:
 
 ```bash
 kubectl scale deployment nginx-demo --replicas=3
@@ -48,9 +48,9 @@ Notice:
 
 If a pod fails, Kubernetes will attempt to replace it automatically.
 
-## Exposing the Deployment
+## Part 2 — Exposing the Deployment
 
-Right now the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
+Right now, the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
 
 ```bash
 kubectl apply -f $RES_HOME/nginx-service.yaml 
@@ -88,7 +88,7 @@ kubectl describe service nginx-service
 
 You should see the IP addresses of all nginx pods currently backing the Service.
 
-## Testing Connectivity Inside the Cluster
+## Part 3 — Testing Connectivity Inside the Cluster
 
 To debug networking inside Kubernetes, it is often useful to launch a temporary utility container.
 
@@ -105,23 +105,23 @@ This launches an interactive shell inside the cluster.
 Kubernetes automatically creates DNS records for Services using CoreDNS. Inside BusyBox, we can test Kubernetes DNS:
 
 ```bash
-$ kubectl exec -it toolbox -- sh
-/ # nslookup nginx-service
+kubectl exec -it toolbox -- sh
+/ nslookup nginx-service
 ```
 
-Using CoreDNS nslookup will resolve to the ClusterIP assigned to the Service, but you should see some warnings too. This is because we have not given the nslookup tool namespace information. Using `nslookup nginx-service.nginx.svc.cluster.local` will remove the warnings.
+Using CoreDNS, nslookup will resolve to the ClusterIP assigned to the Service, but you should see some warnings too. This is because we have not given the nslookup tool namespace information. Using `nslookup nginx-service.nginx.svc.cluster.local` will remove the warnings.
 
 ### Accessing the Service
 
 Still inside BusyBox:
 
 ```bash
-/ # wget -qO- http://nginx-service
+/ wget -qO- http://nginx-service
 ```
 
 You should receive the default NGINX welcome page HTML.
 
-At this point:
+The step by step process at this point is:
 
 * BusyBox queried Kubernetes DNS,
 * resolved the Service name,
@@ -130,12 +130,12 @@ At this point:
 
 All of this happened transparently.
 
-## Observing Load Balancing
+### Observing Load Balancing
 
-Run the request several times:
+It is interesting to see the results if you run the request several times:
 
 ```bash
-/ # wget -qO- http://nginx-service
+/ wget -qO- http://nginx-service
 ```
 
 Although the webpage looks identical, Kubernetes may route each request to a different nginx pod behind the Service. The last line on the webpage output gives you the hostname.
