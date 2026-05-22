@@ -2,35 +2,6 @@
 
 In this lesson, you'll
 
-# Exercise 3 - Persistent storage
-
-## PV/PVC
-
-## Persistent workloads
-
-# Exercise 4 - Monitoring and telemetry
-
-## Grafana and Prometheus
-
-## iperf3
-
-# Exercise 5 - Jobs and batch execution
-
-## Kubernetes Jobs and CronJobs
-
-## A Very Effective “Capstone Demo”
-
-# Exercise 3 - Persistent storage
-
-## PV/PVC
-
-## Persistent workloads
-
-# Exercise 4 - Monitoring and telemetry
-
-## Grafana and Prometheus
-
-## iperf3
 
 # Exercise 5 - Jobs and batch execution
 
