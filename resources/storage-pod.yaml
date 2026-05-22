@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: storage-pod
+  namespace: resource-demo
+
+spec:
+  containers:
+    - name: writer
+
+      image: workshop-tools:arm64
+
+      command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            date >> /data/output.txt
+            sleep 5
+          done
+
+      volumeMounts:
+        - name: workshop-storage
+          mountPath: /data
+
+  volumes:
+    - name: workshop-storage
+      namespace: resource-demo
+      persistentVolumeClaim:
+        claimName: workshop-pvc

@@ -12,6 +12,7 @@ nav:
   - Introduction: lesson2.md
   - Exercise 1 — Services and networking: lesson2/exercise1.md
   - Exercise 2 — Resource Management and Failure Recovery: lesson2/exercise2.md
+  - Exercise 3 — Persistent Storage: lesson2/exercise3.md
 - extra-reading.md
 theme: 
   name: material
