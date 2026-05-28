@@ -97,7 +97,7 @@ docker save -o workshop-images.tar   nginx:alpine   busybox   perl workshop-tool
 
 # Attach blue USB, copy across setup script
 
-Locally; enable scp access and 
+Locally; ensure scp access and 
 ```
 scp ./setup-rpi-worker.sh chef@kmaster:~/ 
 ssh chef@kmaster
