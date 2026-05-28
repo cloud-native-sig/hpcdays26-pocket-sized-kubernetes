@@ -26,7 +26,7 @@ For those of you interested in following this workshop with more Kubernetes tech
 
 A big thank you to the Cloud-Native SIG team for delivering this workshop with support from the Computational Abilities Knowledge Exchange Network+ (CAKE).
 
-CNSIG is funded by a Software Sustainability Institute grand, and CAKE received funding through the UKRI Digital Research Infrastructure Programme under project reference UKRI1799.
+CNSIG is funded by a Software Sustainability Institute grant, and CAKE received funding through the UKRI Digital Research Infrastructure Programme under project reference UKRI1799.
 
 Todays facilitators:
 
