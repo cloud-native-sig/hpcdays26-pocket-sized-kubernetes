@@ -18,25 +18,3 @@ Getting Ready:
 * (optionally) Following along with the [GitHub Pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/)
 * There should be plenty of opportunities for asking questions during the workshop. If Piper or Lewis are presenting, please use [mentimeter?](https://www.mentimeter.com/) to track questions.
 
-## Acknowledgements
-
-This workshop is delivered by the Cloud-Native SIG team with support from the Computational Abilities Knowledge Exchange Network+ (CAKE).
-
-CAKE received funding through the UKRI Digital Research Infrastructure Programme under project reference UKRI1799.
-
-Contributors:
-
-* Piper Fowler-Wright — Rosalind Franklin Institute
-* Lewis Sampson — STFC / DAFNI
-
-Documentation:
-
-* [Cloud Native SIG](https://cloudnative-sig.ac.uk/?utm_source=chatgpt.com)
-* [K3s Documentation](https://docs.k3s.io/?utm_source=chatgpt.com)
-* [Kubernetes Documentation](https://kubernetes.io/docs/home/?utm_source=chatgpt.com)
-
-Links:
-
-* [DAFNI](https://dafni.ac.uk/)
-* [CAKE](https://www.cake.ac.uk/)
-* [RFI ARC](https://www.rfi.ac.uk/focus/platforms/advanced-research-computing/)

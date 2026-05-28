@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+
+metadata:
+  name: time-printer
+  namespace: jobs-demo
+
+spec:
+  schedule: "*/1 * * * *"
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+
+          containers:
+            - name: clock
+
+              image: workshop-tools:arm64
+              imagePullPolicy: IfNotPresent
+
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  echo "Current time:"
+                  date

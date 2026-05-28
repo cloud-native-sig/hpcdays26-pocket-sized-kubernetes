@@ -86,12 +86,18 @@ Might need this if bootstrap fails.
 ```
 docker run --privileged --rm tonistiigi/binfmt --install all
 docker buildx inspect --bootstrap
+docker buildx build   --platform linux/arm64   -t workshop-tools:arm64 --load .
+```
+Check the image and save to tar
+```
+docker run -it workshop-tools:arm64 ## check the expected tools
+docker save -o workshop-images.tar   nginx:alpine   busybox   perl workshop-tools:arm64
 ```
 
 
 # Attach blue USB, copy across setup script
 
-Locally; enable scp access and 
+Locally; ensure scp access and 
 ```
 scp ./setup-rpi-worker.sh chef@kmaster:~/ 
 ssh chef@kmaster

@@ -1,28 +1,13 @@
 # Lesson 2 — Using your cluster
 
-In this lesson, you'll
+In this lesson, you'll begin to deploy a range of resources onto the cluster. We are still working with an air-gapped installation and so there is some limitations to what we can apply. However, we will cover;
 
+* Exercise 1 — Services, networking and Monitoring
+* Exercise 2 — Resource Management and Failure Recovery
+* Exercise 3 — Persistent Storage
+* Exercise 4 — Jobs and Batch Execution
 
-# Exercise 5 - Jobs and batch execution
-
-## Kubernetes Jobs and CronJobs
-
-## A Very Effective “Capstone Demo”
-
-Distributed Monte Carlo π Estimator
-Use:
-• Kubernetes Job
-• parallel workers
-• shared output volume
-• Grafana monitoring
-
-This demonstrates:
-• distributed compute
-• orchestration
-• scaling
-• failure handling
-• telemetry
-And HPC audiences immediately understand the pattern.
+By the end of this session and workshop, the aim is for you to be able to see some of the benefits to using Kubernetes and how this relates to HPC environments. 
 
 ## Some additional setup steps preparations
 
@@ -58,26 +43,3 @@ sudo k3s ctr images import /root/workshop-images.tar
 ```
 
 If the file is missing from the node, alert or email Lewis and he'll help get the files.  
-
-## Acknowledgements
-
-This workshop is delivered by the Cloud-Native SIG team with support from the Computational Abilities Knowledge Exchange Network+ (CAKE).
-
-CAKE received funding through the UKRI Digital Research Infrastructure Programme under project reference UKRI1799.
-
-Contributors:
-
-* Piper Fowler-Wright — Rosalind Franklin Institute
-* Lewis Sampson — STFC / DAFNI
-
-Documentation:
-
-* [Cloud Native SIG](https://cloudnative-sig.ac.uk/?utm_source=chatgpt.com)
-* [K3s Documentation](https://docs.k3s.io/?utm_source=chatgpt.com)
-* [Kubernetes Documentation](https://kubernetes.io/docs/home/?utm_source=chatgpt.com)
-
-Links:
-
-* [DAFNI](https://dafni.ac.uk/)
-* [CAKE](https://www.cake.ac.uk/)
-* [RFI ARC](https://www.rfi.ac.uk/focus/platforms/advanced-research-computing/)

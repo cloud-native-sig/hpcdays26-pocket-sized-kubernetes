@@ -162,39 +162,6 @@ Look for:
 
 Now we will schedule a recurring task.
 
-Create:
-
-```yaml
-apiVersion: batch/v1
-kind: CronJob
-
-metadata:
-  name: time-printer
-
-spec:
-  schedule: "*/1 * * * *"
-
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-
-          containers:
-            - name: clock
-
-              image: bash
-
-              command:
-                - /bin/sh
-                - -c
-                - |
-                  echo "Current time:"
-                  date
-```
-
-Apply it:
-
 ```bash
 kubectl apply -f $RES_HOME/cronjob.yaml
 ```
@@ -225,6 +192,9 @@ View logs from one execution:
 kubectl logs job/<job-name>
 ```
 
+!!! Note  
+    It's worth noting, since the Rasberry Pi's are baked goods (air-gapped) they do not know what the time really is. 
+
 ## Part 4 — Capstone Demo: Distributed Monte Carlo π Estimation
 
 We will now build a simple distributed scientific workload.
@@ -237,28 +207,35 @@ We can estimate π by:
 - checking whether they fall inside a unit circle,
 - and computing the resulting ratio.
 
-This is an excellent Kubernetes example because:
+Within Kubernetes we can use this example to show that:
 
 - each worker is independent,
-- tasks are embarrassingly parallel,
-- and results can be aggregated afterwards.
+- Monte Carlo tasks are highly parallel,
+- and results can be aggregated.
 
 ### Monte Carlo π Refresher
 
-The area of:
+Imagine a circle inscribed inside a square.
 
-- a unit square is `1`
-- a unit circle is `π`
+A square spanning \([-1, 1]\) on both axes has a side length of \(2\), and an area of \(2^2 = 4\).
 
-If random points fall inside the circle with probability:
+The inscribed circle has a radius of \(1\), giving it an area of \(π × r^2 = π\).
 
-:contentReference[oaicite:0]{index=0}
+Random points fall inside the circle with probability `circle_area / square_area`:
 
-then:
+```math
+P = π / 4
+```
 
-:contentReference[oaicite:1]{index=1}
+Then we solve the equation for π. If we substitute the area for points inside or outside, we have an estimate for pi:
 
-The more samples we generate, the better the estimate becomes.
+```math
+inside_points ≈ circle_area
+total_points ≈ square_area
+π ≈ 4 × (inside_points / total_points)
+```
+
+The principle of Monte Carlo estimates is that the more samples we generate, the better the estimate becomes.
 
 ### Distributed Monte Carlo Workers
 
@@ -268,68 +245,51 @@ Apply it:
 kubectl apply -f $RES_HOME/monte-carlo.yaml
 ```
 
-### Observing the Workers
-
-Watch the Job:
+Observe the Workers.
 
 ```bash
 kubectl get pods -w
 ```
 
-Inspect logs from all workers:
+Inspect the logs from all workers:
 
 ```bash
 kubectl logs -l job-name=monte-carlo-pi
 ```
 
-You should see slightly different estimates from each pod.
-
-Example:
+You should see slightly different estimates from each pod, for example:
 
 ```text
 Hostname: monte-carlo-pi-xxxxx
 Estimated π = 3.14184
-```
-
-```text
 Hostname: monte-carlo-pi-yyyyy
 Estimated π = 3.13892
 ```
 
----
-
-### Why This Is a Good HPC Example
-
-This demonstrates several important distributed computing ideas:
-
-- embarrassingly parallel workloads,
-- independent task execution,
-- distributed compute,
-- workload scheduling,
-- and aggregation of independent results.
-
-Although the example is simple, the same execution model scales to:
+Although this example is simple, the same execution model scales to more complex scenarios like:
 
 - scientific simulations,
 - rendering,
 - machine learning inference,
 - and parameter sweeps.
 
-### Failure Recovery Demonstration
+### Scaling the job  
 
-Delete one of the running worker pods:
-
-```bash
-kubectl get pods
-```
+As with all things in Kubernetes, this can be scaled. By editing the manifest using vim, increase the number of completions 20.
 
 ```bash
-kubectl delete pod <pod-name>
+vi $RES_HOME/monte-carlo.yaml 
+# Set completions: 20
 ```
 
-Observe Kubernetes recreate it automatically.
+To update the job, we will need to remove the old one first.
 
-The Job controller ensures the requested number of successful completions still occurs.
+```bash
+kubectl delete job monte-carlo-pi
+kubectl apply -f $RES_HOME/monte-carlo.yaml
+```
+
+You should see the number of pods scale up to 20, but as we're using the same samples, the accuracy of the estimate will be similar. You can play around with editing the job via the yaml file.
 
 ## Summary and clean-up
 
@@ -346,7 +306,6 @@ In this exercise you explored:
 - CronJobs,
 - parallel execution,
 - distributed batch workloads,
-- and failure recovery.
 
 You also built a simple distributed Monte Carlo simulation using Kubernetes Jobs.
 
