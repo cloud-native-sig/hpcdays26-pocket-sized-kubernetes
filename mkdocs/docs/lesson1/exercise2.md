@@ -19,7 +19,7 @@ Since the workshop cluster is air-gapped, installation files are preloaded on ea
 
 But for replication in your own setup, we will include Internet-enabled installation options.
 
-**Option 1 — Air-Gapped Installation**
+#### Option 1 — Air-Gapped Installation
 
 On `kmaster`:
 
@@ -37,7 +37,7 @@ chmod +x /root/k3s/install.sh
 INSTALL_K3S_SKIP_DOWNLOAD=true /root/k3s/install.sh
 ```
 
-**Option 2 — With Internet Access**
+#### Option 2 — With Internet Access
 
 On `kmaster`:
 
@@ -110,29 +110,27 @@ export CONTROL_NODE=192.168.x.xxx
 export CONTROL_TOKEN=$(sudo cat /home/chef/node-token)
 ```
 
-**Option 1 — Air-Gapped Installation**
+#### Option 1 — Air-Gapped Installation
 
 On your desired worker  
 
 ```bash
-$ sudo -i
+ sudo -i
 
-$ chmod +x /root/k3s/k3s-arm64
-$ cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
+ chmod +x /root/k3s/k3s-arm64
+ cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
 
-$ mkdir -p /var/lib/rancher/k3s/agent/images/
+ mkdir -p /var/lib/rancher/k3s/agent/images/
+ cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
 
-$ cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
-
-$ chmod +x /root/k3s/install.sh
-
-$ INSTALL_K3S_SKIP_DOWNLOAD=true \
+ chmod +x /root/k3s/install.sh
+ INSTALL_K3S_SKIP_DOWNLOAD=true \
   K3S_URL=https://$CONTROL_NODE:6443 \
   K3S_TOKEN=$CONTROL_TOKEN \
   /root/k3s/install.sh
 ```
 
-**Option 2 — With Internet Access**
+#### Option 2 — With Internet Access
 
 On your desired worker  
 
@@ -147,7 +145,8 @@ $ curl -sfL https://get.k3s.io | \
 Back on the control node:
 
 ```bash
-$ sudo kubectl get nodes
+sudo kubectl get nodes
+
 NAME        STATUS   ROLES              AGE     VERSION
 kmaster    Ready    control-plane      5m      v1.28.5+k3s1
 kworker1    Ready    <none>             2m      v1.28.5+k3s1
@@ -166,3 +165,5 @@ But we expect the roles to be empty. To fix that we can run the following one-li
 ```bash
 sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker
 ```
+
+At this point you have created a cluster. It is ready to accept Kubernetes resources and deployments. These can be done manually, as we will show over the course of the following exercises, or via GitOps. The latter is the more industry standard way of managing a cluster, using either [Flux](https://fluxcd.io/) or [ArgoCD](https://argo-cd.readthedocs.io/en/stable/). 

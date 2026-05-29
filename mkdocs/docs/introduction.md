@@ -7,7 +7,7 @@ Welcome to **Pocket-Sized Kubernetes at Durham HPC Days 2026**! In this tutorial
 By the end of the tutorial, you will have:
 
 - A basic understanding of Kubernetes architecture and how it can be used in research computing
-- Built a multi-node k3s cluster on Raspberry Pi hardware
+- Built a multi-node K3s cluster on Raspberry Pi hardware
 - Deployed and managed basic containerised applications on Kubernetes
 - Observed key Kubernetes features including self-healing and scaling
 - Gained practical skills transferable to HPC and cloud environments

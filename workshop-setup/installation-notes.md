@@ -127,7 +127,7 @@ ssh-keygen -t ed25519
 ssh-copy-id  chef@kmaster # or whichever machine
 ```
 
-# Install k3s for master or worker node
+# Install K3s for master or worker node
 
 ## Master
 
@@ -166,6 +166,6 @@ Label worker nodes
 - Networking is probably the biggest sticking point, how best to set a static IP?
   (if this could be done in the image, then we would not need the initial
   connect to monitor)
-- Suggest we do imaging and pre-install, participants can install k3s
-- Note k3s suggest ssds as SD cards may struggle with IO load (see
+- Suggest we do imaging and pre-install, participants can install K3s
+- Note K3s suggest ssds as SD cards may struggle with IO load (see
   [Requirements](https://docs.k3s.io/installation/requirements#disks))

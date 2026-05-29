@@ -43,3 +43,5 @@ sudo k3s ctr images import /root/workshop-images.tar
 ```
 
 If the file is missing from the node, alert or email Lewis and he'll help get the files.  
+
+For following along at home, or with regular Docker Hub images on an internet-enabled RPi cluster, you would need to change the manifests in the resources folder to directly pull the chosen image. E.g. in ./resources/iperf3.yaml, replace `image: workshop-tools:arm64` with `image: iperf3`, or in ./resources/cronjob.yaml, replace `image:workshop-tools:arm64` with `image: bash`.
