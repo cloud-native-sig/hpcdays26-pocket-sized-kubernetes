@@ -1,6 +1,6 @@
 # Designing a Cluster
 
-Before creating a Kubernetes cluster, you need to choose a *distribution* of Kubernetes to deploy and infrastructure to deploy it on. These decisions will affect the performance, cost and scalability of your deployment. While your choice will depend on your project's resource and goals. Below we provide some general guidance and alternative solutions as we explain our approach for low-powered Raspberry Pi clusters.
+Before creating a Kubernetes cluster, you need to choose a *distribution* of Kubernetes to deploy and *infrastructure* to deploy it on. These decisions will affect the performance, cost and scalability of your deployment. While your choice will depend on your project's resource and goals. Below we provide some general guidance and alternative solutions as we explain our approach for low-powered Raspberry Pi clusters.
 
 ## Kubernetes Distributions and Hardware
 
@@ -29,7 +29,7 @@ K3s is not limited to small, developmental servers. High-availability K3s server
 
 ### Raspberry Pi hardware and OS
 
-Each of our RPi clusters has a 4GB RAM control node, and 1GB worker nodes. We installed RPi OS Lite, a lightweight (non-GUI) version of the official Debian-based Raspberry Pi operating system, on 16G SD cards. Check out the [GitRepository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes/tree/main/workshop-setup) for more details. 
+Each of our RPi clusters has a 4GB RAM control node, and 1GB or 4GB worker nodes. We installed RPi OS Lite, a lightweight (non-GUI) version of the official Debian-based Raspberry Pi operating system, on 16/32G SD cards. Check out the [GitRepository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes/tree/main/workshop-setup) for more details. 
 
 !!! Warning Disk Requirements
     Kuberentes' `etcd` datastore is write-intensive and for optimal speed it is recommended to use SSD disks. SD Cards (or eMMc) cannot handle the IO load well and are the weakest link of our RPi clusters.

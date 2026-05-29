@@ -14,7 +14,7 @@ By the end of the tutorial, you will have:
 
 ## Who We Are
 
-This workshop is delivered by the **Cloud Native Special Interest Group** (SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE). We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure. You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
+This workshop is delivered by the **Cloud Native Special Interest Group** (SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE) partnership. We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure. You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
 
 ## Following Along at Home
 
