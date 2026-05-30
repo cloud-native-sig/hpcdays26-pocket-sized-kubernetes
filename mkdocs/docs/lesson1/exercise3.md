@@ -55,7 +55,7 @@ chmod 600 ~/.kube/config-k3s
 
 ## Kubernetes Namespaces
 
-Namespaces are used a lot to logically separate resources within a cluster. This allows you to separate applications or different deployments of an application such as `dev` and `prod`.
+Namespaces are are often use to create logical separation of resources within a cluster. This allows you to have multiple applications or different deployments of an application such as `dev` and `prod`.
 
 List all namespaces:
 
@@ -69,7 +69,7 @@ There are a number of pods running essential *system* processes in the `kube-sys
 kubectl get pods --all-namespaces
 ```
 
-You can match these to services from the Kubernetes [Introduction](../introduction.md#architecture-overview)?
+Can you can match these to services from the Kubernetes [Introduction](../introduction.md#architecture-overview)?
 
 ## Exploring Cluster Resources
 
@@ -105,39 +105,38 @@ Still using `kubectl` we can investigate exactly how and what is running on the 
 
 ### Inspecting Pods
 
-We can start by inspecting the pods we have found in the `kube-system` namespace.
+We can start by inspecting the pods we have found in the `kube-system` namespace. Try this now with any of the following
 
-Describe any pod:
+#### Describe any pod
 
 ```bash
 kubectl describe pod <pod-name>
 ```
 
-Inspect a pod manifest output in YAML:
+#### Inspect a pod manifest output in YAML
 
 ```bash
 kubectl get pod <pod-name> -o yaml
 ```
 
-To view the resources that are being used by these pods we can
-inspect the pod itself.
+#### Inspect pod resources
+To view the resources that are being used by these pods we can inspect the pod itself.
 
 ```bash
 kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].allocatedResources'
 kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].resources.limits'
 ```
 
-Edit deployment resources via:
+#### Edit deployment resources via kubectl
 
 ```bash
 kubectl edit deployment coredns
 ```
 
-Or patch directly via a single command:
+#### Patch directly via a single command
 
 ```bash
-$ kubectl patch deployment coredns \
- -p '{"spec":{"template":{"spec":{"containers":[{"name":"coredns","resources":{"requests":{"cpu":"120m"}}}]}}}}'
+kubectl patch deployment coredns  -p '{"spec":{"template":{"spec":{"containers":[{"name":"coredns","resources":{"requests":{"cpu":"120m"}}}]}}}}'
 ```
 
 ### Storage and ConfigMaps

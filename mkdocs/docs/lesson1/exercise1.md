@@ -6,7 +6,7 @@ Each table has a note with:
 * SSH login credentials
 * WiFi credentials for the workshop router
 
-You will also need to connect to our Router - `TP-Link_AP_2A5A_01`
+You will also need to connect your laptop to our Router - `TP-Link_AP_2A5A_01`
 
 > While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
 
@@ -22,7 +22,7 @@ exit
 
 ## Test Node Connectivity
 
-From the control node, verify worker nodes are reachable:
+From the control node, lets verify the worker nodes are reachable:
 
 ```bash
 ssh chef@kmaster
@@ -39,8 +39,7 @@ For convenience, you may want to add IP-hostname pairs to
 192.168.x.yyy    kworker1
 ```
 
-Then you can simply `ssh <username>@kmaster` etc. instead of having
-to remember all the IP addresses.
+Then, you can simply `ssh <username>@kmaster` etc. instead of having to remember all the IP addresses.
 
 Alternatively, configure SSH aliases in `~/.ssh/config`, e.g.
 

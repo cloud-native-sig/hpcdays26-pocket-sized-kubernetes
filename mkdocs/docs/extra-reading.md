@@ -20,7 +20,7 @@ initial login account.
 
 On first boot, connect the device to an external monitor and log in to
 check network connectivity and obtain the device IP address.  In order
-to install k3s, you will need to enable memory cgroups by editing
+to install K3s, you will need to enable memory cgroups by editing
 `/boot/firmware/cmdline.txt` and appending to the end of the existing
 line:
 
@@ -32,7 +32,7 @@ After saving the file, reboot the RPi. You can now disconnect the
 external monitor and connect via SSH from your own laptop or PC.
 
 !!! note "Kubernetes Anywhere"
-    While we used Raspberry Pis for the tutorial, k3s can be installed
+    While we used Raspberry Pis for the tutorial, K3s can be installed
     on a wide range of hardware from homelab servers to cloud server
     instances.
 

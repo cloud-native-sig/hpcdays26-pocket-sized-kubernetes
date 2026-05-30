@@ -187,13 +187,13 @@ For this demonstration we are going to recreate our NGINX deployment but with a 
 kubectl apply -f $RES_HOME/nginx-deployment-persist.yaml
 ```
 
-At this point we need to consider namespaces. PVC's are not accessible across namespaces, so we have created a new PVC in the NGINX namespace. From the single manifest.
+At this point we need to consider namespaces. PVC's are not accessible across namespaces, so we have created a new PVC in the NGINX namespace from the single manifest.
 
-Noting that the orginal PVC is RWO, multiple pods could not bind to the same volume. So the new nginx pvc will allow all the replicas to access the data.
+Noting that the orginal PVC is RWO, multiple pods could not bind to the same volume. The new nginx pvc will allow all the replicas to access the data.
 
 #### Writing Persistent Content
 
-Lets explore writting to this volume. Exec into a nginx pod:
+Lets explore writing to this volume. Execute into a nginx pod:
 
 ```bash
 kubectl exec -it deploy/nginx-demo -n nginx -- sh
@@ -211,7 +211,7 @@ Exit the shell.
 
 #### Optional: Expose the Deployment
 
-Another method for creating a service in the expose command. Here we are creating a new service for our nginx deployment. You can still use the existing service.
+Another method for creating a service is the expose command. Here we are creating a new service for our nginx deployment. You can still use the existing service.
 
 ```bash
 kubectl expose deployment -n nginx nginx-demo \

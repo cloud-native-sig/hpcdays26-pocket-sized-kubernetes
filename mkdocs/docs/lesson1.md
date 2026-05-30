@@ -17,4 +17,3 @@ Getting Ready:
 * Checkout the [workshop github](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes#)
 * (optionally) Following along with the [GitHub Pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/)
 * There should be plenty of opportunities for asking questions during the workshop. If Piper or Lewis are presenting, please use [mentimeter?](https://www.mentimeter.com/) to track questions.
-
