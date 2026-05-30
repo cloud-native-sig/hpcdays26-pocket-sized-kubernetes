@@ -196,9 +196,9 @@ This reconciliation loop is one of the core ideas behind Kubernetes.
 If multiple worker nodes are available, you can simulate node failure.
 
 From the control node:
-
+```bash
 kubectl get nodes
-
+```
 Power off or disconnect one worker node.
 
 ```bash

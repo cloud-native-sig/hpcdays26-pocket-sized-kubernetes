@@ -69,7 +69,7 @@ There are a number of pods running essential *system* processes in the `kube-sys
 kubectl get pods --all-namespaces
 ```
 
-You can match these to services from the Kubernetes [Introduction](../introduction.md#architecture-overview)?
+Can you can match these to services from the Kubernetes [Introduction](../introduction.md#architecture-overview)?
 
 ## Exploring Cluster Resources
 

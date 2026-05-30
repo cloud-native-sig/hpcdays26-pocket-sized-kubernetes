@@ -1,6 +1,6 @@
 # Designing a Cluster
 
-Before creating a Kubernetes cluster, you need to choose a *distribution* of Kubernetes to deploy and *infrastructure* to deploy it on. These decisions will affect the performance, cost and scalability of your deployment. While your choice will depend on your project's resource and goals. Below we provide some general guidance and alternative solutions as we explain our approach for low-powered Raspberry Pi clusters.
+Before creating a Kubernetes cluster, you need to choose a *distribution* of Kubernetes to deploy and *infrastructure* to deploy it on. These decisions will affect the performance, cost and scalability of your deployment, while your choice will depend on your project's resource and goals. Below we provide some general guidance and alternative solutions as we explain our approach for low-powered Raspberry Pi clusters.
 
 ## Kubernetes Distributions and Hardware
 

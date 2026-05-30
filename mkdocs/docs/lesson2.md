@@ -17,7 +17,7 @@ Before you connect to the router, in this next session the cluster will need acc
 git clone https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes.git
 ```
 
-If you are accessing the nodes via ssh and using kubectl from here, checkout the repo, connect to our router, and then copy at least the resources repository to the node youre using. For example
+If you are accessing the nodes via ssh and using kubectl from here, checkout the repo, connect to our router, and then copy at least the resources repository to the node you're using. For example
 
 ```bash
 git clone https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes.git

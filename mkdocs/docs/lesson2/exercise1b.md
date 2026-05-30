@@ -110,7 +110,7 @@ watch kubectl top pods
 
 You should notice slight increases to the CPU activity, as well as changes in memory usage, and workload activity across nodes.
 
-Even though this is only a small cluster, the same principles apply to much larger Kubernetes environments. Even with the production level monitorring, kube-state metrics can still be very useful.
+Even though this is only a small cluster, the same principles apply to much larger Kubernetes environments. Even with the production level monitoring, kube-state metrics can still be very useful.
 
 ### Optional: Inspecting Pod Placement
 

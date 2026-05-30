@@ -117,15 +117,7 @@ Job complete.
 
 ## Part 2 — Parallel Batch Execution
 
-Kubernetes Jobs can also run multiple tasks in parallel.
-
-This is extremely useful for:
-
-- parameter sweeps,
-- ensemble simulations,
-- and embarrassingly parallel workloads.
-
-Apply it:
+Typical HPC workloads include being able to run multiple tasks in parallel, including parameter sweeps and ensemble simulations. In Kubernetes we use the Jobs resource for being able to schedule parallel batch execution. We will start with a single parallel job.
 
 ```bash
 kubectl apply -f $RES_HOME/parallel-job.yaml
@@ -275,7 +267,7 @@ Although this example is simple, the same execution model scales to more complex
 
 ### Scaling the job  
 
-As with all things in Kubernetes, this can be scaled. By editing the manifest using vim, increase the number of completions 20.
+As with all things in Kubernetes, this can be scaled. By editing the manifest using vim, increase the number of completions by 20.
 
 ```bash
 vi $RES_HOME/monte-carlo.yaml 
