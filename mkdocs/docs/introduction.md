@@ -1,3 +1,9 @@
+---
+marp: true
+headingDivider: 3
+---
+
+
 # Introduction
 
 Welcome to **Pocket-Sized Kubernetes at Durham HPC Days 2026**! In this tutorial, you'll build a working Kubernetes cluster from scratch using Raspberry Pi hardware, deploy containerised applications, and gain experience working with distributed systems.
@@ -12,13 +18,14 @@ By the end of the tutorial, you will have:
 - Observed key Kubernetes features including self-healing and scaling
 - Gained practical skills transferable to HPC and cloud environments
 
+
 ## Who We Are
 
 This workshop is delivered by the **Cloud Native Special Interest Group** (SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE) partnership. We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure. You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
 
 ## Following Along at Home
 
-All code and resources used in this tutorial are available on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to follow along at home or perhaps run your own workshop, you can start by reading our [extra reading section.](./extra-reading.md) 
+All code and resources used in this tutorial are available on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to follow along at home or perhaps run your own workshop, you can start by reading our [extra reading section.](./extra-reading.md)
 
 ## Introduction to Kubernetes
 

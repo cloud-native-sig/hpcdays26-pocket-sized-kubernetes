@@ -21,11 +21,15 @@ But for replication in your own setup, we will include Internet-enabled installa
 
 #### Option 1 — Air-Gapped Installation
 
-On `kmaster`:
+On `kmaster` become the root use:
 
 ```bash
 sudo -i
+```
 
+Then instal the binaraies locally and run the startup script.
+
+```bash
 chmod +x /root/k3s/k3s-arm64
 cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
 
@@ -101,43 +105,62 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 
 Share the output with everyone that is configuring the worker nodes!
 !!! tip "Transfering the token"
-    One option is to copy it to `/home/chef/` and `chown chef:chef /home/chef/node-token`. Then `scp /home/chef/node-token chef@192.168.x.yyy:/home/chef/` with the IP of your desired worker node.
+    One option is to copy it to the home directory of chef and set the owner. 
+    ```bash
+    cp /var/lib/rancher/k3s/server/node-token /home/chef/
+    chown chef:chef /home/chef/node-token
+    ```
+    Then we can copy it to over other node by using the IP of your desired worker node. 
+    ```bash
+    scp /home/chef/node-token chef@192.168.x.yyy:/home/chef/
+    ```
 
-Then SSH into a worker node and assign these to variables:
 
-```bash
-export CONTROL_NODE=192.168.x.xxx
-export CONTROL_TOKEN=$(sudo cat /home/chef/node-token)
-```
 
 #### Option 1 — Air-Gapped Installation
 
-On your desired worker  
+On your desired worker become root
 
 ```bash
  sudo -i
+```
 
- chmod +x /root/k3s/k3s-arm64
- cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
+From this worker node and assign these variables and run the k3s install:
 
- mkdir -p /var/lib/rancher/k3s/agent/images/
- cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
+```bash
+export CONTROL_NODE=192.168.x.xxx
+export CONTROL_TOKEN=$(cat /home/chef/node-token)
+chmod +x /root/k3s/k3s-arm64
+cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
 
- chmod +x /root/k3s/install.sh
- INSTALL_K3S_SKIP_DOWNLOAD=true \
+mkdir -p /var/lib/rancher/k3s/agent/images/
+cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
+
+chmod +x /root/k3s/install.sh
+INSTALL_K3S_SKIP_DOWNLOAD=true \
   K3S_URL=https://$CONTROL_NODE:6443 \
   K3S_TOKEN=$CONTROL_TOKEN \
   /root/k3s/install.sh
 ```
+
+!!! troubleshooting "If the service struggles to start"
+    If you have issues with the k3s-agent service starting, it is likely either misconfigured token/IP or an issue with the timestamps.
+    Like most chefs, our RPi's do not know exactly what the time is, so they may require coaxing.
+    First check the token and IP are correct, then reset the time on all the machines. 
+    Locally; `date +'%Y-%m-%d %H:%M:%S'`
+    Then using the date command on the host; `date -s <The-Date>`
 
 #### Option 2 — With Internet Access
 
 On your desired worker  
 
 ```bash
-$ curl -sfL https://get.k3s.io | \
- K3S_URL=https://$CONTROL_NODE:6443 \
- K3S_TOKEN=$CONTROL_TOKEN sh -
+sudo -i
+export CONTROL_NODE=192.168.x.xxx
+export CONTROL_TOKEN=$(cat /home/chef/node-token)
+curl -sfL https://get.k3s.io | \
+K3S_URL=https://$CONTROL_NODE:6443 \
+K3S_TOKEN=$CONTROL_TOKEN sh -
 ```
 
 ## Verify the Cluster

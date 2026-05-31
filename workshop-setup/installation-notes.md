@@ -35,8 +35,8 @@ nmcli radio wifi on
 nmcli dev wifi connect TP-Link_AP_2A5A_01 --ask
 ip -brief add
 # Use your current IP address and configure it statically.
-nmcli connection modify "TP-Link_AP_2A5A_01" ipv4.addresses "192.168.0.1[01-99]/24" ipv4.dns "192.168.0.254,8.8.8.8" ipv4.gateway "192.168.0.254" ipv4.method manual
-systemctl restart NetworkManager
+sudo nmcli connection modify "TP-Link_AP_2A5A_01" ipv4.addresses "192.168.0.1[01-99]/24" ipv4.dns "192.168.0.254,8.8.8.8" ipv4.gateway "192.168.0.254" ipv4.method manual
+sudo systemctl restart NetworkManager
 ```
 
 Note IP address - Can use this to connect from own device, monitor and keyboard
@@ -116,6 +116,7 @@ scp ./setup-rpi-worker.sh chef@kmaster:~/
 ssh chef@kmaster
 sudo -i
 chmod +x /home/chef/setup-rpi-worker.sh
+/home/chef/setup-rpi-worker.sh
 ```
 
 *Workshop will start here*

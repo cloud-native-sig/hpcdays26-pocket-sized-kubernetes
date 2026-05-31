@@ -17,25 +17,36 @@ Examples:
 
 ```bash
 kubectl get nodes
-kubectl describe node kworker1
+kubectl describe node kworker01
 ```
 
-## Optional setup: Access the Cluster From Your Laptop
+## Access the Cluster From Your Laptop
 
-Copy the Kubernetes configuration file:
+Before we start using kubectl, you might prefer to connect to the cluster from you local computer (if not, feel free to skip this step). This is also required for running kubectl from other nodes.
+
+To do this we need to copy the k3s.yaml file to our chosen environment.
+
+To start with, whoever is on the contrl-plane node, move the file to the chef's home directory and give it the appropriate owner.
 
 ```bash
-$ scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
-    ~/.kube/config-k3s
+cp /etc/rancher/k3s/k3s.yaml /home/chef/
+chown chef:chef /home/chef/k3s.yaml
 ```
 
-Edit the server to point to your control plane and api-server:
+Then from your local environment, or the worker nodes, copy the Kubernetes configuration file.
+
+```bash
+mkdir -p ~/.kube/
+scp chef@kmaster:/home/chef/k3s.yaml ~/.kube/config-k3s
+```
+
+Edit the server to point to your control plane IP and api-server with `vi ~/.kube/config-k3s`:
 
 ```yaml
 server: https://<control-node-ip>:6443
 ```
 
-After exporting the config to your local environment:
+After exporting the config to the local environment:
 
 ```bash
 export KUBECONFIG=~/.kube/config-k3s
@@ -120,12 +131,15 @@ kubectl get pod <pod-name> -o yaml
 ```
 
 #### Inspect pod resources
+
 To view the resources that are being used by these pods we can inspect the pod itself.
 
 ```bash
 kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].allocatedResources'
 kubectl get pod -o json -l k8s-app=kube-dns | jq -r '.items[0].status.containerStatuses[].resources.limits'
 ```
+
+> Our RPi's have not had jq installed. Instead try `kubectl get pod  -l k8s-app=kube-dns --output=jsonpath="{.items[0].status.containerStatuses[].allocatedResources}"`
 
 #### Edit deployment resources via kubectl
 
