@@ -41,6 +41,9 @@ markdown_extensions:
   - footnotes
   - attr_list
   - md_in_html
+plugins:
+  - glightbox:
+      manual: true
 copyright: © Cloud Native SIG 2026
 repo_url: https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes
 edit_uri: edit/main/tutorial

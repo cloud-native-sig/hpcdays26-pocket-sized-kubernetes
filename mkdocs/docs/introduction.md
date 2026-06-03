@@ -60,7 +60,7 @@ For more on this see, [our extra reading](./extra-reading.md) section on Kuberne
 
 Kubernetes follows a **control plane + worker nodes** architecture:
 
-![The components of a Kubernetes Cluster](assets/kubernetes-overview.png)
+![The components of a Kubernetes Cluster](assets/kubernetes-overview.png){.on-glb }
 
 *The components of a Kubernetes cluster. [Overview Components](https://kubernetes.io/docs/concepts/overview/components/)*
 
