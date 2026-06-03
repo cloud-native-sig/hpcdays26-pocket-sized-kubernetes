@@ -85,6 +85,8 @@ RUN apk add --no-cache \
     iperf3 \
     fio \
     procps \
+    python3 \
+    py3-pip \
     htop
 
 CMD ["sh"] ' > Dockerfile
