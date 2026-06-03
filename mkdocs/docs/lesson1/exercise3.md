@@ -20,7 +20,7 @@ kubectl get nodes
 kubectl describe node kworker1
 ```
 
-## Optional setup: Access the Cluster From Your Laptop
+## Optional: Access the Cluster Directly From Your Laptop
 
 Copy the Kubernetes configuration file:
 
@@ -41,13 +41,13 @@ After exporting the config to your local environment:
 export KUBECONFIG=~/.kube/config-k3s
 ```
 
-You can now run all kubectl commands from your computer:
+You can now run all kubectl commands from your own computer:
 
 ```bash
 kubectl get nodes
 ```
 
-For additional security you should typically limit access to this new file:
+For additional security you should typically limit access to the config file:
 
 ```bash
 chmod 600 ~/.kube/config-k3s
@@ -101,7 +101,7 @@ This includes:
 
 ### Resource Requests and Limits
 
-Still using `kubectl` we can investigate exactly how and what is running on the cluster at this point.
+Continuing with `kubectl`, we can investigate exactly how and what is running on the cluster at this point.
 
 ### Inspecting Pods
 

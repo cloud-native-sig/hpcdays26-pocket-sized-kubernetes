@@ -12,7 +12,8 @@ You will also need to connect your laptop to our Router - `TP-Link_AP_2A5A_01`
 
 ## Verify SSH Access
 
-Once you have connected to the router, as a group, you will need to confirm you can connect to each node:
+Once you have connected to the router, as a group you should confirm you can
+connect to each node:
 
 ```bash
 ssh chef@192.168.x.xxx
@@ -20,16 +21,7 @@ hostname
 exit
 ```
 
-## Test Node Connectivity
-
-From the control node, lets verify the worker nodes are reachable:
-
-```bash
-ssh chef@kmaster
-ping -c3 192.168.x.yyy
-```
-
-## Optional: Configure Host Aliases
+## Recommended: Configure Host Aliases
 
 For convenience, you may want to add IP-hostname pairs to
 `/etc/hosts/` on your own device:
@@ -39,8 +31,7 @@ For convenience, you may want to add IP-hostname pairs to
 192.168.x.yyy    kworker1
 ```
 
-Then, you can simply `ssh <username>@kmaster` etc. instead of having to remember all the IP addresses.
-
+Then, you can simply `ssh <username>@kmaster` etc. instead of having to remember each IP address, as we do below.
 Alternatively, configure SSH aliases in `~/.ssh/config`, e.g.
 
 ```text
@@ -63,14 +54,23 @@ ssh-copy-id chef@kmaster
 
 Repeat for each node if desired.
 
-## Optional: Troubleshooting
+## Verify Node Interconnectivity
 
-We should have configured static IPs through our router's DHCP settings.
-But, if a node is unreachable we will need to:
+Check the worker nodes are reachable *from the control node:*
 
-* Verify the IP address
+```bash
+ssh chef@kmaster
+ping -c3 192.168.x.yyy
+```
+
+## *Troubleshooting*
+
+The Pis should be configured static IPs through our router's DHCP settings.
+However, if a node is unreachable we will need to:
+
 * Check the node is powered on
+* Verify the IP address
 * Confirm `sshd` is running
-* Configured a static IPs using `nmcli` or `nmtui`.
+* Check a static IP has been configured using `nmcli` or `nmtui`.
 
 If needed, ask one of the course facilitators to help by connecting the Raspberry Pi to a display and keyboard for debugging

@@ -13,7 +13,7 @@ This session is intentionally hands-on, so expect to spend most of the time in t
 
 Getting Ready:
 
-* Split into even groups per cluster, introduce yourself to the group you'll be working with for today.
-* Checkout the [workshop github](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes#)
-* (optionally) Following along with the [GitHub Pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/)
-* There should be plenty of opportunities for asking questions during the workshop. If Piper or Lewis are presenting, please use [mentimeter?](https://www.mentimeter.com/) to track questions.
+* Split into roughly even groups per cluster and introduce yourself
+* Check out the [workshop github](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes#) and (optionally) follow along on the [GitHub Pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/introduction/)
+* Open a terminal application with a working SSH client 
+<!--* There should be plenty of opportunities for asking questions during the workshop. If Piper or Lewis are presenting, please use [mentimeter?](https://www.mentimeter.com/) to track questions.-->
