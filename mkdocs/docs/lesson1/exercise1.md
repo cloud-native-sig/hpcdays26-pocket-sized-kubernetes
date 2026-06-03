@@ -1,6 +1,6 @@
 # Exercise 1 — Connecting to Your Nodes
 
-Each table has a note with:
+Each table should have a note with:
 
 * Raspberry Pi IP addresses
 * SSH login credentials
@@ -44,13 +44,13 @@ Then, you can simply `ssh <username>@kmaster` etc. instead of having to remember
 Alternatively, configure SSH aliases in `~/.ssh/config`, e.g.
 
 ```text
-Host kworker1
+Host kworker01
     HostName 192.168.x.yyy
     User chef
     IdentityFile ~/.ssh/id_ed25519
 ```
 
-Then connect to the desired now with `ssh kworker1`
+Then connect to the desired node with `ssh kworker01`
 
 ## Optional: Configure SSH Keys
 
