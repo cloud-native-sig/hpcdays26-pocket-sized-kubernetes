@@ -8,7 +8,8 @@ Each table has a note with:
 
 You will also need to connect your laptop to our Router - `TP-Link_AP_2A5A_01`
 
-> While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
+!!! Warning
+    While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
 
 ## Verify SSH Access
 

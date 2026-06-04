@@ -20,7 +20,7 @@ kubectl get nodes
 kubectl describe node kworker1
 ```
 
-## Optional: Access the Cluster Directly From Your Laptop
+## Optional: Access The Cluster Directly From Your Laptop
 
 Copy the Kubernetes configuration file:
 
@@ -95,7 +95,8 @@ This includes:
 * Services
 * Jobs
 
-> `kubectl get all` does not quite show all the resources, but it does highlight the main ones.
+!!! Tip
+    `kubectl get all` does not quite show all the resources, but it does highlight the main ones.
 
 ---
 

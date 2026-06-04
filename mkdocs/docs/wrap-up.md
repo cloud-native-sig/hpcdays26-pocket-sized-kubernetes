@@ -18,7 +18,7 @@ p + ul {
 
 We have now come to the end of our exercises and the Pocket-Size kubernetes workshop. We hope that this session has been useful at introducing the basics of creating a small Kubernetes cluster, as well as underststanding resources and how they can be deployed.  
 
-If you were not able to complete any of the exercies, feel free to come back to this site at any time to finish them or just to review what you have done. There is a big wide world of Kubernetes options, applications, customisations, and opinions. A good place to start would be our [extra reading page](../extra-reading.md)
+If you were not able to complete any of the exercies, feel free to come back to this site at any time to finish them or just to review what you have done. There is a big wide world of Kubernetes options, applications, customisations, and opinions. A good place to start is our [extra reading page](extra-reading.md)
 
 For those of you interested in following this workshop with more Kubernetes technologies, make sure to join the [Cloud-Native SIG mailing list](https://www.jiscmail.ac.uk/cgi-bin/wa-jisc.exe?SUBED1=CLOUDNATIVE-SIG) as well as the [CAKE fellowship activities](https://www.cake.ac.uk/ke-fellowships/cohort1).
 
