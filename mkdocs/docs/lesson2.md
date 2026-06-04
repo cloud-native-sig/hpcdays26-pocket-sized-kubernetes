@@ -25,7 +25,7 @@ Without creating specific namespaces, every deployment your group makes will
 land in the `default` namespace, leading to quite a mess. 
 
 !!! Warning
-    If you choose to work asynchronously on different exercises within your group, make sure to communicate to each other which namespaces and deployments you create.
+    If you choose to work asynchronously on different exercises within your group, make sure to communicate to each other which deployments (and so namespaces) you create.
 
 For convenience, whilst working on a specific deployment
 you can change the target namespace for all `kubectl` commands:
