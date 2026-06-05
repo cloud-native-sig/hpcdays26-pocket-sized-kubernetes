@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: workshop-pvc
-  namespace: resource-demo
+  namespace: storage-demo
 
 spec:
   accessModes:
