@@ -52,7 +52,7 @@ you can change the target namespace for all `kubectl` commands:
 kubectl config set-context --current --namespace=my-app
 ```
 Then you no longer need to specify `-n my-app` with each call. Just remember to
-change back the `deault` namespace when you are finished!
+change back the `default` namespace when you are finished!
 
 !!! Tip
     You can check the current namespace targeted by `kubectl` commands by running `kubectl config get-contexts` (`*` indicates the current namespace) 
