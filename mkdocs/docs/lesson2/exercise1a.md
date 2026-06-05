@@ -7,10 +7,10 @@ This section will focus on creating an nginx deployment, looking at scaling pods
 We’ll begin by creating a  deployment running a single nginx pod:
 
 ```bash
-kubectl create namespace nginx
+kubectl create namespace nginx-demo
 kubectl apply -f $RES_HOME/nginx-deployment.yaml
 ```
-Note `nginx-deployment.yaml` specifies a namespace called `nginx` for the deployment, which must be created
+Note `nginx-deployment.yaml` specifies a deployment called `nginx-demo` in namespace called `nginx`, which must be created
 first. For this exercise, it will be convenient to set `kubectl` to target
 this namespace: 
 ```bash
@@ -106,6 +106,9 @@ kubectl apply -f $RES_HOME/busybox.yaml
 
 This launches an interactive shell inside the cluster.
 
+!!! info
+    BusyBox packages a large number of common 'NIX utilities into a single binary. You can find out about the project at [busybox.net](https://busybox.net/about.html).
+
 ### DNS Resolution
 
 Kubernetes automatically creates DNS records for Services using CoreDNS. Inside BusyBox, we can test Kubernetes DNS:
@@ -171,6 +174,14 @@ Note that you must target a specific node&mdash;if that node goes down, the
 endpoint becomes unreachable.  For a more robust solution, a dedicated Ingress
 controller is created that sites in front of the nodes and provides a single
 entry point.
+
+## Clean-up
+
+Let's remove the deployment and reset our `kubectl` context:
+```bash
+kubectl delete deployment nginx-demo
+kubectl config set-context --curent --namespace=default
+``` 
  
 ## Summary
 

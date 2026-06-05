@@ -67,9 +67,11 @@ You should see something similar to:
 local-path (default)
 ```
 
-This provisioner dynamically creates storage directories on cluster nodes.
+This provisioner dynamically creates storage directories on cluster nodes using
+the local filesystem.
 
-It is lightweight and ideal for small clusters and workshops. For production clusters, you can use CSI-backed file storage, NFS file storage or vendor distributed storage.  
+!!! tip
+    *Local Path* is lightweight and ideal for small clusters and workshops. For production clusters, you can use CSI-backed file storage, NFS file storage or cloud vendor storage.  
 
 ## Part 2 — Creating a Persistent Volume Claim
 
@@ -77,12 +79,14 @@ In Kubernetes, applications usually request storage through a Persistent Volume 
 
 The cluster then provides storage that satisfies the request.
 
-!!! tip  
-    Before we start, move to the `resource-demo` namespace.
+Our demo deployment wants a `storage-demo` namespace, so we need to make sure
+it has been created (the command will fail harmlessly if it already exists):
+```bash
+kubectl create namespace storage-demo
+kubectl config set-context --current --namespace=storage-demo
+```
 
-    `kubectl config set-context --current --namespace=resource-demo`
-
-We have written a yaml manifest for our demo:
+The yaml specification for the PVC is `pvc.yaml`. Apply this now:
 
 ```bash
 kubectl apply -f $RES_HOME/pvc.yaml
@@ -109,7 +113,8 @@ The claim will not automatically bind since its the `local-path-provisioner` is 
 
 ## Part 3 — Using Persistent Storage in a Pod
 
-Now we will mount the PVC into a container.
+Now we will mount the PVC into a container using the `storage-pod.yaml` Pod
+specification:
 
 ```bash
 kubectl apply -f $RES_HOME/storage-pod.yaml
@@ -179,6 +184,8 @@ This is demonstrates the key difference between ephemeral container storage and 
 
 ### Persistent Workloads with Deployments
 
+> This part assumes you have already complete [Exercise 1a](./exercise1a.md)
+
 Most real applications use Deployments or StatefulSets rather than standalone pods.
 
 For this demonstration we are going to recreate our NGINX deployment but with a volume mount.
@@ -189,7 +196,10 @@ kubectl apply -f $RES_HOME/nginx-deployment-persist.yaml
 
 At this point we need to consider namespaces. PVC's are not accessible across namespaces, so we have created a new PVC in the NGINX namespace from the single manifest.
 
-Noting that the orginal PVC is RWO, multiple pods could not bind to the same volume. The new nginx pvc will allow all the replicas to access the data.
+Noting that the ordinal PVC is ReadWriteOnce or *RWO*, meaning multiple pods cannot bind to the same volume. The new NGINX PVC will allow all the replicas to access the data.
+
+!!! info
+    You can read about the different possible *Access Modes* (RWO, ROX, RWX and RWOP) for PVCs on the Kubernetes Documentation on [persistent-volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
 
 #### Writing Persistent Content
 

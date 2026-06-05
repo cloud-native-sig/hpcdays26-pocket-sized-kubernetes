@@ -20,7 +20,7 @@ By the end of the exercise you should understand:
 
 Containers do not have unlimited access to system memory. Kubernetes can enforce memory limits using Linux cgroups.
 
-If a container exceeds its memory limit, the kernel may terminate it with an OOM (Out Of Memory) kill.
+If a container exceeds its memory limit, the kernel may terminate it with an OOM kill.
 
 We will intentionally trigger this behaviour by deploying a Memory Stress Test
 
@@ -36,6 +36,9 @@ Using the memory-demo.yaml manifest, apply a new deployment:
 ```bash
 kubectl apply -f $RES_HOME/memory-demo.yaml
 ```
+
+!!! Exercise
+    `memory-demo.yaml` specifies a pod to execute a memory test using the `stress-ng` benchmarking tool. Can you run the same test using an interactive pod? (See the [`kubectl run` example](../exercise1b/#part-3-launch-a-client-pod) from the previous exercise). Explain why the test succeeds in this case (HINT: read about **limits** below). 
 
 ### Observing the Failure
 
@@ -87,7 +90,7 @@ Increase the memory limit:
 kubectl edit deployment memory-demo
 ```
 
-This will bring up your local editer or VIM on the RPI. Change:
+This will bring up your local editor or VIM on the RPI. Change:
 
 ```bash
 limits:
@@ -199,7 +202,8 @@ From the control node:
 ```bash
 kubectl get nodes
 ```
-Power off or disconnect one worker node.
+Power off or disconnect one worker node&mdash;discuss with your group before
+doing this!
 
 ```bash
 ssh kworker03
