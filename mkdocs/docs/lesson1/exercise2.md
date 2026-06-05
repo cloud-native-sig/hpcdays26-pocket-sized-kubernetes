@@ -11,11 +11,11 @@ We will:
 > We recommend splitting responsibility of the nodes between members of your group; try to pair people with different levels or experience with the Unix Shell, with 1-3 people per node.
 
 !!! Tip
-    If you are following along after the workshop with your own Raspberry Pis, ensure memory cgroups are enabled. Edit: `/boot/firmware/cmdline.txt` and append: `cgroup_memory=1 cgroup_enable=memory`
+    If you are following along after the tutorial with your own Raspberry Pis, ensure memory cgroups are enabled. Edit: `/boot/firmware/cmdline.txt` and append: `cgroup_memory=1 cgroup_enable=memory`
 
 ## Control Node: Installation
 
-Since the workshop cluster is air-gapped, installation files are preloaded on each node. If there are any missing files, the blue USB will contain everything needed.
+Since the tutorial clusters are air-gapped, installation files are preloaded on each node. If there are any missing files, the blue USB will contain everything needed.
 
 For replication in your own setup, we will include internet-enabled installation options.
 

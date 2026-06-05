@@ -4,12 +4,12 @@ Each table has a note with:
 
 * Raspberry Pi IP addresses
 * SSH login credentials
-* WiFi credentials for the workshop router
+* WiFi credentials for the tutorial router
 
 You will also need to connect your laptop to our Router - `TP-Link_AP_2A5A_01`
 
 !!! Warning
-    While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
+    While connected to the tutorial router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router.
 
 ## Verify SSH Access
 

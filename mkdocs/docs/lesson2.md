@@ -9,10 +9,28 @@ In this lesson, you'll begin to deploy a range of resources onto the cluster. As
 
 Through this session you will see first-hand the benefits of using Kubernetes to manage high availability application deployments and how this relates to HPC environments. 
 
+We firstly need to know about **deployments and namespaces.**
+Here we only provide minimal detail on these resources, to enable understanding of the topics listed above
+through a series of deployments (in different namespaces!).  For a more
+in-depth understanding, a good starting point is our most recent
+[Kubechaos Workshop Lesson
+Material](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
+
+## Deployments
+Deployments are the bread-and-butter of Kubernetes applications.
+A Deployment
+declares the desired state of your application&mdash;which container images to run
+and how many replica pods to keep running them&mdash;and Kubernetes continuously works to
+reconcile the actual state of the cluster with that desired state. Deployments are
+specified in a `.yaml` file known as a manifest and 'applied', i.e., *deployed*,
+ using `kubectl apply -f <manifest.yaml>`. Upon running this command, the Kubernetes API server triggers a sequence
+of events leading to the Kubelet process on a node pulling the relevant container image
+and starting up the pod(s).
+
 ## Namespaces
-For the exercises in this section we will make use of Kubernetes *namespaces*
-which provide a way of organising resources associated with different
-deployments. A namespace can be created using `kubectl` with
+Namespaces provide a mechanism for isolating groups of resources within a
+cluster. They are commonly used to separate environments (e.g., dev, staging,
+production), teams, or applications. A namespace can be created using:
 ```bash
 kubectl create namespace my-app
 ```
@@ -22,7 +40,8 @@ You can then target resources in these namespace by appending `-n my-app` to any
 kubectl get pods -n my-app
 ```
 Without creating specific namespaces, every deployment your group makes will
-land in the `default` namespace, leading to quite a mess. 
+land in the `default` namespace, making it difficult to distinguish whose
+resources and whose. 
 
 !!! Warning
     If you choose to work asynchronously on different exercises within your group, make sure to communicate to each other which namespaces and deployments you create.
