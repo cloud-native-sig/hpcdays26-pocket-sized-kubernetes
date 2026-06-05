@@ -216,11 +216,8 @@ Then observe:
 kubectl get pods -o wide -w
 ```
 
-Eventually Kubernetes will:
-
-* mark the node NotReady,
-* evict workloads,
-* and recreate pods on healthy nodes.
+Eventually Kubernetes will mark the node as `NotReady`, evict any workloads, and recreate pods on healthy nodes
+as appropriate. 
 
 This process may take several minutes.
 

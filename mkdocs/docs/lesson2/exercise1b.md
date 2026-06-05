@@ -21,20 +21,13 @@ Monitoring systems help answer questions such as:
 - Are applications healthy?
 - Where are bottlenecks occurring?
 
-In larger Kubernetes environments this telemetry is often collected using systems such as:
+In larger Kubernetes environments this telemetry is often collected using systems such as Prometheus, Grafana, Loki and OpenTelemetry.
 
-- Prometheus
-- Grafana
-- Loki
-- OpenTelemetry
-
-For this workshop we will use the lighter-weight Kubernetes metrics pipeline already available in the cluster.
+For this tutorial we will use the lighter-weight Kubernetes metrics pipeline already available in the cluster.
 
 ## Part 1 — Kubernetes Metrics
 
-If `metrics-server` is installed (see [Extra reading](../extra-reading.md#kubernetes-metrics-server)), Kubernetes can expose live resource usage information through the Kubernetes API.
-
-This includes:
+If `metrics-server` is installed (see [Extra reading](../extra-reading.md#kubernetes-metrics-server)), Kubernetes can expose live resource usage information through the Kubernetes API, including:
 
 - CPU usage,
 - memory consumption,
@@ -148,19 +141,11 @@ kubectl delete service iperf-service
 
 ## Summary
 
-In production Kubernetes environments, telemetry is often collected and visualised using:
+In production Kubernetes environments, telemetry is often collected and visualised using Prometheus for metrics collection
+and Grafana for dashboards and visualisation.
 
-- Prometheus for metrics collection,
-- and Grafana for dashboards and visualisation.
-
-These systems allow:
-
-- historical monitoring,
-- alerting,
-- performance analysis,
-- and cluster-wide observability.
-
-However, they also introduce additional operational overhead and resource consumption, which is why we are using the lighter-weight metrics pipeline for this workshop.
+These systems allow for historical monitoring, alerts, benchmarking and cluster-wide observability.
+However, they also introduce additional operational overhead and resource consumption, which is why we are using the lighter-weight metrics pipeline for this tutorial.
 
 In this exercise you:
 

@@ -1,44 +1,23 @@
 # Exercise 4 — Jobs and Batch Execution
 
-In this exercise we will explore one of Kubernetes’ most important workload types for research computing and HPC-style environments:
+In this exercise we will explore several of Kubernetes’ most important workload types for research computing and HPC-style environments:
 
 - Jobs
 - CronJobs
 - and distributed batch execution
 
-Unlike long-running services such as web applications, batch workloads:
+Unlike long-running services such as web applications, batch workloads produce
+outputs until completion at which point they terminate.
 
-- run to completion,
-- produce outputs,
-- and then terminate.
-
-This makes them ideal for:
-
-- simulations,
-- data processing,
-- scientific pipelines,
-- machine learning tasks,
-- and parameter sweeps.
+This makes them ideal for tasks such as simulations with parameter sweeps, data processing and machine learning.
 
 ## Why Batch Workloads Matter
 
-Many HPC and research workloads are naturally batch-oriented.
+Many HPC and research workloads are naturally batch-oriented, e.g., Monte Carlo
+simulations, image processing and finite element simulations.
 
-Examples include:
-
-- Monte Carlo simulations,
-- genome analysis,
-- image processing,
-- parameter sweeps,
-- finite element simulations,
-- and workflow pipelines.
-
-Kubernetes supports these using:
-
-- Jobs
-- CronJobs
-- parallel execution
-- and automatic retry behaviour.
+Kubernetes supports these using Jobs and CronJobs with parallel execution and
+automatic retry behaviour.
 
 ## Kubernetes Job Concepts
 
@@ -46,28 +25,15 @@ Kubernetes supports these using:
 
 A Kubernetes Job creates one or more pods and ensures they complete successfully.
 
-Unlike Deployments:
+Unlike Deployments jobs are *not* intended to run forever and will terminate once work is complete.
 
-- Jobs are not intended to run forever,
-- pods terminate once work is complete.
-
-Kubernetes tracks:
-
-- successful completions,
-- failures,
-- retries,
-- and execution state.
+Kubernetes tracks successful completions, failures, retries and execution state.
 
 ### CronJobs
 
 CronJobs schedule Jobs periodically using cron syntax.
 
-Examples:
-
-- nightly backups,
-- scheduled analysis,
-- telemetry collection,
-- or automated reporting.
+Examples applications include nightly backups or telemetry collection.
 
 ## Part 1 — A Simple Job
 
@@ -143,12 +109,7 @@ Inspect the Job:
 kubectl describe job parallel-job
 ```
 
-Look for:
-
-- completions,
-- parallelism,
-- success counters,
-- and pod status.
+Look for completions, parallelism, success counters, and pod status.
 
 ## Part 3 — CronJobs
 
@@ -166,11 +127,7 @@ Watch Jobs appear automatically:
 kubectl get jobs -w
 ```
 
-Every minute:
-
-- a new Job will be created,
-- execute,
-- and terminate.
+Every minute a new Job will be created, execute and terminate.
 
 Inspect the CronJob:
 
@@ -199,11 +156,9 @@ We can estimate π by:
 - checking whether they fall inside a unit circle,
 - and computing the resulting ratio.
 
-Within Kubernetes we can use this example to show that:
-
-- each worker is independent,
-- Monte Carlo tasks are highly parallel,
-- and results can be aggregated.
+This will demonstrate not only how Monte Carlo tasks are highly parallel (the
+results can be aggregated) but also that each worker in Kubernetes is
+independent.
 
 ### Monte Carlo π Refresher
 
@@ -258,12 +213,8 @@ Hostname: monte-carlo-pi-yyyyy
 Estimated π = 3.13892
 ```
 
-Although this example is simple, the same execution model scales to more complex scenarios like:
-
-- scientific simulations,
-- rendering,
-- machine learning inference,
-- and parameter sweeps.
+Although this example is simple, the same execution model scales to more complex
+scientific simulations, rendering and machine learning inference.
 
 ### Scaling the job  
 
@@ -302,7 +253,4 @@ In this exercise you explored:
 You also built a simple distributed Monte Carlo simulation using Kubernetes Jobs.
 
 This execution model is one of the reasons Kubernetes has become increasingly popular for:
-
-- scientific computing,
-- research infrastructure,
-- and cloud-native HPC workflows.
+scientific computing and research infrastructure as well as generally cloud-native HPC workflows.

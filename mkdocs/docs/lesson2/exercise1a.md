@@ -70,11 +70,8 @@ NAME            TYPE        CLUSTER-IP      PORT(S)
 nginx-service   ClusterIP   10.43.x.xxx    80/TCP
 ```
 
-The Service provides:
-
-* a stable virtual IP,
-* internal DNS resolution,
-* and load balancing across the nginx pods.
+The Service provides a stable virtual IP, internal DNS resolution 
+and load balancing across the nginx pods.
 
 Importantly, the Service remains stable even if pods are recreated.
 
@@ -194,9 +191,6 @@ In this exercise you:
 * tested networking from inside the cluster using BusyBox, and outside via a
   `NodePort`
 
-These ideas form the foundation for more advanced topics:
+These ideas form the foundation for more advanced topics including ingress
+controllers, service meshes, observability and multi-service applications.
 
-* ingress controllers,
-* service meshes,
-* observability,
-* and multi-service applications.

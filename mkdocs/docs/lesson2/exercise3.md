@@ -17,12 +17,7 @@ We will:
 
 ## Part 1 — Why Persistent Storage Matters
 
-In all contexts containers are designed to be disposable. This is extremely useful for scalability and recovery, but many real applications still need durable storage. This storage can be used for:
-
-- shared datasets and databases,
-- user uploads and scientific outputs,
-- workflow checkpoints,
-- logging and debugging.
+In all contexts containers are designed to be disposable. This is extremely useful for scalability and recovery, but many real applications still need durable storage. This storage could be used for shared datasets, databases, scientific outputs, logging, etc.
 
 Kubernetes handles this by abstracting storage into separate resources.
 
@@ -32,19 +27,14 @@ Kubernetes handles this by abstracting storage into separate resources.
 
 A Persistent Volume represents storage available to the cluster.
 
-Examples include:
-
-- local disks,
-- network filesystems,
-- cloud block storage,
-- or parallel filesystems.
+Examples of the type of storage backing a PV include local disks, network filesystems,
+cloud block storage and parallel filesystems.
 
 #### Persistent Volume Claim (PVC)
 
 A Persistent Volume Claim is a request for storage made by a workload.
 
 Pods generally consume PVCs rather than interacting with PVs directly.
-
 This separation allows storage to be managed independently from applications.
 
 ### Inspecting the Local Path Provisioner
@@ -286,19 +276,9 @@ You also saw another important Kubernetes principle:
 
 Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
 
-As mentioned earlier, persistent storage is essential for many workloads, including:
-
-- shared datasets and databases,
-- user uploads and scientific outputs,
-- workflow checkpoints,
-- logging and debugging.
-
-However, storage in Kubernetes introduces additional complexity:
-
-- scheduling constraints,
-- node locality,
-- performance considerations,
-- and failure recovery behaviour.
+As mentioned earlier, persistent storage is essential for many workloads. However, it does introduce additional complexity
+to your cluster, often bringing
+scheduling constraints, node locality, and considerations regarding performance and failure recovery behaviour.
 
 ### Optional Exploration
 
@@ -314,10 +294,5 @@ You can ssh into the node and inspect this path. You'll also notice paths simila
 /var/lib/rancher/k3s/storage/
 ```
 
-On a production environment, this could instead map to:
-
-- NFS,
-- Ceph,
-- Lustre,
-- BeeGFS,
-- or cloud block storage.
+On a production environment, this could instead map to NFS, Ceph, Lustre, BeeGFS
+etc.
