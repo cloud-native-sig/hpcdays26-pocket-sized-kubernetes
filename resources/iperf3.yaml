@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: iperf-server
-  namespace: resource-demo
+  namespace: iperf-demo
 
 spec:
   replicas: 1
@@ -21,7 +21,7 @@ spec:
       containers:
         - name: iperf3
 
-          image: workshop-tools:arm64
+          image: networkstatic/iperf3
           imagePullPolicy: IfNotPresent
 
           command:

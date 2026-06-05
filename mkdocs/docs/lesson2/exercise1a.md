@@ -1,16 +1,17 @@
-# Exercise 1 — Services and networking
+# Exercise 1a — Services and networking
 
 This section will focus on creating an nginx deployment, looking at scaling pods, connecting services and testing cluster networks.
 
 ## Part 1 — NGINX deployment
 
-We’ll begin by creating a deployment running a single nginx pod:
+We’ll begin by creating a  deployment running a single nginx pod:
 
 ```bash
+kubectl create namespace nginx
 kubectl apply -f $RES_HOME/nginx-deployment.yaml
 ```
-`nginx-deployment.yaml` specifies the deployment should use a namespace called `nginx`, which will be created
-if it doesn't exist already. For this exercise, it will be convenient to set `kubectl` to target
+Note `nginx-deployment.yaml` specifies a namespace called `nginx` for the deployment, which must be created
+first. For this exercise, it will be convenient to set `kubectl` to target
 this namespace: 
 ```bash
 kubectl config set-context --current --namespace=nginx

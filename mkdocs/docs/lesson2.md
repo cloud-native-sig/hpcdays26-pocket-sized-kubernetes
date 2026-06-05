@@ -25,7 +25,7 @@ Without creating specific namespaces, every deployment your group makes will
 land in the `default` namespace, leading to quite a mess. 
 
 !!! Warning
-    If you choose to work asynchronously on different exercises within your group, make sure to communicate to each other which deployments (and so namespaces) you create.
+    If you choose to work asynchronously on different exercises within your group, make sure to communicate to each other which namespaces and deployments you create.
 
 For convenience, whilst working on a specific deployment
 you can change the target namespace for all `kubectl` commands:
@@ -80,4 +80,4 @@ sudo k3s ctr images import /root/workshop-images.tar
 <!--If the file is missing from the node, alert or email Lewis and he'll help get the files.  -->
 
 !!! Tip
-    For following along at home, or with regular Docker Hub images on an internet-enabled RPi cluster, you will need to change the manifests in the resources folder to directly pull the chosen image. For example, in `./resources/iperf3.yaml`, one would replace `image: workshop-tools:arm64` with `image: iperf3`, and in `./resources/cronjob.yaml`, `image:workshop-tools:arm64` would be replaced with `image: bash`.
+    For following along at home, or with regular Docker Hub images on an internet-enabled RPi cluster, you will need to change the manifests in the resources folder to directly pull the chosen image. For example, in `./resources/iperf3.yaml`, one would replace `image: workshop-tools:arm64` with `image: networkstatic/iperf3`, and in `./resources/cronjob.yaml`, `image:workshop-tools:arm64` would be replaced with `image: bash`.
