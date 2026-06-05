@@ -11,8 +11,8 @@ nav:
 - Section 2 — Using your cluster:
   - Introduction: lesson2.md
   - Exercise 1 — Services, networking and Monitoring: 
-      1a) Services and networking: lesson2/exercise1a.md
-      1b) Monitoring and Telemetry: lesson2/exercise1b.md
+    - 1a) Services and networking: lesson2/exercise1a.md
+    - 1b) Monitoring and Telemetry: lesson2/exercise1b.md
   - Exercise 2 — Resource Management and Failure Recovery: lesson2/exercise2.md
   - Exercise 3 — Persistent Storage: lesson2/exercise3.md
   - Exercise 4 — Jobs and Batch Execution: lesson2/exercise4.md
