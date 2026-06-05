@@ -2,18 +2,13 @@
 
 At the end of the first Lesson, we discussed how most workloads deployed are *ephemeral*. If a pod is deleted and recreated, any files written inside the container are typically lost.
 
-In this exercise we will explore how Kubernetes manages persistent storage using:
-
-- Persistent Volumes (PV)
-- Persistent Volume Claims (PVC)
-- Stateful workloads
+In this exercise we will explore how persistence storage is managed in Kubernetes through Persistent Volumes (PV)
+and Persistent Volume Claims (PVC), enabling stateful workloads.
 
 We will:
-
-- Create persistent storage,
-- Attach it to a pod,
-- Verify data survives container recreation,
-- Explore how Kubernetes separates compute from storage.
+- Create persistent storage
+- Attach it to a pod
+- Verify data survives container recreation
 
 ## Part 1 — Why Persistent Storage Matters
 
@@ -172,9 +167,10 @@ The previous data should still be present and you'll notice a gap in the timesta
 
 This is demonstrates the key difference between ephemeral container storage and the persistent Kubernetes volumes.
 
-### Persistent Workloads with Deployments
+## Persistent Workloads with Deployments
 
-> This part assumes you have already complete [Exercise 1a](./exercise1a.md)
+> This part extends from the deployment in [Exercise 1a](./exercise1a.md),
+> but can be performed independently.
 
 Most real applications use Deployments or StatefulSets rather than standalone pods.
 
@@ -184,14 +180,20 @@ For this demonstration we are going to recreate our NGINX deployment but with a 
 kubectl apply -f $RES_HOME/nginx-deployment-persist.yaml
 ```
 
-At this point we need to consider namespaces. PVC's are not accessible across namespaces, so we have created a new PVC in the NGINX namespace from the single manifest.
+!!! warning
+    To avoid conflict with anyone going through Exercise 1a, make sure you remain in the `storage-demo` namespace for this deployment.
 
-Noting that the ordinal PVC is ReadWriteOnce or *RWO*, meaning multiple pods cannot bind to the same volume. The new NGINX PVC will allow all the replicas to access the data.
+The deployment defines a new PVC in the namespace, `nginx-pvc`. Note while our
+first PVC had an `accessMode` of
+`ReadWriteOnce` or *RWO*, meaning 
+the volume can be mounted a read-write by a single *node*, the new one has 
+`ReadWriteMany` (RWM), which is critical to allow replicas spawned on different
+nodes to have access to the storage.
 
 !!! info
     You can read about the different possible *Access Modes* (RWO, ROX, RWX and RWOP) for PVCs on the Kubernetes Documentation on [persistent-volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
 
-#### Writing Persistent Content
+### Writing Persistent Content
 
 Lets explore writing to this volume. Execute into a nginx pod:
 
@@ -209,13 +211,14 @@ Exit the shell.
 
 ---
 
-#### Optional: Expose the Deployment
+### Optional: Expose the Deployment to the Cluster
 
-Another method for creating a service is the expose command. Here we are creating a new service for our nginx deployment. You can still use the existing service.
-
+In Exercise 1a we declared a service with type `ClusterIP` via a `.yaml` file to allow access to
+the NGINX server from within the cluster. Another way to achieve this is
+using the expose command:
 ```bash
-kubectl expose deployment -n nginx nginx-demo \
-    --port=80 \
+kubectl expose deployment nginx-demo \
+    --port=8081 \
     --target-port=80 \
     --name=persistent-nginx
 ```
@@ -236,18 +239,18 @@ You should see:
 <h1>Hello Persistent Kubernetes</h1>
 ```
 
-#### Demonstrating Persistence During Failure
+### Demonstrating Persistence During Failure
 
 Delete the nginx pod:
-
 ```bash
-kubectl get pods -n nginx
-kubectl delete pod -n nginx <pod-name>
+kubectl delete pods -n storage-demo -l app=nginx-demo
 ```
+Kubernetes will create a replacement pods automatically.
 
-Kubernetes will create a replacement pod automatically.
+!!! tip
+    `-l app=nginx-demo` is an example of matching using a *label selector*. Labels and selectors and an immensely useful way to make targeted changes to deployments and other resources in Kubernetes.  
 
-Once the new pod is running:
+Once a new `nginx-demo` pod is running:
 
 ```bash
 kubectl run curl-test \
@@ -256,31 +259,36 @@ kubectl run curl-test \
     --restart=Never -- \
     curl http://persistent-nginx.nginx.svc.cluster.local/persist.html
 ```
-
 The webpage should still exist.
-
 Even though the original container disappeared, the pod changed, and the workload restarted. The persistent volume preserved the application data.
+
+## Clean-up
+Remove any of the resources you used in this session, including the service
+created by the expose command (if you ran it):
+```
+kubectl delete -f $RES_HOME/pvc.yaml -f $RES_HOME/storage-pod.yaml -f $RES_HOME/nginx-deployment-persist.yaml
+kubectl detele service nginx-demo
+```
+You can then reset your configured `kubectl` namespace:
+```
+kubectl config set-context --curent --namespace=default
+```
 
 ## Summary
 
-In this exercise you:
+Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
 
-- created Persistent Volume Claims,
-- mounted persistent storage into pods,
-- observed data surviving pod deletion,
-- and explored how persistent workloads behave in Kubernetes.
-
-You also saw another important Kubernetes principle:
+In this exercise you saw how persistent workloads are possible 
+using Persistent Volume Claims mounted into pods that survive pod recreation or
+deletion. Note the general principle in Kubernetes: 
 
 > Containers are usually disposable, but storage often is not.
 
-Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
-
-As mentioned earlier, persistent storage is essential for many workloads. However, it does introduce additional complexity
+While essential for many workloads, persistent storage does introduce additional complexity
 to your cluster, often bringing
 scheduling constraints, node locality, and considerations regarding performance and failure recovery behaviour.
 
-### Optional Exploration
+## Optional: Node Storage Paths
 
 Inspect where the local-path storage exists on the node:
 

@@ -1,13 +1,11 @@
 # Exercise 2 — Resource Management and Failure Recovery
 
-In this exercise we will explore how Kubernetes manages:
+In this exercise we will explore how Kubernetes manages memory limits and CPU
+contention, and handles failed containers with automated recovery.
 
-* memory limits,
-* CPU contention,
-* failed containers,
-* and automatic recovery.
-
-Rather than just discussing resource requests and limits conceptually, we will intentionally create workloads that misbehave and observe how Kubernetes responds.
+Rather than just discussing resource requests and limits conceptually, we will
+intentionally create workloads that misbehave and observe how Kubernetes
+responds.
 
 By the end of the exercise you should understand:
 
@@ -38,7 +36,7 @@ kubectl apply -f $RES_HOME/memory-demo.yaml
 ```
 
 !!! Exercise
-    `memory-demo.yaml` specifies a pod to execute a memory test using the `stress-ng` benchmarking tool. Can you run the same test using an interactive pod? (See the [`kubectl run` example](../exercise1b/#part-3-launch-a-client-pod) from the previous exercise). Explain why the test succeeds in this case (HINT: read about **limits** below). 
+    `memory-demo.yaml` specifies a pod to execute a memory test using the `stress-ng` benchmarking tool. Can you run the same test using an interactive pod? (See the [`kubectl run` example](exercise1b.md/#part-3-launch-a-client-pod) from the previous exercise). Explain why the test succeeds in this case (HINT: read about **limits** below). 
 
 ### Observing the Failure
 
@@ -116,38 +114,29 @@ kubectl get pods
 
 Unlike memory limits, CPU limits do not usually terminate containers. Instead, the Linux scheduler throttles CPU usage.
 
-We will create multiple CPU-intensive workloads and observe the effects.
-
-Deploying a CPU Stress Test:
-
+We next create multiple CPU-intensive workloads and observe the effects by
+deploying a CPU stress test:
 ```bash
 kubectl apply -f $RES_HOME/cpu-demo.yaml
 ```
 
-### Watching CPU Usage
-
-Now the pods have been deployed we can observe the CPU consumption:
-
+Top-the-pods to follow CPU consumption:
 ```bash
 kubectl top pods
 ```
 
-You should notice:
-
-* CPU usage capped near the defined limit,
-* multiple pods competing for CPU time,
-* and potentially uneven scheduling across nodes.
+You should notice that CPU usage is capped near the defined limit, with multiple
+pods competing for that CPU time. Note that scheduling across the cluster's nodes is
+not necessarily even.
 
 You can also inspect node utilisation:  
-
 ```bash
 kubectl top nodes
 ```
 
 ### Optional: Inspect from Inside the Container
 
-You can inspect CPU visibility directly inside a pod:
-
+You can inspect CPU metrics from *within* a pod:
 ```bash
 kubectl exec -it deploy/cpu-demo -- sh
 ```
@@ -186,13 +175,13 @@ A replacement pod should appear automatically.
 
 The pod itself is not the important object.
 
-The Deployment defines the desired state, e.g. `replicas: 4`
+The Deployment defines the desired state, e.g. `replicas: 4`, and Kubernetes
+continuously compares this state against the actual cluster state.  If the
+actual state has fewer pods, the Deployment controller requests another one to
+restore the specified replica count.
 
-Kubernetes continuously compares the desired state, against actual cluster state.
-
-When a pod disappears, the Deployment controller creates another one to restore the requested replica count.
-
-This reconciliation loop is one of the core ideas behind Kubernetes.
+This declarative approach, and the reconciliation loop that results,
+ is one of the core features of Kubernetes.
 
 ### Optional: Simulating Node Failure
 
@@ -202,7 +191,7 @@ From the control node:
 ```bash
 kubectl get nodes
 ```
-Power off or disconnect one worker node&mdash;discuss with your group before
+Power off or disconnect one worker node&mdash;warn your group before
 doing this!
 
 ```bash
@@ -218,25 +207,22 @@ kubectl get pods -o wide -w
 
 Eventually Kubernetes will mark the node as `NotReady`, evict any workloads, and recreate pods on healthy nodes
 as appropriate. 
-
 This process may take several minutes.
 
-## Summary and clean up
+## Clean-up
 
-Due to the nature of the stress-tests, lets clean up these resources before they cause trouble later on.  
-
+Due to the nature of the stress-tests, you should definitely clean-up their resources (also resetting your
+`kubectl` namespace) 
 ```bash
 kubectl delete -f $RES_HOME/cpu-demo.yaml -f $RES_HOME/memory-demo.yaml
+kubectl config set-context --curent --namespace=default
 ```
 
-In this exercise you explored:
+## Summary
 
-* resource requests and limits,
-* Out Of Memory (OOM) kills,
-* CPU throttling,
-* Kubernetes scheduling,
-* and automatic workload recovery.
-
-You also saw an important Kubernetes design principle in practice:
-
-Kubernetes is continuously attempting to reconcile the cluster toward a desired state. This reconciliation behaviour is what allows Kubernetes to recover automatically from many common failures.
+In this exercise you explored resource requests and limits in Kubernetes, and
+associated OOM kills, CPU throttling and automated workload recovery.  The
+latter all comes back to the declarative design principle of Kubernetes, which
+acts continuously to reconcile the cluster toward a desired state.  It is this
+reconciliation behaviour is what allows Kubernetes to recover automatically from
+many common failures and so provide high availability services.

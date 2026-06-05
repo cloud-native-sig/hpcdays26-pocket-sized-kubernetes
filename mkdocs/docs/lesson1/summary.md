@@ -7,13 +7,11 @@ This lesson has focussed on getting the K3s cluster set up and hopefully by this
 * Verified cluster health with `kubectl`
 * Explored namespaces, pods, resources, and storage
 
-By the end of the session you should be comfortable with the options for accessing your cluster nodes, the basic use of `kubectl`, and the set up to allow easy inspection of Kubernetes resources. All the basics for managing a small Kubernetes cluster.
+By the end of the session you should be comfortable with the options for
+accessing your cluster nodes, the basic use of `kubectl`, and the set up to
+allow easy inspection of Kubernetes resources. All the basics for managing a
+small Kubernetes cluster.
 
-In the next lesson we will explore:
-
-* networking
-* ingresses
-* storage
-* telemetry
-* CronJobs
-* and high availability.
+In the next lesson we will go through a number of example deployments to
+explore topics of networking and monitoring, resource management and recovery,
+persistent storage and job/batch execution.
