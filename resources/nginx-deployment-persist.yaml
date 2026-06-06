@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: nginx-demo
+  name: nginx
   namespace: storage-demo
 
 spec:
@@ -10,12 +10,12 @@ spec:
 
   selector:
     matchLabels:
-      app: nginx-demo
+      app: nginx
 
   template:
     metadata:
       labels:
-        app: nginx-demo
+        app: nginx
 
     spec:
       containers:

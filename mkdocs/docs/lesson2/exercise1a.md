@@ -10,11 +10,11 @@ We’ll begin by creating a  deployment running a single nginx pod:
 kubectl create namespace nginx-demo
 kubectl apply -f $RES_HOME/nginx-deployment.yaml
 ```
-Note `nginx-deployment.yaml` specifies a deployment called `nginx-demo` in namespace called `nginx`, which must be created
+Note `nginx-deployment.yaml` specifies a deployment called `nginx` in a namespace `nginx-demo`, which must be created
 first. For this exercise, it will be convenient to set `kubectl` to target
 this namespace: 
 ```bash
-kubectl config set-context --current --namespace=nginx
+kubectl config set-context --current --namespace=nginx-demo
 ```
 
 You can now inspect the pod that started running with the deployment using
@@ -27,7 +27,7 @@ You should see a pod running with its own internal cluster IP (it may take a few
 Even simple containers produce logs that can be inspected with `kubectl`:
 
 ```bash
-kubectl logs deployment/nginx-demo
+kubectl logs deployment/nginx
 ```
 
 ### Scaling the Deployment
@@ -37,7 +37,7 @@ One of Kubernetes’ core strengths is scaling workloads horizontally.
 We can easily scale the deployment from 1 replica to 3:
 
 ```bash
-kubectl scale deployment nginx-demo --replicas=3
+kubectl scale deployment nginx --replicas=3
 ```
 
 Watch the new pods appear:
@@ -176,7 +176,7 @@ entry point.
 
 Let's remove the deployment and reset our `kubectl` context:
 ```bash
-kubectl delete deployment nginx-demo
+kubectl delete deployment nginx
 kubectl config set-context --curent --namespace=default
 ``` 
  

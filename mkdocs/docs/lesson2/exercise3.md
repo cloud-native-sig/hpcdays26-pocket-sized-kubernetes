@@ -198,7 +198,7 @@ nodes to have access to the storage.
 Lets explore writing to this volume. Execute into a nginx pod:
 
 ```bash
-kubectl exec -it deploy/nginx-demo -n nginx -- sh
+kubectl exec -it deploy/nginx -- sh
 ```
 
 Create a webpage:
@@ -217,7 +217,7 @@ In Exercise 1a we declared a service with type `ClusterIP` via a `.yaml` file to
 the NGINX server from within the cluster. Another way to achieve this is
 using the expose command:
 ```bash
-kubectl expose deployment nginx-demo \
+kubectl expose deployment nginx \
     --port=8081 \
     --target-port=80 \
     --name=persistent-nginx
@@ -243,14 +243,14 @@ You should see:
 
 Delete the nginx pod:
 ```bash
-kubectl delete pods -n storage-demo -l app=nginx-demo
+kubectl delete pods -n storage-demo -l app=nginx
 ```
 Kubernetes will create a replacement pods automatically.
 
 !!! tip
-    `-l app=nginx-demo` is an example of matching using a *label selector*. Labels and selectors and an immensely useful way to make targeted changes to deployments and other resources in Kubernetes.  
+    `-l app=nginx` is an example of matching using a *label selector*. Labels and selectors and an immensely useful way to make targeted changes to deployments and other resources in Kubernetes.  
 
-Once a new `nginx-demo` pod is running:
+Once a new `nginx` pod is running:
 
 ```bash
 kubectl run curl-test \
@@ -267,7 +267,7 @@ Remove any of the resources you used in this session, including the service
 created by the expose command (if you ran it):
 ```
 kubectl delete -f $RES_HOME/pvc.yaml -f $RES_HOME/storage-pod.yaml -f $RES_HOME/nginx-deployment-persist.yaml
-kubectl detele service nginx-demo
+kubectl detele service persistent-nginx
 ```
 You can then reset your configured `kubectl` namespace:
 ```
