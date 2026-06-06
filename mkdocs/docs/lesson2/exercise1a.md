@@ -169,7 +169,7 @@ curl kworker1:30080
 ```
 Note that you must target a specific node&mdash;if that node goes down, the
 endpoint becomes unreachable.  For a more robust solution, a dedicated Ingress
-controller is created that sites in front of the nodes and provides a single
+controller is created that sits in front of the nodes and provides a single
 entry point.
 
 ## Clean-up
