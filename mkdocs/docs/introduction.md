@@ -66,7 +66,7 @@ Kubernetes follows a **control plane + worker nodes** architecture:
 ### Key Components
 
 - **Node**: A physical or virtual machine in the cluster
-- **Pod**: The smallest deployable unit consisting of one more containers that share storage/network
+- **Pod**: The smallest deployable unit consisting of one or more containers that share storage/network
 - **Deployment**: Manages a set of identical pods (defines desired state)
 - **Service**: Stable network endpoint to access pods 
 - **Control Plane**: The brain of the cluster, makes decisions based on the current cluster state, accessible via the **API Server**
