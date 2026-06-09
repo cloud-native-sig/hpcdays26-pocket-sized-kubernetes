@@ -16,7 +16,7 @@ requirements, and ease of use. The most popular distributions include:
   usage and ease of installation for IoT and Edge Computing
 - [MicroK8s by Canonical](https://canonical.com/microk8s)&mdash;Batteries included lightweight distribution designed for ease-of-use ('ZeroOps')
 - [Minikube](https://minikube.sigs.k8s.io/docs/)&mdash;Single-node cluster designed for local development
-- [RKE2](https://docs.rke2.io/)&mdash;Rancher Kubernetes Enginer 2, is Rancher's enterprise-ready next-generation Kubernetes distribution.
+- [RKE2](https://docs.rke2.io/)&mdash;Rancher Kubernetes Engine 2, is Rancher's enterprise-ready next-generation Kubernetes distribution.
 
 ### K3s and Hardware Requirements
 
