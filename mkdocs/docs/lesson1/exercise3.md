@@ -25,7 +25,7 @@ kubectl describe node kworker1
 Copy the Kubernetes configuration file:
 
 ```bash
-$ scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
+scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
     ~/.kube/config-k3s
 ```
 
