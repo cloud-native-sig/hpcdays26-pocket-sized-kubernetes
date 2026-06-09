@@ -9,10 +9,9 @@ In this lesson, you'll begin to deploy a range of resources onto the cluster. As
 
 Through this session you will see first-hand the benefits of using Kubernetes to manage high availability application deployments and how this relates to HPC environments. 
 
-We firstly need to know about **deployments and namespaces.**
-Here we only provide minimal detail on these resources, to enable understanding of the topics listed above
-through a series of deployments (in different namespaces!).  For a more
-in-depth understanding, a good starting point is our most recent
+We will learn the above topics through a series of example deployments.
+Before doing so, we need to explain a bit more about **deployments and namespaces.**
+For further details, you can refer to our most recent
 [Kubechaos Workshop Lesson
 Material](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
 
@@ -28,7 +27,8 @@ of events leading to the Kubelet process on a node pulling the relevant containe
 and starting up the pod(s).
 
 ## Namespaces
-Namespaces provide a mechanism for isolating groups of resources within a
+As introduced in the previous session,
+namespaces provide a mechanism for isolating groups of resources within a
 cluster. They are commonly used to separate environments (e.g., dev, staging,
 production), teams, or applications. A namespace can be created using:
 ```bash
