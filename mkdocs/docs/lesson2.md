@@ -18,7 +18,7 @@ Material](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
 ## Deployments
 Deployments are the bread-and-butter of Kubernetes applications.
 A Deployment
-declares the desired state of your application&mdash;which container images to run
+defining the desired state of your application&mdash;which container images to run
 and how many replica pods to keep running them&mdash;and Kubernetes continuously works to
 reconcile the actual state of the cluster with that desired state. Deployments are
 specified in a `.yaml` file known as a manifest and 'applied', i.e., *deployed*,
