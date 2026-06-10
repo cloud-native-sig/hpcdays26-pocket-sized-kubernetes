@@ -81,5 +81,5 @@ on the control node and `etcd`, a key-value store for cluster data.
 Kubernetes follows a *declarative* approach where you define the target state of the applications running in the cluster, and Kubernetes works continuously to achieve that state. For example, if a node goes down, Kubernetes may distribute its workload to other nodes to ensure services for running applications are not interrupted.Kubernetes management follows the Infrastructure as Code paradigm and is readily integrated with GitOps using high-level tools such as [ArgoCD](https://argoproj.github.io/cd/).
 
 !!! tip "Further Reading"
-    Further information on Kubernetes architecture can be found on our 
+    Further information on Kubernetes architecture can be found on our
     [Introduction to Kubernetes workshop materials](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
