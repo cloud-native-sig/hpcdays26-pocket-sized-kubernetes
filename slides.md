@@ -2,9 +2,7 @@
 marp: true
 theme: default
 paginate: true
-header:
-  <img src='./mkdocs/docs/assets/CN-SIG-logo.png' width='200px' style='padding-left:1050px'></img>
-  <img src='./slide-assets/k8s-cake-logo.png' width='100px' style="float:centre"></img>
+header: '<div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px"><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px"></div>'
 style: |
   /* Define global background, subtle gradient, and layout framework */
   section {
@@ -65,25 +63,28 @@ style: |
 
 ---
 
-# Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters
+<br>
 
-## A Cloud Native SIG and CAKE Workshop
+### Cloud-Native SIG and CAKE present...
+
+# Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters
 
 *16 June 2026, RH007, Durham University*
 
-<p><img src="./slide-assets/github-pages-qr.png" style="width:200;height:200;float:right" alt="github pages QR code"> <https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes></p>
+<p><img src="./slide-assets/github-pages-qr.png" width=250 height=250 style="float:right;padding-right:300px;margin-top:-60px;" alt="github pages QR code"> <https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes></img></p>
+<p style="position:absolute; bottom:40px; right:45px; font-size:28px;"><a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes">github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes</a></p>
+<p style="position:absolute; bottom:15px; right:58px; font-size:28px;"><a href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes">cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes</a></p>
 
 ---
 
-# Housekeeping
-
-## Agenda
+# Agenda
 
 1. Introductions
-1. Kubernetes background and cluster design
-1. Section 1 - Building your cluster
+1. Kubernetes Architecture & Cluster Design 
+1. Section 1&mdash;Building your cluster <!--(Walkthrough)-->
 1. Lunch break
-1. Section 2 - Using your cluster
+1. Kubernetes Deployments & Namespaces
+1. Section 2&mdash;Using your cluster <!--(Independent)-->
 1. Summary, Q&A, Follow-up opportunities
 
 ---
@@ -96,185 +97,208 @@ style: |
 
 ## Who We Are
 
-This workshop is delivered by the **Cloud Native Special Interest Group** (SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE) partnership.
+Tutorial from the **Cloud-Native Special Interest Group** with support from the **Computational Abilities Knowledge Exchange** partnership.
 
-We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure.
+New community of RSEs/dRTPs for cloud-native technologies in research software and digital infrastructure.
 
-You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
+<!--More about CN-SIG & getting involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).-->
+Get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/)
+<br>
 
 **Lewis Sampson** (DAFNI), *<lewis.sampson@stfc.ac.uk>*
-**Piper Fowler-Wright** (Rosalind Franklin Institute), *<Piper.Fowler-Wright@rfi.ac.uk>*
+**Piper Fowler-Wright** (Rosalind Franklin Institute), *<piper.fowler-wright@rfi.ac.uk>*
 
 ---
+<br>
 
-## Todays session
+## Today's Tutorial
 
-By the end of the tutorial, you will have:
+By the end you will have:
 
-- A basic understanding of Kubernetes architecture and how it can be used in research computing
+- An understanding of Kubernetes architecture and its use in research computing
 - Built a multi-node K3s cluster on Raspberry Pi hardware
-- Deployed basic applications and observer key Kubernetes features
+- Deployed basic applications and observed key Kubernetes features
 - Gained practical skills transferable to HPC and cloud environments
 
-### Following Along at Home
+> <small>Everything you learn today can be used in your own work.</small>
 
-<small> All code and resources used in this tutorial are available on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to follow along at home or perhaps run your own workshop, you can start by reading our [extra reading section.](./extra-reading.md) </small>
+#### Following Along at Home
+
+<small> Code and resources available on the [GitHub repo](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to recreate with your own hardware, see the [extra reading section](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/extra-reading) of the GitHub pages.</small>
 
 ---
 
+<!-- _class: Title -->
+<!-- _header: "" -->
 # Introduction to Kubernetes
 
-## What is Kubernetes
 
-Kubernetes (k8s) is an open-source container orchestration platform that automates deployment, scaling, and management of containerised applications across groups of machines.
+---
+
+## What is Kubernetes (k8s)
+
+Kubernetes is an open-source container orchestration platform to automate the deployment, scaling & management of containerised applications across groups of machines.
 
 ---
 
 # Kubernetes vs Docker Compose
 
-**Docker** runs applications from built images in sandboxed environments called containers. **Docker Compose** is a declarative tool that allows you to run groups of containers with networking and storage volumes on a single host.
+* **Docker:** run apps from built images in containers (sandboxed environments)
+* **Docker Compose:** groups of containers with networking and storage on a single host
+* **Kubernetes:** Orchestration pipeline for multi-host, multi-container applications. 
+<br>
+<br>
 
-**Kubernetes** goes beyond Docker Compose by providing an orchestration pipeline for multi-host, multi-container applications. k8s allows complex containerised applications to run across multiple hosts in a cluster with powerful automation and management features.
+---
 
+# Kubernetes vs Docker Compose
+
+- **Docker:** run apps from built images in containers (sandboxed environments)
+- **Docker Compose:** groups of containers with networking and storage on a single host
+- **Kubernetes:** Orchestration pipeline for multi-host, multi-container applications. 
+
+<small>K8s allows complex containerised applications to run across multiple hosts in a cluster with powerful automation and management features.</small>
+
+<!--
 ---
 
 >Note On *Docker Swarm* - Docker Engine's [Swarm mode](https://docs.docker.com/engine/swarm/) has many goals in common with Kubernetes, but is not as actively developed, feature-rich or has the same level of resilience for production use.
+-->
 
 ---
 
-# Using Kubernetes in Research Computing
+# Kubernetes in Research Computing
 
-Developing a Kubernetes cluster is a good approach when you need to manage multiple containerised services across different machines, and may benefit from:
+Use if need to manage multiple containerised services across different machines. Or may benefit from
 
-- Automatic scaling of workloads based on demand
+- Automatic workload scaling based on demand
 - Rolling updates with minimal downtime
 - Self-healing resilient systems with high-availability
 - Portability between on-prem and cloud infrastructure
 
 ---
 
-# Using Kubernetes in Research Computing
+# Kubernetes in Research Computing
 
-On the other hand, Kubernetes introduces complexity and has a significant learning curve, and so may not be appropriate for:
+Adds complexity and not typically suitable for:
 
-- Simple container applications that can run on a single host (use
-  Docker Compose)
-- HPC batch job management (use SLURM)
-- Services offered by a cloud provider or technology you are already
-  invested in
-- Large-scale parallel filesystems (use dedicated solutions, e.g.,
-  Lustre)
+- Simple container applications on a single host (use Docker Compose)
+- HPC job management (use SLURM)
+- Large-scale parallel filesystems (e.g., Lustre)
+- Services offered by a cloud provider or technology you are already invested in
+<br>
 
->For more on this see, [our extra reading](./extra-reading.md) section on Kubernetes and HPC.
+> <small>For more see the [extra reading section](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/extra-reading) on Kubernetes and HPC</small>
 
 ---
+<br>
 
 # Architecture Overview
 
-<figure style="text-align: center;">
-  <img src="./mkdocs/docs/assets/kubernetes-overview.png" style="height: 450px;" alt="The components of a Kubernetes Cluster">
-  <figcaption><small>The components of a Kubernetes cluster. <a href="https://kubernetes.io">[Overview Components]</a></small></figcaption>
+<figure style="text-align: center; margin-top:-10px; margin-bottom:-30px; padding-top:0px;">
+  <img src="./mkdocs/docs/assets/kubernetes-overview.png" style="height: 450px" alt="The components of a Kubernetes Cluster">
+  <figcaption><small>Components of a Kubernetes cluster (<a href="https://kubernetes.io">kubernetes.io</a>)</small></figcaption>
 </figure>
 
 ---
 
 # Key Components
 
-- **Node**: A physical or virtual machine in the cluster
-- **Pod**: The smallest deployable unit consisting of one more containers that share storage/network
-- **Deployment**: Manages a set of identical pods (defines desired state)
-- **Service**: Stable network endpoint to access pods
-- **Control Plane**: The brain of the cluster, makes decisions based on the current cluster state.
-- **Worker Nodes**: Run the containerised applications using a
-    container runtime.
+- **Node**: Physical or virtual machine
+- **Control Plane (Node)**: Brains of cluster, acts based on current cluster state vs target state
+- **Worker Node**: Run containerised applications using a container runtime.
+- **Pod**: Smallest deployable unit&mdash;one or more containers sharing storage/network
+- **Deployment**: Target state of identical pods serving an app
+- **Service**: Network endpoint for pods
 
-Other critical components include the Controller Manager and Scheduler
-on the control node and `etcd`, a key-value store for cluster data.
+<small>
+Other critical components include the Controller Manager and Scheduler, and etcd (key-value store for cluster data).
+</small>
 
 ---
 
-# How Kubernetes works
+# How Kubernetes Works
 
-Kubernetes follows a *declarative* approach where you define the target state of the applications running in the cluster, and Kubernetes works continuously to achieve that state.
+**Declarative:** define target state of applications&mdash;Kubernetes works to achieve it
 
-For example, if a node goes down, Kubernetes may distribute its workload to other nodes to ensure services for running applications are not interrupted.
+Example: On *node failure* Kubernetes distributes workload to other nodes
 
-Kubernetes management follows the Infrastructure as Code paradigm and is readily integrated with GitOps using high-level tools such as [ArgoCD](https://argoproj.github.io/cd/).
+GitOps ready: Infrastructure as code (`.yaml`), workflow managers, e.g., [ArgoCD](https://argoproj.github.io/cd/)
+<br>
 
-> Further information on Kubernetes architecture can be found on our [Introduction to Kubernetes workshop materials](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/).
+> Further discussion: [Introduction to Kubernetes workshop material](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/)
 
 ---
 
 <!-- _class: Title -->
 <!-- _header: "" -->
-# Designing a cluster
+# Designing a Cluster
 
 ---
 
-# The Distribution Landscape
+# Kubernetes Distributions
 
-While Kubernetes itself is standardised, various distributions package it differently. The most popular distributions include:
-
-- Vanilla Kubernetes ([kubeadm](https://kubernetes.io/docs/reference/setup-tools/kubeadm/)) by CNCF&mdash;industry standard, fully-featured Kubernetes implementation
-- [RKE2](https://docs.rke2.io/)&mdash;Rancher Kubernetes Enginer 2, is Rancher's enterprise-ready next-generation Kubernetes distribution.
-- [K3s by Rancher](https://k3s.io/)&mdash;Minimal resource usage and ease of installation for IoT and Edge Computing
-- [MicroK8s by Canonical](https://canonical.com/microk8s)&mdash;Batteries included lightweight distribution designed for ease-of-use ('ZeroOps')
-- [Minikube](https://minikube.sigs.k8s.io/docs/)&mdash;Single-node cluster designed for local development.
+- Vanilla k8s, i.e., [kubeadm](https://kubernetes.io/docs/reference/setup-tools/kubeadm/) (CNCF)&mdash;industry standard, fully-featured
+- [RKE2](https://docs.rke2.io/) (Rancher Kubernetes Engine 2)&mdash;enterprise, security & compliance
+- [K3s](https://k3s.io/) (Rancher)&mdash;Minimal resources & installation, e.g., IoT / Edge Computing
+- [MicroK8s](https://canonical.com/microk8s) (Canonical)&mdash;Batteries included, lightweight
+- [Minikube](https://minikube.sigs.k8s.io/docs/)&mdash;Single-node cluster for local development
 
 ---
 
 # K3s and Hardware Requirements
 
-For our RPi Kubernetes clusters we chose K3s, which is specifically designed to have a minimal footprint. It requires a minimum of 2 cores/2G RAM for control nodes and 1 core/512M for worker nodes.
+K3s for our RPi clusters: minimal footprint & ease of installation
 
-> In K3s, the node running the control-plane is referred to as the **Server**, and all other nodes are called **Agents**.
+Control node&mdash;Min. 2 Cores/2G RAM
+Worker node&mdash;Min. 1 Core/512M RAM
+<br>
+
+> In K3s, the node running the control-plane is referred to as the **Server**, and all other nodes **Agents**.
 
 ---
 
-# Raspberry Pi hardware and OS
+# Cluster Hardware
 
-Each of our RPi clusters has a 4GB RAM control node, and 1GB or 4GB worker nodes. We installed RPi OS Lite, a lightweight (non-GUI) version of the official Debian-based Raspberry Pi operating system, on 16/32G SD cards. Check out the [GitRepository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes/tree/main/workshop-setup) for specific details.
-
-Again, more details for RPi's, OS, and Infrastructure options can be found over at our [Extra reading](./extra-reading.md) page on Github.
+- 4x 4G RPi model 4B (or 400)
+- RPi OS Lite (Debian-based, non-GUI)
+- Select binaries and custom container images for air-gapped installations (see
+  `workshop-setup/` on GitHub)
 
 ---
 
 <!-- _class: Title -->
 <!-- _header: "" -->
-# Exercise 1 — Connecting to Your Nodes
+# Exercise 1—Connecting to Nodes
 
 ---
 
-## Connecting to Your Nodes
+# Network Information
 
 Each table should have a note with:
 
-- Raspberry Pi IP addresses
+- RPi IP addresses
 - SSH login credentials
-- WiFi credentials for the workshop router
+- Router WiFi credentials
 
-You will also need to connect your laptop to our Router - `TP-Link_AP_2A5A_01`
+Connect your laptop to Router `TP-Link_AP_2A5A_01`
+<br>
 
-> <small> While connected to the workshop router, your laptop will lose internet access. You might want to have [kubectl](https://kubernetes.io/docs/tasks/tools/) installed locally before connecting to the router. </small>
+> <small> Our router does *not* provide internet access. Consider installing [kubectl](https://kubernetes.io/docs/tasks/tools/) locally first.</small>
 
 ---
 
-## Verify SSH Access
+# Verify Connectivity
 
-Once you have connected to the router, as a group, you will need to confirm you can connect to each node:
-
+Once connected to the router, as a group check access to each node:
 ```bash
 ssh chef@192.168.x.xxx
 hostname
 exit
 ```
-
-## Test Node Connectivity
-
-From the control node, lets verify the worker nodes are reachable:
-
+And that the worker nodes are reachable from the control:
 ```bash
-ssh chef@kmaster
+ssh chef@192.168.x.xxx
 ping -c3 192.168.x.yyy
 ```
 
@@ -282,114 +306,361 @@ ping -c3 192.168.x.yyy
 
 ## Troubleshooting
 
-We should have configured static IPs through our router's DHCP settings.
-But, if a node is unreachable we will need to:
+If a node is unreachable:
 
-1. Verify the IP address
-1. Check the node is powered on
-1. Confirm `sshd` is running
-1. Configured a static IPs using `nmcli` or `nmtui`.
+1. Check powered on
+1. Check IP address
+1. Check `sshd` is running
+<br>
 
-If needed, ask one of the course facilitators to help by connecting the Raspberry Pi to a display and keyboard for debugging
+> <small>If needed, connect RPi to an external display to troubleshoot & configure IP using <code>nmcli/nmtui</code>.</small>
 
 ---
+<br>
 
-## Optional: configure Host Aliases
+## Optional: Configure Host Aliases
 
-You may want to add IP-hostname pairs to `/etc/hosts/` on your device:
-
+<!--Consider adding IP-hostnames to `/etc/hosts/` on your device:-->
+Edit `/etc/hosts` to use `ssh <user>@kmaster` etc. instead of IP addresses:
 ```text
 192.168.x.xxx    kmaster
 192.168.x.yyy    kworker1
 ```
-
-<small>
-
-You can then use `ssh <username>@kmaster`, instead of having to remember all the IP addresses.
-
-Or configure SSH aliases in `~/.ssh/config`, then connect to the desired node with `ssh kworker01`
-
+<!--You can then use `ssh <username>@kmaster`, instead of having to remember all the IP addresses.-->
+Or configure SSH aliases in <code>~/.ssh/config</code>: 
 ```text
 Host kworker01
     HostName 192.168.x.yyy
     User chef
-    IdentityFile ~/.ssh/id_ed25519
+```
+Then `ssh kworker01` would connect to the node. You can also setup SSH keys for quicker logins (e.g., `ssh-keygen -t ed25519; ssh-copy-id chef@kmaster`)
+
+---
+
+
+<!-- _class: Title -->
+<!-- _header: "" -->
+# Exercise 2—Installing K3s & Creating the Cluster
+
+---
+
+# Strategy
+
+1. Install K3s on Control
+2. Retrieve Join Token for Workers
+2. Install K3s on Workers and Join to Cluster
+
+Split into ~2 per node (pair program on one device)
+<br>
+
+
+> <small>Explore the [K3S Documentation](https://docs.k3s.io/) and ask questions!</small>
+
+---
+
+<br>
+
+# Control Node Installation 
+
+On `kmaster` (code on GitHub pages/slides):
+<small>
+
+```bash
+sudo -i
+
+chmod +x /root/k3s/k3s-arm64
+cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
+
+mkdir -p /var/lib/rancher/k3s/agent/images/
+cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
+
+chmod +x /root/k3s/install.sh
+INSTALL_K3S_SKIP_DOWNLOAD=true /root/k3s/install.sh
 ```
 
 </small>
 
 ---
 
-## Optional: Configure SSH Keys
+# Control Node Verification
 
-To avoid repeatedly entering passwords you can setup SSH keys to make login more streamlined:
-
+Check K3s is running:
 ```bash
-ssh-keygen -t ed25519
-ssh-copy-id chef@kmaster
+sudo systemctl status k3s
+```
+Check node status:
+```bash
+sudo kubectl get nodes
+``` 
+Which version of K3s was installed?
+
+---
+
+# Worker Node Join Token
+
+Everyone on a worker node will need the following from the *control:*
+```bash
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+Copy this to, e.g., `/home/chef/node-token` on the Worker and assign
+```bash
+export CONTROL_NODE=192.168.x.xxx
+export CONTROL_TOKEN=$(sudo cat /home/chef/node-token)
 ```
 
-Repeat for each node if desired.
+---
+
+# Worker Installation
+
+With `CONTROL_NODE` and `CONTROL_TOKEN` set (code on GitHub/slides):
+<small>
+```bash
+sudo -i
+
+chmod +x /root/k3s/k3s-arm64
+cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
+
+mkdir -p /var/lib/rancher/k3s/agent/images/
+cp /root/k3s/k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/
+
+chmod +x /root/k3s/install.sh \
+  INSTALL_K3S_SKIP_DOWNLOAD=true \
+  K3S_URL=https://$CONTROL_NODE:6443 \
+  K3S_TOKEN=$CONTROL_TOKEN \
+  /root/k3s/install.sh
+```
+</small>
 
 ---
 
----
+# Worker Verification
+
+As on the master, check `sudo kubectl get nodes`. All nodes should have `STATUS: ready`  but no role (see [snippet on GitHub pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster) to fix this).
+
+## Optional: kubectl without sudo
+
+It is convenient to set
+```bash
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
+to use `kubectl` without `sudo`. 
 
 ---
 
----
+<!-- _class: Title -->
+<!-- _header: "" -->
+# Exercise 3—Using kubectl
 
 ---
 
----
+# Kubectl Syntax
+
+Command-line interface for Kubernetes:
+```bash
+kubectl <command> <type> [name] [flags]
+```
+- `<command>`&mdash;action
+- `<type>`&mdash;Kubernetes resource (nodes, pods, deployments etc.)
+- `[name]`&mdash;optional resource name
+- `[flags]`&mdash;optional parameters
 
 ---
 
----
+## Optional: kubectl From Your Laptop (Requires kubectl!)
+
+Copy K3s config from the control:
+```bash
+scp chef@kmaster:/etc/rancher/k3s/k3s.yaml ~/.kube/config-k3s
+```
+Edit `server`:
+```bash
+server: https://<control-node-ip>:6443
+```
+Set `KUBECONFIG`:
+```bash
+export KUBECONFIG=~/.kube/config-k3s
+```
 
 ---
 
----
+# About: Namespaces
+
+Separate groups of cluster resources:
+```bash
+kubectl get namespaces
+```
+Can filter resources by namespace, e.g.,
+```bash
+kubectl get pods -n kube-system
+```
+Change default namespace from `default` (empty) to `kube-system`:
+```bash
+kubectl config set-context --current --namespace=kube-system
+```
 
 ---
 
+# Exploring Resources (kube-system)
+
+Get resource (`pods`, `deployments`, `services`...):
+```bash
+kubectl get <item>
+```
+`get all` may be used to list everything within a namespace
+
+Chose a pod to inspect further:
+```bash
+kubectl get <pod-name> -o yaml
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+```
+
+> <small>Commands `edit`, `patch` and `apply` may used for deployments (next session)</small>
+
 ---
 
-# Using Kubernetes in your work
+# Accessing Containers
 
-Everything you will learn today can be used in your own work. For further reading on the requirements to scale to production please see:
+`exec` can be used to run commands in a container (like docker) within a pod:
+```bash
+kubectl exec -it <pod-name> -- sh
+```
+See examples in the next session
 
-<img src='slide-assets/qr.png' width=200px class=centered-image></img>
-*<https://github.com/cloud-native-sig/stfcfeb26-intro-to-kubernetes/>*
+---
+
+# About: Storage
+
+Pods are *ephemeral.* Storing data requires
+
+- Persistent Volumes (PV) and Persistent Volume Claims (PVC), OR
+- `ConfigMaps` for configuration data, e.g., environmental variables, CLI arguments
+<br>
+
+> <small>Examples of PV/PVC in next session; for `ConfigMaps` see [Updating with ConfigMaps](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/lesson3-config-maps/)</small>
+
+
+---
+
+# Section 1&mdash;Summary
+
+So far:
+- Introduced Kubernetes architecture (Declarative) and design (Control/Workers, Distributions)
+- Built RPi Cluster with K3s
+- Setup `kubectl` to inspect Kubernetes resources
+<br>
+
+Next: Using your cluster!
+
+<!--(Deployments to explore networking and monitoring, resource management and recovering, storage and jobs)-->
+
+---
+
+
+<!-- _class: Title -->
+<!-- _header: "" -->
+# Section 2—Using Your Cluster
+
+
+---
+
+<br>
+
+# Prep: Get Demo Deployments
+Clone repository to your laptop if you haven't already:
+<small> 
+```bash
+git clone https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes
+```
+
+</small>
+
+Reconnect to `TP-Link_AP_2A5A_01` and copy `resources` to your *node*:
+```bash
+scp -r resources/ chef@192.168.x.xxx:~/
+```
+<!--In following we assume `~/resources` location-->
+
+Import custom images into Kubernetes:
+```bash
+sudo k3s ctr images import /root/workshop-images.tar
+```
+<!--<img src="./slide-assets/github-pages-qr.png" width=250 height=250 style="position:absolute;top:10px;right:225px;" alt="github pages QR code"></img>-->
+
+---
+
+# About: Deployments
+
+- Defines target *state* of your app (which container images, how many replica pods to run them)
+- Kubernetes works to reconcile actual state with this target
+- Deployed from a `manifest.yaml` using `apply`:
+```bash
+kubectl apply -f manifest.yaml
+```
+
+Kubernetes handles the rest!
+
+<br>
+
+> <small> `kubectl rollout restart deployment/deployment-name` can be used to initiate a *rolling restart* of a deployment if needed </small>
+
+--- 
+
+<h1 style="position:absolute;top:115px;left:60px;">Exercises: Over to You!</h1>
+
+<img src="./slide-assets/github-pages-qr.png" width=250 height=250 style="position:absolute;top:10px;right:225px;" alt="github pages QR code"></img>
+<img src="./slide-assets/github-pages-toc.png" height=500 style="position:absolute;left:50px;top:200px;" alt="github pages exercises"></img>
+
+<div style="position:absolute;left:550px;top:300px;width:600px;border:2px solid #cc0000;border-radius:6px;padding:12px;">
+
+**Tips**
+
+&#x2022; Can be done in any order
+&#x2022; Work on *different* exercises in pairs
+&#x2022; Use namespaces and cleanup resources (see Exercises)
+
+</div>
+
+---
+
+# Section 2&mdash;Summary
+
+- Application *deployments* are specified by manifest files
+- Services provide networking endpoints
+- Examples with networking & monitoring, resource management & recovery, storage & jobs
+<br>
+
+> <small>Feel free to continue working on the exercises at home (e.g., using Minikube)</small>
 
 ---
 
 # Knowledge Exchange opportunities
 
-## Cloud Native SIG
+## Cloud_Native SIG
 
-This workshop was brought to you by the Cloud-Native SIG, with support from the **Software Sustainability Institute**
+This workshop was brought to you by the Cloud-Native SIG and CAKE, with support from the Software Sustainability Institute
 
 &nbsp;&nbsp;&nbsp;**Join us:**
 
-- ✉️ <cloudnative-sig@jiscmail.ac.uk>
-- 🌐 cloudnative-sig.ac.uk
+- ✉️  [cloudnative-sig@jiscmail.ac.uk](https://www.jiscmail.ac.uk/cgi-bin/wa-jisc.exe?SUBED1=CLOUDNATIVE-SIG) 
+- 🌐 [cloudnative-sig.ac.uk](https://cloudnative-sig.ac.uk)
 
-<img src='slide-assets/SSI-LOGO.png' ></img>
 
 ---
 
-# Knowledge exchange opportunities
+# Knowledge Exchange Opportunities
 
-## CAKE Fellowship
+### CAKE Fellowship
 
-Read more here - <https://www.cake.ac.uk/ke-fellowships/cohort1>
+Read more: <https://www.cake.ac.uk/ke-fellowships/cohort1>
 <br>
 
-## SCD Kubernetes colaboration group
+### SCD Kubernetes collaboration group
 
-Contact Lewis - <lewis.sampson@stfc.ac.uk> for more information.
+Contact Lewis <lewis.sampson@stfc.ac.uk> for more information.
 
 ---
 
-# Thanks for your participation
+<!-- _class: Title -->
+<!-- _header: "" -->
+# Thank you for your participation
