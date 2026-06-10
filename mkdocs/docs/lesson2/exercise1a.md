@@ -1,27 +1,33 @@
-# Exercise 1 — Services and networking
+# Exercise 1a — Services and networking
 
 This section will focus on creating an nginx deployment, looking at scaling pods, connecting services and testing cluster networks.
 
 ## Part 1 — NGINX deployment
 
-We’ll begin by creating a Deployment running a single nginx pod.
+We’ll begin by creating a  deployment running a single nginx pod:
 
 ```bash
-kubectl create namespace nginx
+kubectl create namespace nginx-demo
 kubectl apply -f $RES_HOME/nginx-deployment.yaml
-kubectl config set-context --current --namespace=nginx
+```
+Note `nginx-deployment.yaml` specifies a deployment called `nginx` in a namespace `nginx-demo`, which must be created
+first. For this exercise, it will be convenient to set `kubectl` to target
+this namespace: 
+```bash
+kubectl config set-context --current --namespace=nginx-demo
 ```
 
-and inspect the running pod:
-
+You can now inspect the pod that started running with the deployment using
+simply:
 ```bash
 kubectl get pods -o wide
 ```
 
-You should see a pod running with its own internal cluster IP. Even simple containers produce logs that can be inspected with kubectl.
+You should see a pod running with its own internal cluster IP (it may take a few seconds to be assigned). 
+Even simple containers produce logs that can be inspected with `kubectl`:
 
 ```bash
-kubectl logs deployment/nginx-demo
+kubectl logs deployment/nginx
 ```
 
 ### Scaling the Deployment
@@ -31,7 +37,7 @@ One of Kubernetes’ core strengths is scaling workloads horizontally.
 We can easily scale the deployment from 1 replica to 3:
 
 ```bash
-kubectl scale deployment nginx-demo --replicas=3
+kubectl scale deployment nginx --replicas=3
 ```
 
 Watch the new pods appear:
@@ -48,9 +54,9 @@ Notice:
 
 If a pod fails, Kubernetes will attempt to replace it automatically.
 
-## Part 2 — Exposing the Deployment
+## Part 2 — Creating a Cluster Service
 
-Right now, the pods are isolated inside the cluster. To make them reachable, we create a Kubernetes Service.
+Right now, the pods are completely isolated. To make them reachable from within the cluster virtual network, we create a Kubernetes Service.
 
 ```bash
 kubectl apply -f $RES_HOME/nginx-service.yaml 
@@ -64,11 +70,8 @@ NAME            TYPE        CLUSTER-IP      PORT(S)
 nginx-service   ClusterIP   10.43.x.xxx    80/TCP
 ```
 
-The Service provides:
-
-* a stable virtual IP,
-* internal DNS resolution,
-* and load balancing across the nginx pods.
+The Service provides a stable virtual IP, internal DNS resolution 
+and load balancing across the nginx pods.
 
 Importantly, the Service remains stable even if pods are recreated.
 
@@ -99,6 +102,9 @@ kubectl apply -f $RES_HOME/busybox.yaml
 ```
 
 This launches an interactive shell inside the cluster.
+
+!!! info
+    BusyBox packages a large number of common 'NIX utilities into a single binary. You can find out about the project at [busybox.net](https://busybox.net/about.html).
 
 ### DNS Resolution
 
@@ -146,6 +152,34 @@ To figure out which pod is related to which hostname, inspect the pod informatio
 kubectl get pods -o wide
 ```
 
+## Part 4 — Exposing the Service Externally
+So far our Service is only reachable from within the cluster.
+To expose it on the router's network, the primitive approach is to setup a port forwarding rule for each node. 
+This can be done editing `nginx-service.yaml`, changing `type: ClusterIP` to `type: NodePort` and adding a `nodePort` field:
+```bash
+ports:
+- port: 80
+  targetPort: 80
+  nodePort: 30080
+type: NodePort
+```
+You can now reach the service using any node's address:
+```bash
+curl kworker1:30080
+```
+Note that you must target a specific node&mdash;if that node goes down, the
+endpoint becomes unreachable.  For a more robust solution, a dedicated Ingress
+controller is created that sits in front of the nodes and provides a single
+entry point.
+
+## Clean-up
+
+Let's remove the deployment and reset our `kubectl` context:
+```bash
+kubectl delete deployment nginx
+kubectl config set-context --curent --namespace=default
+``` 
+ 
 ## Summary
 
 In this exercise you:
@@ -154,11 +188,9 @@ In this exercise you:
 * scaled it across multiple pods,
 * exposed it using a Service,
 * explored Kubernetes DNS,
-* and tested networking from inside the cluster using BusyBox.
+* tested networking from inside the cluster using BusyBox, and outside via a
+  `NodePort`
 
-These ideas form the foundation for more advanced topics such as:
+These ideas form the foundation for more advanced topics including ingress
+controllers, service meshes, observability and multi-service applications.
 
-* ingress controllers,
-* service meshes,
-* observability,
-* and multi-service applications.

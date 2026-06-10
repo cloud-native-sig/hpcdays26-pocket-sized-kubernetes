@@ -20,12 +20,12 @@ kubectl get nodes
 kubectl describe node kworker1
 ```
 
-## Optional setup: Access the Cluster From Your Laptop
+## Optional: Access The Cluster Directly From Your Laptop
 
 Copy the Kubernetes configuration file:
 
 ```bash
-$ scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
+scp chef@kmaster:/etc/rancher/k3s/k3s.yaml \
     ~/.kube/config-k3s
 ```
 
@@ -41,13 +41,13 @@ After exporting the config to your local environment:
 export KUBECONFIG=~/.kube/config-k3s
 ```
 
-You can now run all kubectl commands from your computer:
+You can now run all kubectl commands from your own computer:
 
 ```bash
 kubectl get nodes
 ```
 
-For additional security you should typically limit access to this new file:
+For additional security you should typically limit access to the config file:
 
 ```bash
 chmod 600 ~/.kube/config-k3s
@@ -95,13 +95,14 @@ This includes:
 * Services
 * Jobs
 
-> `kubectl get all` does not quite show all the resources, but it does highlight the main ones.
+!!! Tip
+    `kubectl get all` does not quite show all the resources, but it does highlight the main ones.
 
 ---
 
 ### Resource Requests and Limits
 
-Still using `kubectl` we can investigate exactly how and what is running on the cluster at this point.
+Continuing with `kubectl`, we can investigate exactly how and what is running on the cluster at this point.
 
 ### Inspecting Pods
 

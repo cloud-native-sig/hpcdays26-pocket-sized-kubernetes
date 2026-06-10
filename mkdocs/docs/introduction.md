@@ -13,12 +13,11 @@ By the end of the tutorial, you will have:
 - Gained practical skills transferable to HPC and cloud environments
 
 ## Who We Are
-
-This workshop is delivered by the **Cloud Native Special Interest Group** (SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE) partnership. We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure. You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
+This tutorial is delivered by the **Cloud-Native Special Interest Group** (CN-SIG) with support from the **Computational Abilities Knowledge Exchange** (CAKE) partnership. We're a new community of research software engineers and technical professionals exploring cloud-native technologies in research software and digital infrastructure. You can find more about the SIG and how to get involved at [https://cloudnative-sig.ac.uk/](https://cloudnative-sig.ac.uk/).
 
 ## Following Along at Home
 
-All code and resources used in this tutorial are available on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to follow along at home or perhaps run your own workshop, you can start by reading our [extra reading section.](./extra-reading.md) 
+All code and resources used in this tutorial are available on the [tutorial's GitHub repository](https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes). If you want to follow along at home or perhaps run your own tutorial, you can start by reading our [extra reading section.](./extra-reading.md) 
 
 ## Introduction to Kubernetes
 
@@ -60,14 +59,14 @@ For more on this see, [our extra reading](./extra-reading.md) section on Kuberne
 
 Kubernetes follows a **control plane + worker nodes** architecture:
 
-![The components of a Kubernetes Cluster](assets/kubernetes-overview.png)
+![The components of a Kubernetes Cluster](assets/kubernetes-overview.png){.on-glb }
 
 *The components of a Kubernetes cluster. [Overview Components](https://kubernetes.io/docs/concepts/overview/components/)*
 
 ### Key Components
 
 - **Node**: A physical or virtual machine in the cluster
-- **Pod**: The smallest deployable unit consisting of one more containers that share storage/network
+- **Pod**: The smallest deployable unit consisting of one or more containers that share storage/network
 - **Deployment**: Manages a set of identical pods (defines desired state)
 - **Service**: Stable network endpoint to access pods 
 - **Control Plane**: The brain of the cluster, makes decisions based on the current cluster state, accessible via the **API Server**

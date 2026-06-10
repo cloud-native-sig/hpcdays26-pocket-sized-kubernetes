@@ -86,13 +86,8 @@ Service](https://azure.microsoft.com/en-us/products/kubernetes-service/).
 
 `metrics-server` is a lightweight Kubernetes component that collects
 resource usage information from nodes and pods.
-
-It provides metrics such as:
-
-- CPU usage
-- Memory usage
-
-These metrics are exposed through the Kubernetes Metrics API and are
+It provides metrics such as CPU and memory usage.
+These are exposed through the Kubernetes Metrics API and are
 used by commands such as:
 
 ```bash
@@ -102,14 +97,9 @@ kubectl top pods
 
 Unlike Prometheus, `metrics-server` is intentionally lightweight and
 only keeps short-term resource metrics.
+It is designed primarily for quick cluster monitoring, autoscaling and operational visibility.
 
-It is designed primarily for:
-
-- quick cluster monitoring,
-- autoscaling,
-- and operational visibility.
-
-The metrics pipeline looks roughly like this:
+The pipeline looks roughly like this:
 
 ```text
 Pod / Node
@@ -143,7 +133,7 @@ This deploys:
 - the metrics-server Deployment,
 - RBAC permissions,
 - API services,
-- and required Kubernetes resources.
+- other required Kubernetes resources.
 
 Verifying the metrics-server deployment with:
 

@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: iperf-server
-  namespace: resource-demo
+  namespace: iperf-demo
 
 spec:
   replicas: 1
@@ -38,7 +38,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: iperf3-service
-  namespace: resource-demo
+  namespace: iperf-demo
 
 spec:
   selector:

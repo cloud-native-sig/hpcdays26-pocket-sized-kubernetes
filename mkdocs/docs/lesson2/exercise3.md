@@ -2,27 +2,17 @@
 
 At the end of the first Lesson, we discussed how most workloads deployed are *ephemeral*. If a pod is deleted and recreated, any files written inside the container are typically lost.
 
-In this exercise we will explore how Kubernetes manages persistent storage using:
-
-- Persistent Volumes (PV)
-- Persistent Volume Claims (PVC)
-- Stateful workloads
+In this exercise we will explore how persistence storage is managed in Kubernetes through Persistent Volumes (PV)
+and Persistent Volume Claims (PVC), enabling stateful workloads.
 
 We will:
-
-- Create persistent storage,
-- Attach it to a pod,
-- Verify data survives container recreation,
-- Explore how Kubernetes separates compute from storage.
+- Create persistent storage
+- Attach it to a pod
+- Verify data survives container recreation
 
 ## Part 1 — Why Persistent Storage Matters
 
-In all contexts containers are designed to be disposable. This is extremely useful for scalability and recovery, but many real applications still need durable storage. This storage can be used for:
-
-- shared datasets and databases,
-- user uploads and scientific outputs,
-- workflow checkpoints,
-- logging and debugging.
+In all contexts containers are designed to be disposable. This is extremely useful for scalability and recovery, but many real applications still need durable storage. This storage could be used for shared datasets, databases, scientific outputs, logging, etc.
 
 Kubernetes handles this by abstracting storage into separate resources.
 
@@ -32,19 +22,14 @@ Kubernetes handles this by abstracting storage into separate resources.
 
 A Persistent Volume represents storage available to the cluster.
 
-Examples include:
-
-- local disks,
-- network filesystems,
-- cloud block storage,
-- or parallel filesystems.
+Examples of the type of storage backing a PV include local disks, network filesystems,
+cloud block storage and parallel filesystems.
 
 #### Persistent Volume Claim (PVC)
 
 A Persistent Volume Claim is a request for storage made by a workload.
 
 Pods generally consume PVCs rather than interacting with PVs directly.
-
 This separation allows storage to be managed independently from applications.
 
 ### Inspecting the Local Path Provisioner
@@ -67,9 +52,11 @@ You should see something similar to:
 local-path (default)
 ```
 
-This provisioner dynamically creates storage directories on cluster nodes.
+This provisioner dynamically creates storage directories on cluster nodes using
+the local filesystem.
 
-It is lightweight and ideal for small clusters and workshops. For production clusters, you can use CSI-backed file storage, NFS file storage or vendor distributed storage.  
+!!! tip
+    *Local Path* is lightweight and ideal for small clusters and workshops. For production clusters, you can use CSI-backed file storage, NFS file storage or cloud vendor storage.  
 
 ## Part 2 — Creating a Persistent Volume Claim
 
@@ -77,12 +64,14 @@ In Kubernetes, applications usually request storage through a Persistent Volume 
 
 The cluster then provides storage that satisfies the request.
 
-!!! tip  
-    Before we start, move to the `resource-demo` namespace.
+Our demo deployment wants a `storage-demo` namespace, so we need to make sure
+it has been created (the command will fail harmlessly if it already exists):
+```bash
+kubectl create namespace storage-demo
+kubectl config set-context --current --namespace=storage-demo
+```
 
-    `kubectl config set-context --current --namespace=resource-demo`
-
-We have written a yaml manifest for our demo:
+The yaml specification for the PVC is `pvc.yaml`. Apply this now:
 
 ```bash
 kubectl apply -f $RES_HOME/pvc.yaml
@@ -109,7 +98,8 @@ The claim will not automatically bind since its the `local-path-provisioner` is 
 
 ## Part 3 — Using Persistent Storage in a Pod
 
-Now we will mount the PVC into a container.
+Now we will mount the PVC into a container using the `storage-pod.yaml` Pod
+specification:
 
 ```bash
 kubectl apply -f $RES_HOME/storage-pod.yaml
@@ -177,7 +167,10 @@ The previous data should still be present and you'll notice a gap in the timesta
 
 This is demonstrates the key difference between ephemeral container storage and the persistent Kubernetes volumes.
 
-### Persistent Workloads with Deployments
+## Persistent Workloads with Deployments
+
+> This part extends from the deployment in [Exercise 1a](./exercise1a.md),
+> but can be performed independently.
 
 Most real applications use Deployments or StatefulSets rather than standalone pods.
 
@@ -187,16 +180,25 @@ For this demonstration we are going to recreate our NGINX deployment but with a 
 kubectl apply -f $RES_HOME/nginx-deployment-persist.yaml
 ```
 
-At this point we need to consider namespaces. PVC's are not accessible across namespaces, so we have created a new PVC in the NGINX namespace from the single manifest.
+!!! warning
+    To avoid conflict with anyone going through Exercise 1a, make sure you remain in the `storage-demo` namespace for this deployment.
 
-Noting that the orginal PVC is RWO, multiple pods could not bind to the same volume. The new nginx pvc will allow all the replicas to access the data.
+The deployment defines a new PVC in the namespace, `nginx-pvc`. Note while our
+first PVC had an `accessMode` of
+`ReadWriteOnce` or *RWO*, meaning 
+the volume can be mounted a read-write by a single *node*, the new one has 
+`ReadWriteMany` (RWM), which is critical to allow replicas spawned on different
+nodes to have access to the storage.
 
-#### Writing Persistent Content
+!!! info
+    You can read about the different possible *Access Modes* (RWO, ROX, RWX and RWOP) for PVCs on the Kubernetes Documentation on [persistent-volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
+
+### Writing Persistent Content
 
 Lets explore writing to this volume. Execute into a nginx pod:
 
 ```bash
-kubectl exec -it deploy/nginx-demo -n nginx -- sh
+kubectl exec -it deploy/nginx -- sh
 ```
 
 Create a webpage:
@@ -209,13 +211,14 @@ Exit the shell.
 
 ---
 
-#### Optional: Expose the Deployment
+### Optional: Expose the Deployment to the Cluster
 
-Another method for creating a service is the expose command. Here we are creating a new service for our nginx deployment. You can still use the existing service.
-
+In Exercise 1a we declared a service with type `ClusterIP` via a `.yaml` file to allow access to
+the NGINX server from within the cluster. Another way to achieve this is
+using the expose command:
 ```bash
-kubectl expose deployment -n nginx nginx-demo \
-    --port=80 \
+kubectl expose deployment nginx \
+    --port=8081 \
     --target-port=80 \
     --name=persistent-nginx
 ```
@@ -236,18 +239,18 @@ You should see:
 <h1>Hello Persistent Kubernetes</h1>
 ```
 
-#### Demonstrating Persistence During Failure
+### Demonstrating Persistence During Failure
 
 Delete the nginx pod:
-
 ```bash
-kubectl get pods -n nginx
-kubectl delete pod -n nginx <pod-name>
+kubectl delete pods -n storage-demo -l app=nginx
 ```
+Kubernetes will create a replacement pods automatically.
 
-Kubernetes will create a replacement pod automatically.
+!!! tip
+    `-l app=nginx` is an example of matching using a *label selector*. Labels and selectors and an immensely useful way to make targeted changes to deployments and other resources in Kubernetes.  
 
-Once the new pod is running:
+Once a new `nginx` pod is running:
 
 ```bash
 kubectl run curl-test \
@@ -256,41 +259,36 @@ kubectl run curl-test \
     --restart=Never -- \
     curl http://persistent-nginx.nginx.svc.cluster.local/persist.html
 ```
-
 The webpage should still exist.
-
 Even though the original container disappeared, the pod changed, and the workload restarted. The persistent volume preserved the application data.
+
+## Clean-up
+Remove any of the resources you used in this session, including the service
+created by the expose command (if you ran it):
+```
+kubectl delete -f $RES_HOME/pvc.yaml -f $RES_HOME/storage-pod.yaml -f $RES_HOME/nginx-deployment-persist.yaml
+kubectl detele service persistent-nginx
+```
+You can then reset your configured `kubectl` namespace:
+```
+kubectl config set-context --curent --namespace=default
+```
 
 ## Summary
 
-In this exercise you:
+Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
 
-- created Persistent Volume Claims,
-- mounted persistent storage into pods,
-- observed data surviving pod deletion,
-- and explored how persistent workloads behave in Kubernetes.
-
-You also saw another important Kubernetes principle:
+In this exercise you saw how persistent workloads are possible 
+using Persistent Volume Claims mounted into pods that survive pod recreation or
+deletion. Note the general principle in Kubernetes: 
 
 > Containers are usually disposable, but storage often is not.
 
-Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.
+While essential for many workloads, persistent storage does introduce additional complexity
+to your cluster, often bringing
+scheduling constraints, node locality, and considerations regarding performance and failure recovery behaviour.
 
-As mentioned earlier, persistent storage is essential for many workloads, including:
-
-- shared datasets and databases,
-- user uploads and scientific outputs,
-- workflow checkpoints,
-- logging and debugging.
-
-However, storage in Kubernetes introduces additional complexity:
-
-- scheduling constraints,
-- node locality,
-- performance considerations,
-- and failure recovery behaviour.
-
-### Optional Exploration
+## Optional: Node Storage Paths
 
 Inspect where the local-path storage exists on the node:
 
@@ -304,10 +302,5 @@ You can ssh into the node and inspect this path. You'll also notice paths simila
 /var/lib/rancher/k3s/storage/
 ```
 
-On a production environment, this could instead map to:
-
-- NFS,
-- Ceph,
-- Lustre,
-- BeeGFS,
-- or cloud block storage.
+On a production environment, this could instead map to NFS, Ceph, Lustre, BeeGFS
+etc.

@@ -3,7 +3,7 @@ kind: Pod
 
 metadata:
   name: storage-pod
-  namespace: resource-demo
+  namespace: storage-demo
 
 spec:
   containers:
@@ -26,6 +26,5 @@ spec:
 
   volumes:
     - name: workshop-storage
-      namespace: resource-demo
       persistentVolumeClaim:
         claimName: workshop-pvc

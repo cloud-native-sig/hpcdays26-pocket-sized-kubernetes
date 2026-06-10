@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: nginx-demo
-  namespace: nginx
+  name: nginx
+  namespace: storage-demo
 
 spec:
   replicas: 3
 
   selector:
     matchLabels:
-      app: nginx-demo
+      app: nginx
 
   template:
     metadata:
       labels:
-        app: nginx-demo
+        app: nginx
 
     spec:
       containers:
@@ -42,11 +42,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nginx-pvc
-  namespace: nginx
+  namespace: storage-demo
 
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 
   resources:
     requests:
