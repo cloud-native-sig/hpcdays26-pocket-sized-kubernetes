@@ -222,11 +222,39 @@ Other critical components include the Controller Manager and Scheduler, and etcd
 **Declarative:** define target state of applications&mdash;Kubernetes works to achieve it
 
 Example: On *node failure* Kubernetes distributes workload to other nodes
-
-GitOps ready: Infrastructure as code (`.yaml`), workflow managers, e.g., [ArgoCD](https://argoproj.github.io/cd/)
+<br>
 <br>
 
-> Further discussion: [Introduction to Kubernetes workshop material](https://cloud-native-sig.github.io/stfcfeb26-intro-to-kubernetes/)
+---
+
+# How Kubernetes Works
+
+**Declarative:** define target state of applications&mdash;Kubernetes works to achieve it
+
+Example: On *node failure* Kubernetes distributes workload to other nodes
+<br>
+<br>
+
+<div style="position:absolute; bottom:220px;right:550px; border: 4px solid red;"><p style="margin:15px;">Reconciliation model</p></div>
+
+
+---
+
+# How Kubernetes Works
+
+**Declarative:** define target state of applications&mdash;Kubernetes works to achieve it
+
+Example: On *node failure* Kubernetes distributes workload to other nodes
+<br>
+<br>
+
+<div style="position:absolute; bottom:220px;right:550px; border: 4px solid red;"><p style="margin:15px;">Reconciliation model</p></div>
+
+<div style="position:absolute; bottom:120px; left:80px;">
+
+> GitOps: Infrastructure as code (`.yaml`), workflow managers, e.g., [ArgoCD](https://argoproj.github.io/cd/)
+
+</div>
 
 ---
 
