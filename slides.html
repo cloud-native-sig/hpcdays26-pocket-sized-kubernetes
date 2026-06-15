@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="POSIX"><head><title>Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters</title><meta property="og:title" content="Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><style>@media screen{body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{appearance:none;background-color:initial;border:0;color:inherit;cursor:pointer;font-size:inherit;opacity:.8;outline:none;padding:0;transition:opacity .2s linear;-webkit-tap-highlight-color:transparent}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:disabled{cursor:not-allowed;opacity:.15!important}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover{opacity:1}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:active{opacity:.6}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:not(:disabled){transition:none}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-prev{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNNjggOTAgMjggNTBsNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-next{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJtMzIgOTAgNDAtNDAtNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNNDAgNzBIMjBWNTBtMjAgMEwyMCA3MG00MC00MGgyMHYyMG0tMjAgMCAyMC0yMCIgY2xhc3M9ImEiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen]{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNMjAgNTBoMjB2MjBtLTIwIDAgMjAtMjBtNDAgMEg2MFYzMG0yMCAwTDYwIDUwIiBjbGFzcz0iYSIvPjwvc3ZnPg==")}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNODcuOCA0Ny41Qzg5IDUwIDg3LjcgNTIgODUgNTJIMzVhOC43IDguNyAwIDAgMS03LjItNC41bC0xNS42LTMxQzExIDE0IDEyLjIgMTIgMTUgMTJoNTBhOC44IDguOCAwIDAgMSA3LjIgNC41ek02MCA1MnYzNm0tMTAgMGgyME00NSA0MmgyMCIvPjwvc3ZnPg==") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-bigger{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODBNNTIgOTBWMTAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-smaller{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}}@keyframes __bespoke_marp_transition_reduced_outgoing__{0%{opacity:1}to{opacity:0}}@keyframes __bespoke_marp_transition_reduced_incoming__{0%{mix-blend-mode:plus-lighter;opacity:0}to{mix-blend-mode:plus-lighter;opacity:1}}.bespoke-marp-note,.bespoke-marp-osc,.bespoke-progress-parent{display:none;transition:none}@media screen{::view-transition-group(*){animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-timing-function:ease}::view-transition-new(*),::view-transition-old(*){animation-delay:0s;animation-direction:var(--marp-bespoke-transition-animation-direction,normal);animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-fill-mode:both;animation-name:var(--marp-bespoke-transition-animation-name,var(--marp-bespoke-transition-animation-name-fallback,__bespoke_marp_transition_no_animation__));mix-blend-mode:normal}::view-transition-old(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_outgoing__;animation-timing-function:ease}::view-transition-new(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_incoming__;animation-timing-function:ease}::view-transition-new(root),::view-transition-old(root){animation-timing-function:linear}::view-transition-new(__bespoke_marp_transition_osc__),::view-transition-old(__bespoke_marp_transition_osc__){animation-duration:0s!important;animation-name:__bespoke_marp_transition_osc__!important}::view-transition-new(__bespoke_marp_transition_osc__){opacity:0!important}.bespoke-marp-transition-warming-up::view-transition-group(*),.bespoke-marp-transition-warming-up::view-transition-new(*),.bespoke-marp-transition-warming-up::view-transition-old(*){animation-play-state:paused!important}body,html{height:100%;margin:0}body{background:#000;overflow:hidden}svg.bespoke-marp-slide{content-visibility:hidden;opacity:0;pointer-events:none;z-index:-1}svg.bespoke-marp-slide:not(.bespoke-marp-active) *{view-transition-name:none!important}svg.bespoke-marp-slide.bespoke-marp-active{content-visibility:visible;opacity:1;pointer-events:auto;z-index:0}svg.bespoke-marp-slide.bespoke-marp-active.bespoke-marp-active-ready *{animation-name:__bespoke_marp__!important}@supports not (content-visibility:hidden){svg.bespoke-marp-slide[data-bespoke-marp-load=hideable]{display:none}svg.bespoke-marp-slide[data-bespoke-marp-load=hideable].bespoke-marp-active{display:block}}}@media screen and (prefers-reduced-motion:reduce){svg.bespoke-marp-slide *{view-transition-name:none!important}}@media screen{[data-bespoke-marp-fragment=inactive]{visibility:hidden}body[data-bespoke-view=""] .bespoke-marp-parent,body[data-bespoke-view=next] .bespoke-marp-parent{inset:0;position:absolute}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc{background:#000000a6;border-radius:7px;bottom:50px;color:#fff;contain:paint;display:block;font-family:Helvetica,Arial,sans-serif;font-size:16px;left:50%;line-height:0;opacity:1;padding:12px;position:absolute;touch-action:manipulation;transform:translateX(-50%);transition:opacity .2s linear;-webkit-user-select:none;user-select:none;white-space:nowrap;will-change:transform;z-index:1;view-transition-name:__bespoke_marp_transition_osc__}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>*,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>*{margin-left:6px}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>:first-child,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>:first-child{margin-left:0}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span{opacity:.8}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page]{display:inline-block;min-width:140px;text-align:center}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev]{height:32px;line-height:32px;width:32px}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive{cursor:none}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc{opacity:0;pointer-events:none}body[data-bespoke-view=""] svg.bespoke-marp-slide,body[data-bespoke-view=next] svg.bespoke-marp-slide{height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent{background:#222;display:flex;height:5px;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent+.bespoke-marp-parent{top:5px}body[data-bespoke-view=""] .bespoke-progress-parent .bespoke-progress-bar{background:#0288d1;flex:0 0 0;transition:flex-basis .2s cubic-bezier(0,1,1,1)}body[data-bespoke-view=next]{background:#0000}body[data-bespoke-view=presenter]{background:#161616}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container{display:grid;font-family:Helvetica,Arial,sans-serif;grid-template:"current dragbar next" minmax(140px,1fr) "current dragbar note" 2fr "info    dragbar note" 3em;grid-template-columns:minmax(3px,var(--bespoke-marp-presenter-split-ratio,66%)) 0 minmax(3px,1fr);height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent{grid-area:current;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide{height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide.bespoke-marp-active{filter:drop-shadow(0 3px 10px rgba(0,0,0,.5))}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container{background:#0288d1;cursor:col-resize;grid-area:dragbar;margin-left:-3px;opacity:0;position:relative;transition:opacity .4s linear .1s;width:6px;z-index:10}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container:hover{opacity:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container.active{opacity:1;transition-delay:0s}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container{background:#222;cursor:pointer;display:none;grid-area:next;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container iframe.bespoke-marp-presenter-next{background:#0000;border:0;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container{background:#222;color:#eee;grid-area:note;position:relative;z-index:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper{display:block;inset:0;position:absolute}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons{background:#000000a6;border-radius:4px;bottom:0;display:flex;gap:4px;margin:12px;opacity:0;padding:6px;pointer-events:none;position:absolute;right:0;transition:opacity .2s linear}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons:focus-within,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper:focus-within+.bespoke-marp-presenter-note-buttons,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container:hover .bespoke-marp-presenter-note-buttons{opacity:1;pointer-events:auto}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note{box-sizing:border-box;font-size:calc(1.1em*var(--bespoke-marp-note-font-scale, 1));height:calc(100% - 40px);margin:20px;overflow:auto;padding-right:3px;white-space:pre-wrap;width:calc(100% - 40px);word-wrap:break-word;scrollbar-color:#eeeeee80 #0000;scrollbar-width:thin}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar{width:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-track{background:#0000}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-thumb{background:#eeeeee80;border-radius:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note:empty{pointer-events:none}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:first-child{margin-top:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:last-child{margin-bottom:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container{align-items:center;box-sizing:border-box;color:#eee;display:flex;flex-wrap:nowrap;grid-area:info;justify-content:center;overflow:hidden;padding:0 10px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{box-sizing:border-box;display:block;padding:0 10px;white-space:nowrap;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page{order:2;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page .bespoke-marp-presenter-info-page-text{display:inline-block;min-width:120px;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time{color:#999;order:1;text-align:left}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{color:#999;order:3;text-align:right}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer:hover{cursor:pointer}}@media print{.bespoke-marp-presenter-info-container,.bespoke-marp-presenter-next-container,.bespoke-marp-presenter-note-container{display:none}}</style><style>div#\:\$p > svg > foreignObject > section{width:1280px;height:720px;box-sizing:border-box;overflow:hidden;position:relative;scroll-snap-align:center center;-webkit-text-size-adjust:100%;text-size-adjust:100%}div#\:\$p > svg > foreignObject > section::after{bottom:0;content:attr(data-marpit-pagination);padding:inherit;pointer-events:none;position:absolute;right:0}div#\:\$p > svg > foreignObject > section:not([data-marpit-pagination])::after{display:none}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1){font-size:2em;margin-block:0.67em}div#\:\$p > svg > foreignObject > section video::-webkit-media-controls{will-change:transform}@page {size:1280px 720px;margin:0}@media print{html, body{background-color:#fff;margin:0;page-break-inside:avoid;break-inside:avoid-page}div#\:\$p > svg > foreignObject > section{page-break-before:always;break-before:page}div#\:\$p > svg > foreignObject > section, div#\:\$p > svg > foreignObject > section *{-webkit-print-color-adjust:exact!important;animation-delay:0s!important;animation-duration:0s!important;color-adjust:exact!important;print-color-adjust:exact!important;transition:none!important}div#\:\$p > svg[data-marpit-svg]{display:block;height:100vh;width:100vw}}div#\:\$p > svg > foreignObject > :where(section){container-type:size}div#\:\$p > svg > foreignObject > section img[data-marp-twemoji]{background:transparent;height:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;width:1em}/*!
+<!DOCTYPE html><html lang="C"><head><title>Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters</title><meta property="og:title" content="Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><style>@media screen{body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{appearance:none;background-color:initial;border:0;color:inherit;cursor:pointer;font-size:inherit;opacity:.8;outline:none;padding:0;transition:opacity .2s linear;-webkit-tap-highlight-color:transparent}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:disabled,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:disabled{cursor:not-allowed;opacity:.15!important}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover{opacity:1}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:active,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:active{opacity:.6}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button:hover:not(:disabled),body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button:hover:not(:disabled){transition:none}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-prev{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNNjggOTAgMjggNTBsNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button.bespoke-marp-presenter-info-page-next{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJtMzIgOTAgNDAtNDAtNDAtNDAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNNDAgNzBIMjBWNTBtMjAgMEwyMCA3MG00MC00MGgyMHYyMG0tMjAgMCAyMC0yMCIgY2xhc3M9ImEiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button.exit[data-bespoke-marp-osc=fullscreen]{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmF7ZmlsbDpub25lO3N0cm9rZTojZmZmO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6NXB4fTwvc3R5bGU+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgeD0iMTAiIHk9IjIwIiBjbGFzcz0iYSIgcng9IjUuNjciLz48cGF0aCBkPSJNMjAgNTBoMjB2MjBtLTIwIDAgMjAtMjBtNDAgMEg2MFYzMG0yMCAwTDYwIDUwIiBjbGFzcz0iYSIvPjwvc3ZnPg==")}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter]{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNODcuOCA0Ny41Qzg5IDUwIDg3LjcgNTIgODUgNTJIMzVhOC43IDguNyAwIDAgMS03LjItNC41bC0xNS42LTMxQzExIDE0IDEyLjIgMTIgMTUgMTJoNTBhOC44IDguOCAwIDAgMSA3LjIgNC41ek02MCA1MnYzNm0tMTAgMGgyME00NSA0MmgyMCIvPjwvc3ZnPg==") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-bigger{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODBNNTIgOTBWMTAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button.bespoke-marp-presenter-note-smaller{background:#0000 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1IiBkPSJNMTIgNTBoODAiLz48L3N2Zz4=") no-repeat 50%;background-size:contain;overflow:hidden;text-indent:100%;white-space:nowrap}}@keyframes __bespoke_marp_transition_reduced_outgoing__{0%{opacity:1}to{opacity:0}}@keyframes __bespoke_marp_transition_reduced_incoming__{0%{mix-blend-mode:plus-lighter;opacity:0}to{mix-blend-mode:plus-lighter;opacity:1}}.bespoke-marp-note,.bespoke-marp-osc,.bespoke-progress-parent{display:none;transition:none}@media screen{::view-transition-group(*){animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-timing-function:ease}::view-transition-new(*),::view-transition-old(*){animation-delay:0s;animation-direction:var(--marp-bespoke-transition-animation-direction,normal);animation-duration:var(--marp-bespoke-transition-animation-duration,.5s);animation-fill-mode:both;animation-name:var(--marp-bespoke-transition-animation-name,var(--marp-bespoke-transition-animation-name-fallback,__bespoke_marp_transition_no_animation__));mix-blend-mode:normal}::view-transition-old(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_outgoing__;animation-timing-function:ease}::view-transition-new(*){--marp-bespoke-transition-animation-name-fallback:__bespoke_marp_transition_reduced_incoming__;animation-timing-function:ease}::view-transition-new(root),::view-transition-old(root){animation-timing-function:linear}::view-transition-new(__bespoke_marp_transition_osc__),::view-transition-old(__bespoke_marp_transition_osc__){animation-duration:0s!important;animation-name:__bespoke_marp_transition_osc__!important}::view-transition-new(__bespoke_marp_transition_osc__){opacity:0!important}.bespoke-marp-transition-warming-up::view-transition-group(*),.bespoke-marp-transition-warming-up::view-transition-new(*),.bespoke-marp-transition-warming-up::view-transition-old(*){animation-play-state:paused!important}body,html{height:100%;margin:0}body{background:#000;overflow:hidden}svg.bespoke-marp-slide{content-visibility:hidden;opacity:0;pointer-events:none;z-index:-1}svg.bespoke-marp-slide:not(.bespoke-marp-active) *{view-transition-name:none!important}svg.bespoke-marp-slide.bespoke-marp-active{content-visibility:visible;opacity:1;pointer-events:auto;z-index:0}svg.bespoke-marp-slide.bespoke-marp-active.bespoke-marp-active-ready *{animation-name:__bespoke_marp__!important}@supports not (content-visibility:hidden){svg.bespoke-marp-slide[data-bespoke-marp-load=hideable]{display:none}svg.bespoke-marp-slide[data-bespoke-marp-load=hideable].bespoke-marp-active{display:block}}}@media screen and (prefers-reduced-motion:reduce){svg.bespoke-marp-slide *{view-transition-name:none!important}}@media screen{[data-bespoke-marp-fragment=inactive]{visibility:hidden}body[data-bespoke-view=""] .bespoke-marp-parent,body[data-bespoke-view=next] .bespoke-marp-parent{inset:0;position:absolute}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc{background:#000000a6;border-radius:7px;bottom:50px;color:#fff;contain:paint;display:block;font-family:Helvetica,Arial,sans-serif;font-size:16px;left:50%;line-height:0;opacity:1;padding:12px;position:absolute;touch-action:manipulation;transform:translateX(-50%);transition:opacity .2s linear;-webkit-user-select:none;user-select:none;white-space:nowrap;will-change:transform;z-index:1;view-transition-name:__bespoke_marp_transition_osc__}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>*,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>*{margin-left:6px}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>:first-child,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>:first-child{margin-left:0}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span,body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span{opacity:.8}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>span[data-bespoke-marp-osc=page]{display:inline-block;min-width:140px;text-align:center}body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=""] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=fullscreen],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=next],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=presenter],body[data-bespoke-view=next] .bespoke-marp-parent>.bespoke-marp-osc>button[data-bespoke-marp-osc=prev]{height:32px;line-height:32px;width:32px}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive{cursor:none}body[data-bespoke-view=""] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc,body[data-bespoke-view=next] .bespoke-marp-parent.bespoke-marp-inactive>.bespoke-marp-osc{opacity:0;pointer-events:none}body[data-bespoke-view=""] svg.bespoke-marp-slide,body[data-bespoke-view=next] svg.bespoke-marp-slide{height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent{background:#222;display:flex;height:5px;width:100%}body[data-bespoke-view=""] .bespoke-progress-parent+.bespoke-marp-parent{top:5px}body[data-bespoke-view=""] .bespoke-progress-parent .bespoke-progress-bar{background:#0288d1;flex:0 0 0;transition:flex-basis .2s cubic-bezier(0,1,1,1)}body[data-bespoke-view=next]{background:#0000}body[data-bespoke-view=presenter]{background:#161616}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container{display:grid;font-family:Helvetica,Arial,sans-serif;grid-template:"current dragbar next" minmax(140px,1fr) "current dragbar note" 2fr "info    dragbar note" 3em;grid-template-columns:minmax(3px,var(--bespoke-marp-presenter-split-ratio,66%)) 0 minmax(3px,1fr);height:100%;left:0;position:absolute;top:0;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent{grid-area:current;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide{height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-parent svg.bespoke-marp-slide.bespoke-marp-active{filter:drop-shadow(0 3px 10px rgba(0,0,0,.5))}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container{background:#0288d1;cursor:col-resize;grid-area:dragbar;margin-left:-3px;opacity:0;position:relative;transition:opacity .4s linear .1s;width:6px;z-index:10}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container:hover{opacity:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-dragbar-container.active{opacity:1;transition-delay:0s}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container{background:#222;cursor:pointer;display:none;grid-area:next;overflow:hidden;position:relative}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-next-container iframe.bespoke-marp-presenter-next{background:#0000;border:0;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.5));height:calc(100% - 40px);left:20px;pointer-events:none;position:absolute;top:20px;-webkit-user-select:none;user-select:none;width:calc(100% - 40px)}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container{background:#222;color:#eee;grid-area:note;position:relative;z-index:1}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper{display:block;inset:0;position:absolute}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons{background:#000000a6;border-radius:4px;bottom:0;display:flex;gap:4px;margin:12px;opacity:0;padding:6px;pointer-events:none;position:absolute;right:0;transition:opacity .2s linear}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-buttons:focus-within,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-presenter-note-wrapper:focus-within+.bespoke-marp-presenter-note-buttons,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container:hover .bespoke-marp-presenter-note-buttons{opacity:1;pointer-events:auto}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note{box-sizing:border-box;font-size:calc(1.1em*var(--bespoke-marp-note-font-scale, 1));height:calc(100% - 40px);margin:20px;overflow:auto;padding-right:3px;white-space:pre-wrap;width:calc(100% - 40px);word-wrap:break-word;scrollbar-color:#eeeeee80 #0000;scrollbar-width:thin}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar{width:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-track{background:#0000}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note::-webkit-scrollbar-thumb{background:#eeeeee80;border-radius:6px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note:empty{pointer-events:none}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note.active{display:block}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:first-child{margin-top:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-note-container .bespoke-marp-note p:last-child{margin-bottom:0}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container{align-items:center;box-sizing:border-box;color:#eee;display:flex;flex-wrap:nowrap;grid-area:info;justify-content:center;overflow:hidden;padding:0 10px}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time,body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{box-sizing:border-box;display:block;padding:0 10px;white-space:nowrap;width:100%}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container button{height:1.5em;line-height:1.5em;width:1.5em}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page{order:2;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-page .bespoke-marp-presenter-info-page-text{display:inline-block;min-width:120px;text-align:center}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-time{color:#999;order:1;text-align:left}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer{color:#999;order:3;text-align:right}body[data-bespoke-view=presenter] .bespoke-marp-presenter-container .bespoke-marp-presenter-info-container .bespoke-marp-presenter-info-timer:hover{cursor:pointer}}@media print{.bespoke-marp-presenter-info-container,.bespoke-marp-presenter-next-container,.bespoke-marp-presenter-note-container{display:none}}</style><style>div#\:\$p > svg > foreignObject > section{width:1280px;height:720px;box-sizing:border-box;overflow:hidden;position:relative;scroll-snap-align:center center;-webkit-text-size-adjust:100%;text-size-adjust:100%}div#\:\$p > svg > foreignObject > section::after{bottom:0;content:attr(data-marpit-pagination);padding:inherit;pointer-events:none;position:absolute;right:0}div#\:\$p > svg > foreignObject > section:not([data-marpit-pagination])::after{display:none}div#\:\$p > svg > foreignObject > section :is(h1, marp-h1){font-size:2em;margin-block:0.67em}div#\:\$p > svg > foreignObject > section video::-webkit-media-controls{will-change:transform}@page {size:1280px 720px;margin:0}@media print{html, body{background-color:#fff;margin:0;page-break-inside:avoid;break-inside:avoid-page}div#\:\$p > svg > foreignObject > section{page-break-before:always;break-before:page}div#\:\$p > svg > foreignObject > section, div#\:\$p > svg > foreignObject > section *{-webkit-print-color-adjust:exact!important;animation-delay:0s!important;animation-duration:0s!important;color-adjust:exact!important;print-color-adjust:exact!important;transition:none!important}div#\:\$p > svg[data-marpit-svg]{display:block;height:100vh;width:100vw}}div#\:\$p > svg > foreignObject > :where(section){container-type:size}div#\:\$p > svg > foreignObject > section img[data-marp-twemoji]{background:transparent;height:1em;margin:0 .05em 0 .1em;vertical-align:-.1em;width:1em}/*!
  * Marp default theme.
  *
  * @theme default
@@ -63,7 +63,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="1" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="1" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -119,14 +119,14 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h3 id="cloud-native-sig-and-cake-present">Cloud-Native SIG and CAKE present...</h3>
 <h1 id="pocket-sized-kubernetes-building-and-deployment-with-raspberry-pi-clusters">Pocket-Sized Kubernetes: Building and Deployment with Raspberry Pi Clusters</h1>
 <p><em>16 June 2026, RH007, Durham University</em></p>
-<p><img src="./slide-assets/github-pages-qr.png" width=250 height=250 style="float:right;padding-right:300px;margin-top:-60px;" alt="github pages QR code" /> <https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes><img /></p>
-<p style="position:absolute; bottom:40px; right:45px; font-size:28px;"><a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes">github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes</a></p>
-<p style="position:absolute; bottom:15px; right:58px; font-size:28px;"><a href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes">cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes</a></p>
+<p><img src="./slide-assets/github-pages-qr.png" width="250" height="250" alt="github pages QR code" /> &lt;https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes&gt;<img /></p>
+<p><a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes">github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes</a></p>
+<p><a href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes">cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes</a></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="2" data-paginate="true" data-header="&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;" data-theme="default" data-style="/* Define global background, subtle gradient, and layout framework */
 section {
@@ -183,7 +183,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="2" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="2" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -239,7 +239,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="agenda">Agenda</h1>
 <ol>
 <li>Introductions</li>
@@ -306,7 +306,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="3" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="3" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -419,7 +419,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="4" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="4" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -475,7 +475,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h2 id="who-we-are">Who We Are</h2>
 <p>Tutorial from the <strong>Cloud-Native Special Interest Group</strong> with support from the <strong>Computational Abilities Knowledge Exchange</strong> partnership.</p>
 <p>New community of RSEs/dRTPs for cloud-native technologies in research software and digital infrastructure.</p>
@@ -540,7 +540,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="5" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="5" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -596,7 +596,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h2 id="todays-tutorial">Today's Tutorial</h2>
 <p>By the end you will have:</p>
@@ -667,7 +667,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="6" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="6" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -780,7 +780,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="7" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="7" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -836,7 +836,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h2 id="what-is-kubernetes-k8s">What is Kubernetes (k8s)</h2>
 <p>Kubernetes is an open-source container orchestration platform to automate the deployment, scaling &amp; management of containerised applications across groups of machines.</p>
 </section>
@@ -895,7 +895,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="8" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="8" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -951,7 +951,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubernetes-vs-docker-compose">Kubernetes vs Docker Compose</h1>
 <ul>
 <li data-marpit-fragment="1"><strong>Docker:</strong> run apps from built images in containers (sandboxed environments)</li>
@@ -1016,7 +1016,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="9" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="9" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1072,7 +1072,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubernetes-vs-docker-compose-1">Kubernetes vs Docker Compose</h1>
 <ul>
 <li><strong>Docker:</strong> run apps from built images in containers (sandboxed environments)</li>
@@ -1136,7 +1136,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="10" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="10" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1192,7 +1192,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubernetes-in-research-computing">Kubernetes in Research Computing</h1>
 <p>Use if need to manage multiple containerised services across different machines. Or may benefit from</p>
 <ul>
@@ -1257,7 +1257,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="11" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="11" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1313,7 +1313,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubernetes-in-research-computing-1">Kubernetes in Research Computing</h1>
 <p>Adds complexity and not typically suitable for:</p>
 <ul>
@@ -1382,7 +1382,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="12" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="12" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1438,11 +1438,11 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h1 id="architecture-overview">Architecture Overview</h1>
-<figure style="text-align: center; margin-top:-10px; margin-bottom:-30px; padding-top:0px;">
-  <img src="./mkdocs/docs/assets/kubernetes-overview.png" style="height: 450px" alt="The components of a Kubernetes Cluster" />
+<figure>
+  <img src="./mkdocs/docs/assets/kubernetes-overview.png" alt="The components of a Kubernetes Cluster" />
   <figcaption><small>Components of a Kubernetes cluster (<a href="https://kubernetes.io">kubernetes.io</a>)</small></figcaption>
 </figure>
 </section>
@@ -1501,7 +1501,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="13" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="13" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1557,12 +1557,12 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="key-components">Key Components</h1>
 <ul>
 <li><strong>Node</strong>: Physical or virtual machine</li>
-<li><strong>Control Plane (Node)</strong>: Brains of cluster, acts based on current cluster state vs target state</li>
-<li><strong>Worker Node</strong>: Run containerised applications using a container runtime.</li>
+<li><strong>Control Plane</strong>: Brains of cluster, acts based on current cluster state vs target state</li>
+<li><strong>Worker</strong>: Run containerised applications using a container runtime.</li>
 <li><strong>Pod</strong>: Smallest deployable unit—one or more containers sharing storage/network</li>
 <li><strong>Deployment</strong>: Target state of identical pods serving an app</li>
 <li><strong>Service</strong>: Network endpoint for pods</li>
@@ -1626,7 +1626,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="14" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="14" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1682,7 +1682,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="how-kubernetes-works">How Kubernetes Works</h1>
 <p><strong>Declarative:</strong> define target state of applications—Kubernetes works to achieve it</p>
 <p>Example: On <em>node failure</em> Kubernetes distributes workload to other nodes<br />
@@ -1744,7 +1744,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="15" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="15" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1800,13 +1800,13 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="how-kubernetes-works-1">How Kubernetes Works</h1>
 <p><strong>Declarative:</strong> define target state of applications—Kubernetes works to achieve it</p>
 <p>Example: On <em>node failure</em> Kubernetes distributes workload to other nodes<br />
 <br /><br />
 <br /></p>
-<div style="position:absolute; bottom:220px;right:550px; border: 4px solid red;"><p style="margin:15px;">Reconciliation model</p></div>
+<div><p>Reconciliation model</p></div>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;" data-theme="default" data-style="/* Define global background, subtle gradient, and layout framework */
 section {
@@ -1863,7 +1863,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="16" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="16" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -1919,14 +1919,14 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="how-kubernetes-works-2">How Kubernetes Works</h1>
 <p><strong>Declarative:</strong> define target state of applications—Kubernetes works to achieve it</p>
 <p>Example: On <em>node failure</em> Kubernetes distributes workload to other nodes<br />
 <br /><br />
 <br /></p>
-<div style="position:absolute; bottom:220px;right:550px; border: 4px solid red;"><p style="margin:15px;">Reconciliation model</p></div>
-<div style="position:absolute; bottom:120px; left:80px;">
+<div><p>Reconciliation model</p></div>
+<div>
 <blockquote>
 <p>GitOps: Infrastructure as code (<code>.yaml</code>), workflow managers, e.g., <a href="https://argoproj.github.io/cd/">ArgoCD</a></p>
 </blockquote>
@@ -1987,7 +1987,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="17" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="17" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2100,7 +2100,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="18" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="18" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2156,7 +2156,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubernetes-distributions">Kubernetes Distributions</h1>
 <ul>
 <li>Vanilla k8s, i.e., <a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/">kubeadm</a> (CNCF)—industry standard, fully-featured</li>
@@ -2221,7 +2221,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="19" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="19" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2277,7 +2277,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="k3s-and-hardware-requirements">K3s and Hardware Requirements</h1>
 <p>K3s for our RPi clusters: minimal footprint &amp; ease of installation</p>
 <p>Control node—Min. 2 Cores/2G RAM<br />
@@ -2342,7 +2342,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="20" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="20" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2398,7 +2398,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="cluster-hardware">Cluster Hardware</h1>
 <ul>
 <li>4x 4G RPi model 4B (or 400)</li>
@@ -2462,7 +2462,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="21" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="21" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2575,7 +2575,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="22" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="22" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2631,7 +2631,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="network-information">Network Information</h1>
 <p>Each table should have a note with:</p>
 <ul>
@@ -2642,7 +2642,7 @@ footer {
 <p>Connect your laptop to Router <code>TP-Link_AP_2A5A_01</code><br />
 <br /></p>
 <blockquote>
-<p><small> Our router does <em>not</em> provide internet access. Consider installing <a href="https://kubernetes.io/docs/tasks/tools/">kubectl</a> locally first.</small></p>
+<p><small> Our router does <em>not</em> provide internet access. It might be helpful later if you install <a href="https://kubernetes.io/docs/tasks/tools/">kubectl</a> before joining.</small></p>
 </blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-header="&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;" data-theme="default" data-style="/* Define global background, subtle gradient, and layout framework */
@@ -2700,7 +2700,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="23" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="23" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2756,7 +2756,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="verify-connectivity">Verify Connectivity</h1>
 <p>Once connected to the router, as a group check access to each node:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">ssh chef@192.168.x.xxx
@@ -2823,7 +2823,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="24" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="24" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -2879,7 +2879,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>If a node is unreachable:</p>
 <ol>
@@ -2889,7 +2889,7 @@ footer {
 <br /></li>
 </ol>
 <blockquote>
-<p><small>If needed, connect RPi to an external display to troubleshoot &amp; configure IP using <code>nmcli/nmtui</code>.</small></p>
+<p><small>If it is needed we can connect any RPi to an external display to troubleshoot &amp; reconfigure the IP using <code>nmcli/nmtui</code>.</small></p>
 </blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-header="&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;" data-theme="default" data-style="/* Define global background, subtle gradient, and layout framework */
@@ -2947,7 +2947,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="25" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="25" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3003,11 +3003,11 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h2 id="optional-configure-host-aliases">Optional: Configure Host Aliases</h2>
 
-<p>Edit <code>/etc/hosts</code> to use <code>ssh &lt;user&gt;@kmaster</code> etc. instead of IP addresses:</p>
+<p>Edit <code>/etc/hosts</code> (specifics will vary on OS) to use <code>kmaster</code> etc. instead of IP addresses:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">192.168.x.xxx    kmaster
 192.168.x.yyy    kworker1
 </code></pre>
@@ -3017,7 +3017,7 @@ footer {
     HostName 192.168.x.yyy
     User chef
 </code></pre>
-<p>Then <code>ssh kworker01</code> would connect to the node. You can also setup SSH keys for quicker logins (e.g., <code>ssh-keygen -t ed25519; ssh-copy-id chef@kmaster</code>)</p>
+<p>Then <code>ssh kworker01</code> would connect to the node. If you really wanted, you can also setup SSH keys for quicker logins (e.g., <code>ssh-keygen -t ed25519; ssh-copy-id chef@kmaster</code>)</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-class="Title" data-theme="default" data-style="/* Define global background, subtle gradient, and layout framework */
 section {
@@ -3074,7 +3074,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="26" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="26" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3187,7 +3187,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="27" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="27" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3243,7 +3243,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="strategy">Strategy</h1>
 <ol>
 <li>Install K3s on Control</li>
@@ -3311,7 +3311,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="28" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="28" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3367,10 +3367,10 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h1 id="control-node-installation">Control Node Installation</h1>
-<p>On <code>kmaster</code> (code on GitHub pages/slides):<br />
+<p>On <code>kmaster</code> (copy the code from the GitHub pages):<br />
 <small></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-built_in">sudo</span> -i
 
@@ -3440,7 +3440,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="29" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="29" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3496,7 +3496,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="control-node-verification">Control Node Verification</h1>
 <p>Check K3s is running:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-built_in">sudo</span> systemctl status k3s
@@ -3561,7 +3561,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="30" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="30" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3617,7 +3617,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="worker-node-join-token">Worker Node Join Token</h1>
 <p>Everyone on a worker node will need the following from the <em>control:</em></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cat</span> /var/lib/rancher/k3s/server/node-token
@@ -3682,7 +3682,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="31" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="31" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3738,9 +3738,9 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="worker-installation">Worker Installation</h1>
-<p>With <code>CONTROL_NODE</code> and <code>CONTROL_TOKEN</code> set (code on GitHub/slides):<br />
+<p>With <code>CONTROL_NODE</code> and <code>CONTROL_TOKEN</code> set (code on GitHub):<br />
 <small></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-built_in">sudo</span> -i
 
@@ -3813,7 +3813,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="32" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="32" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -3869,9 +3869,9 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="worker-verification">Worker Verification</h1>
-<p>As on the master, check <code>sudo kubectl get nodes</code>. All nodes should have <code>STATUS: ready</code>  but no role (see <a href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster">snippet on GitHub pages</a> to fix this).</p>
+<p>As on the master, check <code>sudo kubectl get nodes</code>. All nodes should have <code>STATUS: ready</code>  but no role. There nodes will be unable to schedule pods until they have a role, see [snippet on GitHub pages](<a href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster">https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster</a>, for one-liner to fix this).</p>
 <h2 id="optional-kubectl-without-sudo">Optional: kubectl without sudo</h2>
 <p>It is convenient to set</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chmod</span> 644 /etc/rancher/k3s/k3s.yaml
@@ -3933,7 +3933,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="33" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="33" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4046,7 +4046,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="34" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="34" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4102,7 +4102,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="kubectl-syntax">Kubectl Syntax</h1>
 <p>Command-line interface for Kubernetes:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">kubectl &lt;<span class="hljs-built_in">command</span>&gt; &lt;<span class="hljs-built_in">type</span>&gt; [name] [flags]
@@ -4169,7 +4169,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="35" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="35" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4225,7 +4225,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h2 id="optional-kubectl-from-your-laptop-requires-kubectl">Optional: kubectl From Your Laptop (Requires kubectl!)</h2>
 <p>Copy K3s config from the control:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">scp chef@kmaster:/etc/rancher/k3s/k3s.yaml ~/.kube/config-k3s
@@ -4292,7 +4292,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="36" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="36" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4348,7 +4348,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="about-namespaces">About: Namespaces</h1>
 <p>Separate groups of cluster resources:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">kubectl get namespaces
@@ -4415,7 +4415,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="37" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="37" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4471,7 +4471,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="exploring-resources-kube-system">Exploring Resources (kube-system)</h1>
 <p>Get resource (<code>pods</code>, <code>deployments</code>, <code>services</code>...):</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">kubectl get &lt;item&gt;
@@ -4541,7 +4541,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="38" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="38" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4597,7 +4597,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="accessing-containers">Accessing Containers</h1>
 <p><code>exec</code> can be used to run commands in a container (like docker) within a pod:</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">kubectl <span class="hljs-built_in">exec</span> -it &lt;pod-name&gt; -- sh
@@ -4659,7 +4659,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="39" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="39" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4715,7 +4715,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="about-storage">About: Storage</h1>
 <p>Pods are <em>ephemeral.</em> Storing data requires</p>
 <ul>
@@ -4782,7 +4782,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="40" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="40" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -4838,7 +4838,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="section-1summary">Section 1—Summary</h1>
 <p>So far:</p>
 <ul>
@@ -4904,7 +4904,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="41" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="41" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5017,7 +5017,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="42" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="42" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5073,7 +5073,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <br />
 <h1 id="prep-get-demo-deployments">Prep: Get Demo Deployments</h1>
 <p>Clone repository to your laptop if you haven't already:<br />
@@ -5144,7 +5144,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="43" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="43" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5200,7 +5200,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="about-deployments">About: Deployments</h1>
 <ul>
 <li>Defines target <em>state</em> of your app (which container images, how many replica pods to run them)</li>
@@ -5270,7 +5270,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="44" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="44" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5326,11 +5326,11 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
-<h1 style="position:absolute;top:115px;left:60px;">Exercises: Over to You!</h1>
-<p><img src="./slide-assets/github-pages-qr.png" width=250 height=250 style="position:absolute;top:10px;right:225px;" alt="github pages QR code" /><img /><br />
-<img src="./slide-assets/github-pages-toc.png" height=500 style="position:absolute;left:50px;top:200px;" alt="github pages exercises" /><img /></p>
-<div style="position:absolute;left:550px;top:300px;width:600px;border:2px solid #cc0000;border-radius:6px;padding:12px;">
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
+<h1>Exercises: Over to You!</h1>
+<p><img src="./slide-assets/github-pages-qr.png" width="250" height="250" alt="github pages QR code" /><img /><br />
+<img src="./slide-assets/github-pages-toc.png" height="500" alt="github pages exercises" /><img /></p>
+<div>
 <p><strong>Tips</strong></p>
 <p>• Can be done in any order<br />
 • Work on <em>different</em> exercises in pairs<br />
@@ -5392,7 +5392,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="45" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="45" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5448,7 +5448,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="section-2summary">Section 2—Summary</h1>
 <ul>
 <li>Application <em>deployments</em> are specified by manifest files</li>
@@ -5515,7 +5515,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="46" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="46" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5571,7 +5571,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="knowledge-exchange-opportunities">Knowledge Exchange opportunities</h1>
 <h2 id="cloud_native-sig">Cloud_Native SIG</h2>
 <p>This workshop was brought to you by the Cloud-Native SIG and CAKE, with support from the Software Sustainability Institute</p>
@@ -5636,7 +5636,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" data-marpit-pagination="47" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" data-marpit-pagination="47" style="--paginate:true;--header:&lt;div style=&quot;display:flex; justify-content:space-between; align-items:flex-start; width:100%;&quot;&gt;&lt;img src=&quot;./slide-assets/k8s-cake-logo.png&quot; height=&quot;80px&quot;&gt;&lt;img src=&quot;./mkdocs/docs/assets/CN-SIG-logo.png&quot; height=&quot;80px&quot; style=&quot;padding-left:1000px&quot;&gt;&lt;/div&gt;;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;
@@ -5692,7 +5692,7 @@ footer {
   font-weight: 600;
 }
 ;" data-marpit-pagination-total="48">
-<header><div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;"><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" style="padding-left:1000px" /></div></header>
+<header><div><img src="./slide-assets/k8s-cake-logo.png" height="80px" /><img src="./mkdocs/docs/assets/CN-SIG-logo.png" height="80px" /></div></header>
 <h1 id="knowledge-exchange-opportunities-1">Knowledge Exchange Opportunities</h1>
 <h3 id="cake-fellowship">CAKE Fellowship</h3>
 <p>Read more: <a href="https://www.cake.ac.uk/ke-fellowships/cohort1">https://www.cake.ac.uk/ke-fellowships/cohort1</a><br />
@@ -5755,7 +5755,7 @@ footer {
   color: #7f8c8d;
   font-weight: 600;
 }
-" lang="POSIX" class="Title" data-marpit-pagination="48" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
+" lang="C" class="Title" data-marpit-pagination="48" style="--paginate:true;--class:Title;--theme:default;--style:/* Define global background, subtle gradient, and layout framework */
 section {
   background: linear-gradient(135deg, #fdfbfb 0%, #e4f5f5 100%);
   color: #000000;

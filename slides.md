@@ -205,8 +205,8 @@ Adds complexity and not typically suitable for:
 # Key Components
 
 - **Node**: Physical or virtual machine
-- **Control Plane (Node)**: Brains of cluster, acts based on current cluster state vs target state
-- **Worker Node**: Run containerised applications using a container runtime.
+- **Control Plane**: Brains of cluster, acts based on current cluster state vs target state
+- **Worker**: Run containerised applications using a container runtime.
 - **Pod**: Smallest deployable unit&mdash;one or more containers sharing storage/network
 - **Deployment**: Target state of identical pods serving an app
 - **Service**: Network endpoint for pods
@@ -312,7 +312,7 @@ Each table should have a note with:
 Connect your laptop to Router `TP-Link_AP_2A5A_01`
 <br>
 
-> <small> Our router does *not* provide internet access. Consider installing [kubectl](https://kubernetes.io/docs/tasks/tools/) locally first.</small>
+> <small> Our router does *not* provide internet access. It might be helpful later if you install [kubectl](https://kubernetes.io/docs/tasks/tools/) before joining.</small>
 
 ---
 
@@ -341,7 +341,7 @@ If a node is unreachable:
 1. Check `sshd` is running
 <br>
 
-> <small>If needed, connect RPi to an external display to troubleshoot & configure IP using <code>nmcli/nmtui</code>.</small>
+> <small>If it is needed we can connect any RPi to an external display to troubleshoot & reconfigure the IP using <code>nmcli/nmtui</code>.</small>
 
 ---
 <br>
@@ -349,7 +349,7 @@ If a node is unreachable:
 ## Optional: Configure Host Aliases
 
 <!--Consider adding IP-hostnames to `/etc/hosts/` on your device:-->
-Edit `/etc/hosts` to use `ssh <user>@kmaster` etc. instead of IP addresses:
+Edit `/etc/hosts` (specifics will vary on OS) to use `kmaster` etc. instead of IP addresses:
 ```text
 192.168.x.xxx    kmaster
 192.168.x.yyy    kworker1
@@ -361,7 +361,7 @@ Host kworker01
     HostName 192.168.x.yyy
     User chef
 ```
-Then `ssh kworker01` would connect to the node. You can also setup SSH keys for quicker logins (e.g., `ssh-keygen -t ed25519; ssh-copy-id chef@kmaster`)
+Then `ssh kworker01` would connect to the node. If you really wanted, you can also setup SSH keys for quicker logins (e.g., `ssh-keygen -t ed25519; ssh-copy-id chef@kmaster`)
 
 ---
 
@@ -375,8 +375,8 @@ Then `ssh kworker01` would connect to the node. You can also setup SSH keys for 
 # Strategy
 
 1. Install K3s on Control
-2. Retrieve Join Token for Workers
-2. Install K3s on Workers and Join to Cluster
+1. Retrieve Join Token for Workers
+1. Install K3s on Workers and Join to Cluster
 
 Split into ~2 per node (pair program on one device)
 <br>
@@ -390,7 +390,7 @@ Split into ~2 per node (pair program on one device)
 
 # Control Node Installation 
 
-On `kmaster` (code on GitHub pages/slides):
+On `kmaster` (copy the code from the GitHub pages):
 <small>
 
 ```bash
@@ -440,7 +440,7 @@ export CONTROL_TOKEN=$(sudo cat /home/chef/node-token)
 
 # Worker Installation
 
-With `CONTROL_NODE` and `CONTROL_TOKEN` set (code on GitHub/slides):
+With `CONTROL_NODE` and `CONTROL_TOKEN` set (code on GitHub):
 <small>
 ```bash
 sudo -i
@@ -463,7 +463,7 @@ chmod +x /root/k3s/install.sh \
 
 # Worker Verification
 
-As on the master, check `sudo kubectl get nodes`. All nodes should have `STATUS: ready`  but no role (see [snippet on GitHub pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster) to fix this).
+As on the master, check `sudo kubectl get nodes`. All nodes should have `STATUS: ready`  but no role. There nodes will be unable to schedule pods until they have a role, see [snippet on GitHub pages](https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson1/exercise2/#verify-the-cluster, for one-liner to fix this).
 
 ## Optional: kubectl without sudo
 
