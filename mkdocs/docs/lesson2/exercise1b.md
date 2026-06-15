@@ -98,7 +98,7 @@ This traffic is pod-to-service, routed through Kubernetes networking, and potent
 We can observe some of the metrics using `kubectl top`. In the client, run `iperf3 -c iperf3-service -P 8 -t 20` to send multiple network connections between pods. Whilst it is running, open another terminal and watch node metrics update live with:
 
 ```bash
-watch kubectl top pods
+watch kubectl top pods -n iperf-demo
 ```
 
 You should notice slight increases to the CPU activity, as well as changes in memory usage, and workload activity across nodes.
