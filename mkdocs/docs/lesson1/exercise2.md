@@ -161,7 +161,7 @@ All nodes should report:
 STATUS = Ready
 ```
 
-Note the empty ROLES. These can be fixed by running the following one-liner.
+Note the empty ROLES. It is important to fix this. You can use the one-liner:
 
 ```bash
 sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker
