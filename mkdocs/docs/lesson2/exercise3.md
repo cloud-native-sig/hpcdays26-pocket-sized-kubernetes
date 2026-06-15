@@ -6,6 +6,7 @@ In this exercise we will explore how persistence storage is managed in Kubernete
 and Persistent Volume Claims (PVC), enabling stateful workloads.
 
 We will:
+
 - Create persistent storage
 - Attach it to a pod
 - Verify data survives container recreation
@@ -34,19 +35,11 @@ This separation allows storage to be managed independently from applications.
 
 ### Inspecting the Local Path Provisioner
 
-K3s includes a simple storage provisioner called:
-
-```text
-local-path-provisioner
-```
-
-Inspect the storage classes available:
-
+K3s includes a simple storage provisioner called `local-path-provisioner`; you can inspect the storage classes available with
 ```bash
 kubectl get storageclass
 ```
-
-You should see something similar to:
+which will give something similar to
 
 ```text
 local-path (default)
@@ -243,7 +236,7 @@ You should see:
 
 Delete the nginx pod:
 ```bash
-kubectl delete pods -n storage-demo -l app=nginx
+kubectl delete pods -l app=nginx
 ```
 Kubernetes will create a replacement pods automatically.
 
