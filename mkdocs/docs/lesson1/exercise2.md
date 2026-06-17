@@ -116,10 +116,7 @@ where you should add the full token shared by whoever is on the master node.
 On your desired worker  
 
 ```bash
- sudo -i
-
- export CONTROL_NODE=192.168.x.xxx
- export CONTROL_TOKEN=...
+ sudo -E su
 
  chmod +x /root/k3s/k3s-arm64
  cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
@@ -133,8 +130,6 @@ On your desired worker
   K3S_TOKEN=$CONTROL_TOKEN \
   /root/k3s/install.sh
 ```
-Note you will need to set the environment variables after switching to root (or otherwise preserve environment e.g. `sudo -E su`).
-
 #### Option 2 — With Internet Access
 
 On your desired worker  
