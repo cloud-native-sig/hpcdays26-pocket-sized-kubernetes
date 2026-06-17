@@ -1,0 +1,1616 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cloud-native-sig.github.io/hpcdays26-pocket-sized-kubernetes/lesson2/exercise3/">
+      
+      
+        <link rel="prev" href="../exercise2/">
+      
+      
+        <link rel="next" href="../exercise4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Exercise 3 — Persistent Storage - Pocket-Sized Kubernetes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exercise-3-persistent-storage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Pocket-Sized Kubernetes" class="md-header__button md-logo" aria-label="Pocket-Sized Kubernetes" data-md-component="logo">
+      
+  <img src="../../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Pocket-Sized Kubernetes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Exercise 3 — Persistent Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Pocket-Sized Kubernetes" class="md-nav__button md-logo" aria-label="Pocket-Sized Kubernetes" data-md-component="logo">
+      
+  <img src="../../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    Pocket-Sized Kubernetes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cloud-native-sig/hpcdays26-pocket-sized-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../designing-a-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Designing a Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 1 — Building your cluster
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Section 1 — Building your cluster
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lesson1/exercise1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 1 — Connecting to Your Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lesson1/exercise2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 2 — Installing K3s and creating the cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lesson1/exercise3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 3 — Kubectl Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lesson1/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section 2 — Using your cluster
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Section 2 — Using your cluster
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 1 — Services, networking and Monitoring
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Exercise 1 — Services, networking and Monitoring
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercise1a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1a) Services and networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercise1b/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1b) Monitoring and Telemetry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercise2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 2 — Resource Management and Failure Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 3 — Persistent Storage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 3 — Persistent Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#part-1-why-persistent-storage-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1 — Why Persistent Storage Matters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1 — Why Persistent Storage Matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-storage-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes Storage Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Storage Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#persistent-volume-pv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Volume (PV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistent-volume-claim-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Volume Claim (PVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-local-path-provisioner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Local Path Provisioner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-creating-a-persistent-volume-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2 — Creating a Persistent Volume Claim
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2 — Creating a Persistent Volume Claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Claim
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-using-persistent-storage-in-a-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3 — Using Persistent Storage in a Pod
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3 — Using Persistent Storage in a Pod">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-persistent-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Persistent Volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observing-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observing the Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstrating Persistence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-workloads-with-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Workloads with Deployments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Workloads with Deployments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-persistent-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Persistent Content
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-expose-the-deployment-to-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: Expose the Deployment to the Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-persistence-during-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstrating Persistence During Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-node-storage-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: Node Storage Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercise4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercise 4 — Jobs and Batch Execution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wrap-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wrapping up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../extra-reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extra reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#part-1-why-persistent-storage-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1 — Why Persistent Storage Matters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1 — Why Persistent Storage Matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-storage-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes Storage Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Storage Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#persistent-volume-pv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Volume (PV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistent-volume-claim-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Volume Claim (PVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-local-path-provisioner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Local Path Provisioner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-creating-a-persistent-volume-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2 — Creating a Persistent Volume Claim
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2 — Creating a Persistent Volume Claim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Claim
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-using-persistent-storage-in-a-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3 — Using Persistent Storage in a Pod
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3 — Using Persistent Storage in a Pod">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-the-persistent-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting the Persistent Volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observing-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observing the Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstrating Persistence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-workloads-with-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent Workloads with Deployments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Workloads with Deployments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-persistent-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Persistent Content
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-expose-the-deployment-to-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: Expose the Deployment to the Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demonstrating-persistence-during-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demonstrating Persistence During Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-node-storage-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: Node Storage Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="exercise-3-persistent-storage">Exercise 3 — Persistent Storage</h1>
+<p>At the end of the first Lesson, we discussed how most workloads deployed are <em>ephemeral</em>. If a pod is deleted and recreated, any files written inside the container are typically lost.</p>
+<p>In this exercise we will explore how persistence storage is managed in Kubernetes through Persistent Volumes (PV)
+and Persistent Volume Claims (PVC), enabling stateful workloads.</p>
+<p>We will:</p>
+<ul>
+<li>Create persistent storage</li>
+<li>Attach it to a pod</li>
+<li>Verify data survives container recreation</li>
+</ul>
+<h2 id="part-1-why-persistent-storage-matters">Part 1 — Why Persistent Storage Matters</h2>
+<p>In all contexts containers are designed to be disposable. This is extremely useful for scalability and recovery, but many real applications still need durable storage. This storage could be used for shared datasets, databases, scientific outputs, logging, etc.</p>
+<p>Kubernetes handles this by abstracting storage into separate resources.</p>
+<h3 id="kubernetes-storage-concepts">Kubernetes Storage Concepts</h3>
+<h4 id="persistent-volume-pv">Persistent Volume (PV)</h4>
+<p>A Persistent Volume represents storage available to the cluster.</p>
+<p>Examples of the type of storage backing a PV include local disks, network filesystems,
+cloud block storage and parallel filesystems.</p>
+<h4 id="persistent-volume-claim-pvc">Persistent Volume Claim (PVC)</h4>
+<p>A Persistent Volume Claim is a request for storage made by a workload.</p>
+<p>Pods generally consume PVCs rather than interacting with PVs directly.
+This separation allows storage to be managed independently from applications.</p>
+<h3 id="inspecting-the-local-path-provisioner">Inspecting the Local Path Provisioner</h3>
+<p>K3s includes a simple storage provisioner called <code>local-path-provisioner</code>; you can inspect the storage classes available with
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>storageclass
+</span></code></pre></div>
+which will give something similar to<p></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>local-path (default)
+</span></code></pre></div>
+<p>This provisioner dynamically creates storage directories on cluster nodes using
+the local filesystem.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><em>Local Path</em> is lightweight and ideal for small clusters and workshops. For production clusters, you can use CSI-backed file storage, NFS file storage or cloud vendor storage.  </p>
+</div>
+<h2 id="part-2-creating-a-persistent-volume-claim">Part 2 — Creating a Persistent Volume Claim</h2>
+<p>In Kubernetes, applications usually request storage through a Persistent Volume Claim (PVC).</p>
+<p>The cluster then provides storage that satisfies the request.</p>
+<p>Our demo deployment wants a <code>storage-demo</code> namespace, so we need to make sure
+it has been created (the command will fail harmlessly if it already exists):
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>storage-demo
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>--current<span class="w"> </span>--namespace<span class="o">=</span>storage-demo
+</span></code></pre></div><p></p>
+<p>The yaml specification for the PVC is <code>pvc.yaml</code>. Apply this now:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="nv">$RES_HOME</span>/pvc.yaml
+</span></code></pre></div>
+<h3 id="inspecting-the-claim">Inspecting the Claim</h3>
+<p>Check the PVC:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pvc
+</span></code></pre></div>
+<p>You should see:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>NAME       STATUS   VOLUME                                     CAPACITY
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>demo-pvc   Pending    pvc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx   
+</span></code></pre></div>
+<p>Since K3s includes the <code>local-path-provisioner</code> by default, storage is dynamically provisioned automatically.</p>
+<p>The claim will not automatically bind since its the <code>local-path-provisioner</code> is set to <code>WaitForFirstConsumer</code> binding mode. This means that a Persistent Volume is provided when the cluster requests the resource.  </p>
+<h2 id="part-3-using-persistent-storage-in-a-pod">Part 3 — Using Persistent Storage in a Pod</h2>
+<p>Now we will mount the PVC into a container using the <code>storage-pod.yaml</code> Pod
+specification:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="nv">$RES_HOME</span>/storage-pod.yaml
+</span></code></pre></div>
+<h3 id="inspecting-the-persistent-volume">Inspecting the Persistent Volume</h3>
+<p>View the created PV:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pv
+</span></code></pre></div>
+<p>Describe it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>pv<span class="w"> </span>&lt;pv-name&gt;
+</span></code></pre></div>
+<p>Here you can see the capacity, reclaim policy, storage class, and the claim reference.</p>
+<h3 id="observing-the-data">Observing the Data</h3>
+<p>Lets have a look at the file being written:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>storage-pod<span class="w"> </span>--<span class="w"> </span>sh
+</span></code></pre></div>
+<p>Inside the pod:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cat<span class="w"> </span>/data/output.txt
+</span></code></pre></div>
+<p>You should see timestamps continuously being appended. You can exit the shell when you're finished.</p>
+<h3 id="demonstrating-persistence">Demonstrating Persistence</h3>
+<p>Now delete the pod:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>storage-pod
+</span></code></pre></div>
+<p>This might not happen immediately. Sometimes pods take a while to be safely deleted. Importantly:</p>
+<ul>
+<li>Wait for the pod to be deleted,</li>
+<li>Check that the Persistent Volume and PVC still exists.</li>
+</ul>
+<p>Now we can recreate the pod:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>storage-pod.yaml
+</span></code></pre></div>
+<p>Once running again, inspect the file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span><span class="nv">$RES_HOME</span>/storage-pod<span class="w"> </span>--<span class="w"> </span>sh
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>cat<span class="w"> </span>/data/output.txt
+</span></code></pre></div>
+<p>The previous data should still be present and you'll notice a gap in the timestamps from where the pod was not running.</p>
+<p>This is demonstrates the key difference between ephemeral container storage and the persistent Kubernetes volumes.</p>
+<h2 id="persistent-workloads-with-deployments">Persistent Workloads with Deployments</h2>
+<blockquote>
+<p>This part extends from the deployment in <a href="../exercise1a/">Exercise 1a</a>,
+but can be performed independently.</p>
+</blockquote>
+<p>Most real applications use Deployments or StatefulSets rather than standalone pods.</p>
+<p>For this demonstration we are going to recreate our NGINX deployment but with a volume mount.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="nv">$RES_HOME</span>/nginx-deployment-persist.yaml
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To avoid conflict with anyone going through Exercise 1a, make sure you remain in the <code>storage-demo</code> namespace for this deployment.</p>
+</div>
+<p>The deployment defines a new PVC in the namespace, <code>nginx-pvc</code>. Note while our
+first PVC had an <code>accessMode</code> of
+<code>ReadWriteOnce</code> or <em>RWO</em>, meaning 
+the volume can be mounted a read-write by a single <em>node</em>, the new one has 
+<code>ReadWriteMany</code> (RWM), which is critical to allow replicas spawned on different
+nodes to have access to the storage.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You can read about the different possible <em>Access Modes</em> (RWO, ROX, RWX and RWOP) for PVCs on the Kubernetes Documentation on <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes">persistent-volumes</a>.</p>
+</div>
+<h3 id="writing-persistent-content">Writing Persistent Content</h3>
+<p>Lets explore writing to this volume. Execute into a nginx pod:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>deploy/nginx<span class="w"> </span>--<span class="w"> </span>sh
+</span></code></pre></div>
+<p>Create a webpage:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Hello Persistent Kubernetes&lt;/h1&gt;"</span><span class="w"> </span>&gt;<span class="w"> </span>/usr/share/nginx/html/persist.html
+</span></code></pre></div>
+<p>Exit the shell.</p>
+<hr>
+<h3 id="optional-expose-the-deployment-to-the-cluster">Optional: Expose the Deployment to the Cluster</h3>
+<p>In Exercise 1a we declared a service with type <code>ClusterIP</code> via a <code>.yaml</code> file to allow access to
+the NGINX server from within the cluster. Another way to achieve this is
+using the expose command:
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span>--port<span class="o">=</span><span class="m">8081</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span>--target-port<span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span>--name<span class="o">=</span>persistent-nginx
+</span></code></pre></div><p></p>
+<p>Test it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>curl-test<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span>--image<span class="o">=</span>workshop-tools:arm64<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span>curl<span class="w"> </span>http://persistent-nginx.nginx.svc.cluster.local/persist.html
+</span></code></pre></div>
+<p>You should see:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello Persistent Kubernetes<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<h3 id="demonstrating-persistence-during-failure">Demonstrating Persistence During Failure</h3>
+<p>Delete the nginx pod:
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>nginx
+</span></code></pre></div>
+Kubernetes will create a replacement pods automatically.<p></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>-l app=nginx</code> is an example of matching using a <em>label selector</em>. Labels and selectors and an immensely useful way to make targeted changes to deployments and other resources in Kubernetes.  </p>
+</div>
+<p>Once a new <code>nginx</code> pod is running:</p>
+<p></p><div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>curl-test<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span>--image<span class="o">=</span>workshop-tools:arm64<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span>curl<span class="w"> </span>http://persistent-nginx.nginx.svc.cluster.local/persist.html
+</span></code></pre></div>
+The webpage should still exist.
+Even though the original container disappeared, the pod changed, and the workload restarted. The persistent volume preserved the application data.<p></p>
+<h2 id="clean-up">Clean-up</h2>
+<p>Remove any of the resources you used in this session, including the service
+created by the expose command (if you ran it):
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>kubectl delete -f $RES_HOME/pvc.yaml -f $RES_HOME/storage-pod.yaml -f $RES_HOME/nginx-deployment-persist.yaml
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>kubectl detele service persistent-nginx
+</span></code></pre></div>
+You can then reset your configured <code>kubectl</code> namespace:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl config set-context --curent --namespace=default
+</span></code></pre></div><p></p>
+<h2 id="summary">Summary</h2>
+<p>Persistent storage is one of the key building blocks required for running real applications on Kubernetes clusters.</p>
+<p>In this exercise you saw how persistent workloads are possible 
+using Persistent Volume Claims mounted into pods that survive pod recreation or
+deletion. Note the general principle in Kubernetes: </p>
+<blockquote>
+<p>Containers are usually disposable, but storage often is not.</p>
+</blockquote>
+<p>While essential for many workloads, persistent storage does introduce additional complexity
+to your cluster, often bringing
+scheduling constraints, node locality, and considerations regarding performance and failure recovery behaviour.</p>
+<h2 id="optional-node-storage-paths">Optional: Node Storage Paths</h2>
+<p>Inspect where the local-path storage exists on the node:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>pv
+</span></code></pre></div>
+<p>You can ssh into the node and inspect this path. You'll also notice paths similar to it in:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>/var/lib/rancher/k3s/storage/
+</span></code></pre></div>
+<p>On a production environment, this could instead map to NFS, Ceph, Lustre, BeeGFS
+etc.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../exercise2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Exercise 2 — Resource Management and Failure Recovery">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Exercise 2 — Resource Management and Failure Recovery
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../exercise4/" class="md-footer__link md-footer__link--next" aria-label="Next: Exercise 4 — Jobs and Batch Execution">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Exercise 4 — Jobs and Batch Execution
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Cloud Native SIG 2026
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.footer"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
