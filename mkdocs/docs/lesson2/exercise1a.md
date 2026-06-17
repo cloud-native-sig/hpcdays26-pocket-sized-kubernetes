@@ -115,7 +115,7 @@ kubectl exec -it toolbox -- sh
 / nslookup nginx-service
 ```
 
-Using CoreDNS, nslookup will resolve to the ClusterIP assigned to the Service, but you should see some warnings too. This is because we have not given the nslookup tool namespace information. Using `nslookup nginx-service.nginx.svc.cluster.local` will remove the warnings.
+Using CoreDNS, nslookup will resolve to the ClusterIP assigned to the Service, but you should see some warnings too. This is because we have not given the nslookup tool namespace information. Using `nslookup nginx-service.nginx-demo.svc.cluster.local` will remove the warnings.
 
 ### Accessing the Service
 
