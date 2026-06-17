@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: toolbox
-  namespace: default
+  namespace: ngnix-demo
 
 spec:
   containers:
