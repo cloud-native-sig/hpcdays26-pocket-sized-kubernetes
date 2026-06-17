@@ -118,6 +118,9 @@ On your desired worker
 ```bash
  sudo -i
 
+ export CONTROL_NODE=192.168.x.xxx
+ export CONTROL_TOKEN=...
+
  chmod +x /root/k3s/k3s-arm64
  cp /root/k3s/k3s-arm64 /usr/local/bin/k3s
 
@@ -130,6 +133,7 @@ On your desired worker
   K3S_TOKEN=$CONTROL_TOKEN \
   /root/k3s/install.sh
 ```
+Note you will need to set the environment variables after switching to root (or otherwise preserve environment e.g. `sudo -E su`).
 
 #### Option 2 — With Internet Access
 
@@ -161,7 +165,7 @@ All nodes should report:
 STATUS = Ready
 ```
 
-Note the empty ROLES. It is important to fix this. You can use the one-liner:
+Note the empty ROLES. **It is important to fix this.** You can use the one-liner:
 
 ```bash
 sudo kubectl get no -o name | grep worker | xargs -I {} sudo kubectl label {} node-role.kubernetes.io/worker=worker
